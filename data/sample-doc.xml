@@ -1,0 +1,78 @@
+<article lang="en">
+  <meta>
+    <doi>10.7554/eLife.06351</doi>
+      <title>Molecular architecture of human polycomb repressive complex 2</title>
+    <abstract>
+      Dopamine neurons in the midbrain have a central role in generating cycles of biological activity with periods as short as 4 hours and as long as 100 hours.
+    </abstract>
+  </meta>
+  <resources>
+    <image-figure id="fig1">
+      <title>Reconstitution of the human <em>PRC2-AEBP2 Complex</em>.</title>
+      <img src="http://cdn.elifesciences.org/elife-articles/00005/jpg/elife00005f001.jpg" data-preview-src="http://cdn.elifesciences.org/elife-articles/00005/jpg/elife00005f001.jpg" alt="TODO: support alt tags">
+      <caption><strong>(A)</strong> Schematic representation of the components of the human PRC2 Complex and AEBP2. <strong>(B)</strong> Size-exclusion chromatography of recombinant PRC2-AEBP2 complex and corresponding SDS-PAGE separation stained with Coomassie brilliant blue. The molecular mass of the recombinant complex is ∼275 kDa. Arrows and numbers indicate elution markers in the size-exclusion chromatography experiments and their molecular masses (in kilodaltons), respectively (a.u.: arbitrary unit). <strong>(C)</strong> Negative-stain EM of the recombinant PRC2-AEBP2 complex. Individual particles have an elongated shape with a length of ∼16 nm and a thickness of ∼7 nm. Bar: 200 nm. <strong>(D)</strong> Comparison between representative reference-free 2D class averages from non cross-linked (0%) and mildly cross-linked (0.015% glutaraldehyde) particles of the PRC2-AEBP2 complex.</caption>
+    </image-figure>
+
+    <image-figure id="fig2">
+      <title>Ab initio random conical tilt reconstruction of the human PRC2-AEBP2 complex.</title>
+      <img id="img1" src="http://cdn.elifesciences.org/elife-articles/00005/jpg/elife00005f002.jpg" data-preview-src="http://cdn.elifesciences.org/elife-articles/00005/jpg/elife00005f002.jpg" alt="TODO: support alt tags">
+      <caption>(A) Representative untilted and 60° tilt-pair micrographs (80,000× magnification). Corresponding particles pairs indicated by yellow circles. (B) RCT Volumes aligned to each of the 20 corresponding reference free class averages (from 6075 particles in the 0° micrographs, each class containing between 150 and 800 particles, as indicated in parentheses). (C) Alignment of the RCT volumes with respect to each other.</caption>
+    </image-figure>
+
+    <table-figure id="tfig1">
+      <title>Ab initio random conical tilt reconstruction of the human PRC2-AEBP2 complex.</title>
+      <table id="t1">
+        <thead id="t1_h">
+          <tr id="t1_1"><th id="t1_1_1">A</th><th id="t1_1_2">B</th><th id="t1_1_3">C</th><th id="t1_1_4">D</th><th id="t1_1_5">E</th><th id="t1_1_6">F</th></tr>
+        </thead>
+        <tbody id="t1_b">
+          <tr id="t1_2"><td id="t1_2_1">1</td><td id="t1_2_2">2</td><td id="t1_2_3">3</td><td id="t1_2_4">4</td><td id="t1_2_5">5</td><td id="t1_2_6">6</td></tr>
+          <tr id="t1_3"><td id="t1_3_1">7</td><td id="t1_3_2">8</td><td id="t1_3_3">9</td><td id="t1_3_4">10</td><td id="t1_3_5">11</td><td id="t1_3_6">2</td></tr>
+          <tr id="t1_4"><td id="t1_4_1">13</td><td id="t1_4_2">14</td><td id="t1_4_3">15</td><td id="t1_4_4">16</td><td id="t1_4_5">17</td><td id="t1_4_6">18</td></tr>
+          <tr id="t1_5"><td id="t1_5_1">19</td><td id="t1_5_2">20</td><td id="t1_5_3">21</td><td id="t1_5_4">22</td><td id="t1_5_5">23</td><td id="t1_5_6">24</td></tr>
+          <tr id="t1_6"><td id="t1_6_1">25</td><td id="t1_6_2">26</td><td id="t1_6_3">27</td><td id="t1_6_4">28</td><td id="t1_6_5">29</td><td id="t1_6_6">30</td></tr>
+        </tbody>
+      </table>
+      <caption>(A) Representative untilted and 60° tilt-pair micrographs (80,000× magnification). Corresponding particles pairs indicated by yellow circles. (B) RCT Volumes aligned to each of the 20 corresponding reference free class averages (from 6075 particles in the 0° micrographs, each class containing between 150 and 800 particles, as indicated in parentheses). (C) Alignment of the RCT volumes with respect to each other.</caption>
+    </table-figure>
+
+    <bib id="bib1">
+      <![CDATA[{"subtitle":[],"issued":{"year":2008,"month":6,"day":11},"score":1,"prefix":"http://id.crossref.org/prefix/10.1038","author":[{"affiliation":[],"family":"Hamada","given":"Fumika N."},{"affiliation":[],"family":"Rosenzweig","given":"Mark"},{"affiliation":[],"family":"Kang","given":"Kyeongjin"},{"affiliation":[],"family":"Pulver","given":"Stefan R."},{"affiliation":[],"family":"Ghezzi","given":"Alfredo"},{"affiliation":[],"family":"Jegla","given":"Timothy J."},{"affiliation":[],"family":"Garrity","given":"Paul A."}],"container-title":"Nature","reference-count":28,"page":"217-220","deposited":{"date-parts":[[2011,8,16]],"timestamp":1313452800000},"issue":"7201","title":"An internal thermal sensor controlling temperature preference in Drosophila","alternative-id":["nature07001"],"type":"journal-article","DOI":"10.1038/nature07001","ISSN":["0028-0836","1476-4687"],"URL":"http://dx.doi.org/10.1038/nature07001","source":"CrossRef","publisher":"Nature Publishing Group","indexed":{"date-parts":[[2014,9,20]],"timestamp":1411257151711},"volume":"454","member":"http://id.crossref.org/member/339","page-first":"217"}]]>
+    </bib>
+
+    <bib id="bib2">
+      <![CDATA[{"subtitle":[],"license":[{"content-version":"tdm","delay-in-days":0,"start":{"date-parts":[[2007,12,1]],"timestamp":1196467200000},"URL":"http://www.elsevier.com/tdm/userlicense/1.0/"},{"content-version":"vor","delay-in-days":2055,"start":{"date-parts":[[2013,7,17]],"timestamp":1374019200000},"URL":"http://www.elsevier.com/open-access/userlicense/1.0/"}],"issued":{"year":2007,"month":12},"link":[{"intended-application":"text-mining","content-version":"vor","content-type":"text/xml","URL":"http://api.elsevier.com/content/article/PII:S0960982207022683?httpAccept=text/xml"},{"intended-application":"text-mining","content-version":"vor","content-type":"text/plain","URL":"http://api.elsevier.com/content/article/PII:S0960982207022683?httpAccept=text/plain"}],"score":1,"prefix":"http://id.crossref.org/prefix/10.1016","author":[{"affiliation":[],"family":"Hwang","given":"Richard Y."},{"affiliation":[],"family":"Zhong","given":"Lixian"},{"affiliation":[],"family":"Xu","given":"Yifan"},{"affiliation":[],"family":"Johnson","given":"Trevor"},{"affiliation":[],"family":"Zhang","given":"Feng"},{"affiliation":[],"family":"Deisseroth","given":"Karl"},{"affiliation":[],"family":"Tracey","given":"W. Daniel"}],"container-title":"Current Biology","reference-count":46,"page":"2105-2116","deposited":{"date-parts":[[2015,4,24]],"timestamp":1429833600000},"issue":"24","title":"Nociceptive Neurons Protect Drosophila Larvae from Parasitoid Wasps","alternative-id":["S0960982207022683"],"type":"journal-article","DOI":"10.1016/j.cub.2007.11.029","ISSN":["0960-9822"],"URL":"http://dx.doi.org/10.1016/j.cub.2007.11.029","source":"CrossRef","publisher":"Elsevier BV","indexed":{"date-parts":[[2015,4,27]],"timestamp":1430126143484},"volume":"17","member":"http://id.crossref.org/member/78","page-first":"2105"}]]>
+    </bib>
+
+    <bib id="bib3"><![CDATA[{"subtitle":[],"license":[{"content-version":"tdm","delay-in-days":0,"start":{"date-parts":[[2007,12,1]],"timestamp":1196467200000},"URL":"http://www.elsevier.com/tdm/userlicense/1.0/"},{"content-version":"vor","delay-in-days":2055,"start":{"date-parts":[[2013,7,17]],"timestamp":1374019200000},"URL":"http://www.elsevier.com/open-access/userlicense/1.0/"}],"issued":{"year":2007,"month":12},"link":[{"intended-application":"text-mining","content-version":"vor","content-type":"text/xml","URL":"http://api.elsevier.com/content/article/PII:S0960982207022683?httpAccept=text/xml"},{"intended-application":"text-mining","content-version":"vor","content-type":"text/plain","URL":"http://api.elsevier.com/content/article/PII:S0960982207022683?httpAccept=text/plain"}],"score":1,"prefix":"http://id.crossref.org/prefix/10.1016","author":[{"affiliation":[],"family":"Hwang","given":"Richard Y."},{"affiliation":[],"family":"Zhong","given":"Lixian"},{"affiliation":[],"family":"Xu","given":"Yifan"},{"affiliation":[],"family":"Johnson","given":"Trevor"},{"affiliation":[],"family":"Zhang","given":"Feng"},{"affiliation":[],"family":"Deisseroth","given":"Karl"},{"affiliation":[],"family":"Tracey","given":"W. Daniel"}],"container-title":"Current Biology","reference-count":46,"page":"2105-2116","deposited":{"date-parts":[[2015,4,24]],"timestamp":1429833600000},"issue":"24","title":"Nociceptive Neurons Protect Drosophila Larvae from Parasitoid Wasps","alternative-id":["S0960982207022683"],"type":"journal-article","DOI":"10.1016/j.cub.2007.11.029","ISSN":["0960-9822"],"URL":"http://dx.doi.org/10.1016/j.cub.2007.11.029","source":"CrossRef","publisher":"Elsevier BV","indexed":{"date-parts":[[2015,4,27]],"timestamp":1430126143484},"volume":"17","member":"http://id.crossref.org/member/78","page-first":"2105"}]]>
+    </bib>
+
+    <bib id="bib4">
+      <![CDATA[{"subtitle":[],"issued":{"year":2008,"month":3,"day":21},"score":1,"prefix":"http://id.crossref.org/prefix/10.1126","author":[{"affiliation":[],"family":"Yang","given":"C.-h."},{"affiliation":[],"family":"Belawat","given":"P."},{"affiliation":[],"family":"Hafen","given":"E."},{"affiliation":[],"family":"Jan","given":"L. Y."},{"affiliation":[],"family":"Jan","given":"Y.-N."}],"container-title":"Science","reference-count":21,"page":"1679-1683","deposited":{"date-parts":[[2011,7,17]],"timestamp":1310860800000},"issue":"5870","title":"Drosophila Egg-Laying Site Selection as a System to Study Simple Decision-Making Processes","type":"journal-article","DOI":"10.1126/science.1151842","ISSN":["0036-8075","1095-9203"],"URL":"http://dx.doi.org/10.1126/science.1151842","source":"CrossRef","publisher":"American Association for the Advancement of Science (AAAS)","indexed":{"date-parts":[[2014,9,20]],"timestamp":1411238801895},"volume":"319","member":"http://id.crossref.org/member/221","page-first":"1679"}]]>
+    </bib>
+  </resources>
+  <body>
+    <p id="pd"><em>Content from: http://lens.elifesciences.org/00005</em></p>
+    <h1 id="h1">Abstract</h1>
+    <p id="p0">Polycomb Repressive Complex 2 (PRC2) is essential for gene silencing, establishing transcriptional repression of specific genes by tri-methylating Lysine 27 of histone H3, a process mediated by cofactors such as AEBP2. In spite of its biological importance, little is known about PRC2 architecture and subunit organization. Here, we present the first three-dimensional electron microscopy structure of the human PRC2 complex bound to its cofactor AEBP2. Using a novel internal protein tagging-method, in combination with isotopic chemical cross-linking and mass spectrometry, we have localized all the PRC2 subunits and their functional domains and generated a detailed map of interactions. The position and stabilization effect of AEBP2 suggests an allosteric role of this cofactor in regulating gene silencing. Regions in PRC2 that interact with modified histone tails are localized near the methyltransferase site, suggesting a molecular mechanism for the chromatin-based regulation of PRC2 activity.</p>
+
+    <include data-rtype="table_figure" data-rid="tfig1"></div>
+
+    <h1>Introduction</h1>
+    <p id="p1">Some <em id="em13">annotated</em> content (see <cite id="c1" typeof="bib" data-rid="bib1">Doe, 2010</cite> and <cite id="c2" typeof="fig" data-rid="fig1">Figure 1</cite> and <cite id="c3" typeof="table" data-rid="tfig1">Table 1</cite>).</p>
+
+    <h1 id="h2">Reconstitution of the human PRC2-AEBP2 complex</h1>
+    <p id="p2">In preliminary experiments, we reconstituted the tetrameric PRC2 complex (Ezh2/EED/Suz12/RbAp48) in an insect cell expression system, following previous protocols established to reconstitute a functional PRC2 complex (Pasini et al., 2004; Ketel et al., 2005; Margueron et al., 2008). When analyzed by SDS page the purified complex appeared to be stoichiometric and biochemically homogeneous (data not shown). However, further analysis to generate reference-free 2D class averages and a 3D reconstruction were limited in resolution and lacked clear structural details (data not shown), indicating the presence of extreme conformational flexibility and hampering further structural studies of this tetrameric PRC2.</p>
+
+    <!-- include external resource (figure) -->
+    <include data-rtype="image_figure" data-rid="fig2"></div>
+
+    <h2 id="h3">Section 2.1</h2>
+    <p id="p3">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+    
+    <!-- include external resource (figure) -->
+    <include data-rtype="image_figure" data-rid="fig1"></div>
+
+    <p>End of file</p>
+  </body>
+</article>

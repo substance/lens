@@ -1,0 +1,272 @@
+// Pull in common writer styles
+@import 'node_modules/substance-ui/writer/writer';
+
+/* Custom Scrollbar styles
+-----------------------------------------------------*/
+
+.scrollbar-component.comments .highlight {
+  background: #aaa;
+}
+
+
+.scrollbar-component.cite_bib_item .highlight {
+  background-color: #0b9dd9;
+}
+
+/* Custom Annotation styles
+-----------------------------------------------------*/
+
+.container-annotation.comment.annotation-fragment {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.container-annotation.comment.annotation-fragment.active {
+  background: #aaa;
+}
+
+.annotation.citation {
+  background: rgba(145, 187, 4, 0.15);
+  border-bottom: 1px solid rgba(145, 187, 4, 0.6);
+  color: #495A11;
+  cursor: pointer;
+}
+
+.annotation.citation:hover {
+  background: rgba(145, 187, 4, 0.2);
+}
+
+.annotation.citation.active {
+  background: rgba(145, 187, 4, 0.3);
+}
+
+.annotation.bib-item-citation {
+  background: rgba(11, 157, 217, 0.075);
+  color: #1B6685;
+  border-bottom: 1px solid rgba(11, 157, 217, 0.4);
+  cursor: pointer;
+}
+
+.annotation.bib-item-citation:hover {
+  background: rgba(11, 157, 217, 0.15);
+}
+
+.annotation.bib-item-citation.active {
+  background: rgba(11, 157, 217, 0.15);
+}
+
+
+/* TOC Panel
+-----------------------------------------------------*/
+
+.toc-panel-component .toc-entries {
+  padding: 20px 0px;
+}
+
+.toc-panel-component .toc-entry {
+  color: #777;
+  font-weight: 600;
+  display: block;
+  padding: 5px 0px;
+}
+
+.toc-panel-component .toc-entry.active {
+  color: #222;
+}
+
+.toc-panel-component .toc-entry:hover {
+  color: #444;
+}
+
+.toc-panel-component .toc-entry.level-1 {
+  font-size: 20px;
+  padding-left: 20px;
+}
+
+.toc-panel-component .toc-entry.level-2 {
+  font-size: 18px;
+  padding-left: 40px;
+}
+
+.toc-panel-component .toc-entry.level-3 {
+  font-size: 16px;
+  padding-left: 60px;
+}
+
+/* Text Annotations
+-----------------------------------------------------*/
+
+.annotation.strong {
+  font-weight: bold;
+}
+
+.annotation.emphasis {
+  font-style: italic;
+}
+
+.content-tools-component .tools a.publish-tool-component {
+  width: 120px;
+}
+
+/* Science Writer Specific
+-----------------------------------------------------*/
+
+.resource-container {
+  width: 35%;
+}
+
+.main-container {
+  width: 65%;
+  z-index: 30;
+}
+
+
+/* CSL Styles
+-----------------------------------------------------*/
+
+.csl-entry {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 25px;
+  padding: 5px 20px;
+}
+
+.csl-block {
+  padding:0.4em 0px 0.4em 0em;
+}
+
+.csl-left-margin {
+  float: left;
+  color: #aaa;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.csl-right-inline {
+  margin-left: 20px;
+  margin-right: 100px;
+}
+
+/* Toolbar
+-----------------------------------------------------*/
+
+.table-dropdown {
+// TODO: how to make the dropdown take more width
+// As some entries get broken in 2 lines
+}
+
+/* Non-Editables
+*/
+
+*[contenteditable="false"] {
+  cursor: default;
+}
+
+/* Cite Panel
+-----------------------------------------------------*/
+
+.cite-panel-component .item {
+  cursor: pointer;
+
+  border-left: 2px solid transparent;
+
+  &.active { background: white; border-left: 2px solid #444; }
+  &:hover { background: white; }
+}
+
+/* Figure Item */
+
+.cite-panel-component .item.figure {
+
+  &.active { border-left: 2px solid rgba(145, 187, 4, 1); }
+
+  .title {
+    font-weight: 600;
+    padding-bottom: 10px;
+  }
+
+  img {
+    padding-right: 20px;
+    width: 70px;
+    float: left;
+  }
+}
+
+.cite-panel-component .item.bib-item {
+
+  &.active { background: white; border-left: 2px solid rgba(11, 157, 217, 1); }
+
+  .label {
+    padding-right: 5px;
+    float: left;
+    font-weight: 600;
+  }
+}
+
+/* Figures
+-----------------------------------------------------*/
+
+.figure img {
+  max-width: 100%;
+}
+
+/* Figure Node
+-----------------------------------------------------*/
+
+.content-node.figure {
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+
+
+  .label {
+    color: #777;
+    padding-bottom: 10px;
+  }
+
+  .title {
+    font-size: 20px;
+    padding-bottom: 20px;
+    // font-weight: 600;
+  }
+
+  .description {
+    padding-top: 20px;
+    line-height: 20px;
+  }
+
+  .image {
+    padding-bottom: 20px;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+/* Custom Annotation styles
+-----------------------------------------------------*/
+
+
+/* Export Panel
+-----------------------------------------------------*/
+
+.manage-collection-component {
+  background: green;
+}
+
+.manage-collection-component .content-node.figure {
+
+  .figure-content {
+    float: left;
+    width: 40%;
+  }
+
+  .label,
+  .title,
+  .description {
+    padding-left: 30px;
+    float: right;
+    width: 60%;
+  }
+}
+
