@@ -1,7 +1,9 @@
 var Substance = require('substance');
 var $$ = React.createElement;
 
-var TitleEditor = require("./title_editor");
+var TitleEditor = require('./title_editor');
+var BibliographyComponent = require('./bibliography_component');
+
 var UnsupporedNode = require('./nodes/unsupported_node');
 
 var Surface = Substance.Surface;
@@ -89,7 +91,10 @@ var ContentEditor = React.createClass({
           },
           $$('div', {className: "nodes"}, components)
         )
-      )
+      ),
+      $$(BibliographyComponent, {
+        doc: doc,
+      })
     );
   },
 

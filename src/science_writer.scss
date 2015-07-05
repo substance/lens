@@ -136,14 +136,13 @@
 
 .csl-left-margin {
   float: left;
-  color: #aaa;
+  // color: #aaa;
   font-weight: 600;
   font-size: 13px;
 }
 
 .csl-right-inline {
-  margin-left: 20px;
-  margin-right: 100px;
+  margin-left: 40px;
 }
 
 /* Toolbar
@@ -247,7 +246,7 @@
 -----------------------------------------------------*/
 
 
-/* Export Panel
+/* Manage Collection Component
 -----------------------------------------------------*/
 
 .manage-collection-component {
@@ -270,3 +269,11 @@
   }
 }
 
+
+/* Bibliography in manuscript area
+-----------------------------------------------------*/
+
+.bibliography-component .bib-item {
+  padding-bottom: 10px;
+  font-size: 14px;
+}
