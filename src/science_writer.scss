@@ -29,6 +29,7 @@
   border-bottom: 1px solid rgba(145, 187, 4, 0.6);
   color: #495A11;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .annotation.citation:hover {
@@ -272,6 +273,10 @@
 
 /* Bibliography in manuscript area
 -----------------------------------------------------*/
+
+.bibliography-component {
+  cursor: not-allowed;
+}
 
 .bibliography-component .bib-item {
   padding-bottom: 10px;
