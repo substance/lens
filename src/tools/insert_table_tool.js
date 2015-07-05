@@ -53,7 +53,7 @@ var InsertTableTool = Tool.extend({
     // We need some more XML aware parsing here
     // TODO: put parsing code into a module somewhere
     var parser = new DOMParser();
-    xmlDoc = parser.parseFromString(TABLE, "text/xml");
+    var xmlDoc = parser.parseFromString(TABLE, "text/xml");
     var $table = $(xmlDoc).find('table-figure');
 
     surface.transaction({ selection: sel }, function(tx, args) {
