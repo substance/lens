@@ -9,7 +9,9 @@ class FigureComponent extends React.Component {
     var contentNode = this.props.node.getContentNode();
     var ContentComponentClass = componentRegistry.get(contentNode.type);
 
-    return $$('div', { className: "content-node figure clearfix", "data-id": this.props.node.id },
+    var specificType = this.props.node.type;
+
+    return $$('div', { className: "content-node figure clearfix "+specificType, "data-id": this.props.node.id },
       $$('div', {className: 'label', contentEditable: false}, this.props.node.label),
       $$(TextProperty, {
         tagName: 'div',
