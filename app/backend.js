@@ -44,20 +44,15 @@ Backend.Prototype = function() {
     $.ajax(ajaxOpts);
   };
 
-
   // Document
   // ------------------
 
   this.getDocument = function(documentId, cb) {
-    
-    this._request('GET', 'data/full-doc.html', null, function(err, rawDoc) {
+    this._request('GET', 'data/example-doc.xml', null, function(err, rawDoc) {
       if (err) { console.error(err); cb(err); }
-      var doc = Article.fromHtml(rawDoc);
+      var doc = Article.fromXml(rawDoc);
       window.doc = doc;
       cb(null, doc);
-
-      // console.log('convert back to HTML', doc.toHtml());
-
     });
   };
 

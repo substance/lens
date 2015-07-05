@@ -3,8 +3,8 @@ var Tool = Substance.Surface.Tool;
 var Article = require('../../lib/article');
 
 var TABLE = [
-  '<div typeof="tablefig">',
-    '<div property="title">Enter title.</div>',
+  '<table-figure>',
+    '<title>Enter title.</title>',
       '<table>',
         '<thead>',
          '<tr><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>',
@@ -17,8 +17,8 @@ var TABLE = [
           '<tr><td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td></tr>',
         '</tbody>',
       '</table>',
-    '<div property="caption">Enter caption</div>',
-  '</div>'
+    '<caption>Enter caption</caption>',
+  '</table-figure>'
 ].join('');
 
 var InsertTableTool = Tool.extend({
