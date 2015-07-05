@@ -34,19 +34,17 @@ var ExportTool = Tool.extend({
   performAction: function(app) {
     var doc = this.context.doc;
 
-    doc.toXml();
-
     // Starts a download of the current HTML
-    // var a = window.document.createElement('a');
-    // a.href = window.URL.createObjectURL(new Blob([doc.toXml()], {type: 'text/html'}));
-    // a.download = slug(doc.getTitle())+".html";
+    var a = window.document.createElement('a');
+    a.href = window.URL.createObjectURL(new Blob([doc.toXml()], {type: 'text/xml'}));
+    a.download = slug(doc.getTitle())+".xml";
 
-    // // Append anchor to body.
-    // document.body.appendChild(a);
-    // a.click();
+    // Append anchor to body.
+    document.body.appendChild(a);
+    a.click();
 
-    // // Remove anchor from body
-    // document.body.removeChild(a);
+    // Remove anchor from body
+    document.body.removeChild(a);
   }
 });
 
