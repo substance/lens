@@ -12,7 +12,6 @@ var port = process.env.PORT || 5000;
 
 var browserify = require("browserify");
 var babelify = require("babelify");
-var es6ify = require("es6ify");
 
 // use body parser so we can get info from POST and/or URL parameters
 app.use(bodyParser.json({limit: '3mb'}));
@@ -23,20 +22,14 @@ app.use(express.static(path.join(__dirname, "app/assets")));
 app.use(express.static(path.join(__dirname, "app/data")));
 app.use('/i18n', express.static(path.join(__dirname, "app/i18n")));
 
-
 // Backend
 // --------------------
 
 app.get('/app.js', function (req, res, next) {
   // var startTime = Date.now();
   browserify({ debug: true, cache: false })
-    // .transform(es6ify)
-    // .transform(es6ify.configure(new RegExp('^'+path.join(__dirname, 'src')+'.+$')))
-    // .transform(babelify.configure({ only: [ path.join(__dirname, 'src') ] }))
+    .transform(babelify.configure({ only: [ path.join(__dirname, 'src') ] }))
     .add(path.join(__dirname, "app", "app.js"))
-    // .on('file', function(file, id, parent) {
-    //   console.log('### ', (Date.now() - startTime));
-    // })
     .bundle()
     .on('error', function(err, data){
       console.error(err.message);
@@ -76,9 +69,6 @@ app.get('/app.css.map', function(req, res) {
     res.send(result.map);
   });
 });
-
-
-
 
 app.listen(port, function(){
   console.log("Lens running on port " + port);

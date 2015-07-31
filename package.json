@@ -8,13 +8,12 @@
     "browserify": "^10.2.4",
     "cheerio": "^0.19.0",
     "ejs": "*",
-    "es6ify": "^1.6.0",
     "express": "*",
     "js-beautify": "^1.5.6",
     "lodash": "3.3.1",
     "node-polyglot": "^0.4.1",
     "node-sass": "3.x",
-    "substance": "substance/substance-legacy#193d87259fae45a0f546bdb133a9fc7f34d87b52",
+    "substance": "substance/substance#components",
     "substance-ui": "substance/ui#7a6cb53b1d6a1e55fa022c2b69a1b8f938f5ae4f"
   },
   "devDependencies": {
