@@ -9,7 +9,8 @@ require('./i18n/load');
 // Main entry point of the Substance Journal web client
 
 var _ = require("substance/helpers");
-var $$ = React.createElement;
+var Component = require("substance/ui/component");
+var $$ = Component.$$;
 
 // Specify a backend
 // ---------------
@@ -32,44 +33,32 @@ var CrossrefSearch = require('../lib/article/bib/crossref_search');
 //
 
 // Available contexts
-var ScienceWriter = require("../src");
+var ScienceWriter = require("../src/science-writer");
 
 // Top Level Application
 // ---------------
 //
 
-var App = React.createClass({
-  displayName: "App",
+class App extends Component.Root {
 
-  childContextTypes: {
-    backend: React.PropTypes.object,
-    notifications: React.PropTypes.object,
-    bibSearchEngines: React.PropTypes.array
-  },
+  constructor(props) {
+    super(props)
 
-  getChildContext: function() {
-    return {
+    this.childContext = {
       backend: backend,
       bibSearchEngines: [new CrossrefSearch()],
-      notifications: notifications,      
-    };
-  },
+      notifications: notifications,
+    }
+  }
 
-  render: function() {
+  render() {
     return $$(ScienceWriter, {
       documentId: "sample"
     });
   }
-});
-
-// Start the app
+}
 
 $(function() {
-  React.render(
-    $$(App, {
-      route: window.location.hash.slice(1)
-    }),
-    document.getElementById('container')
-  );
+  new App().mount($('container'));
 });
 

@@ -1,14 +1,13 @@
-var $$ = React.createElement;
-var Substance = require('substance');
+"use strict";
+
 var _ = require('substance/helpers');
+var Component = require('substance/ui/component');
+var $$ = Component.$$;
 
+class BibliographyComponent extends Component {
 
-var BibliographyComponent = React.createClass({
-  displayName: "BibliographyComponent",
-
-  componentWillMount: function() {
+  didMount: function() {
     var doc = this.props.doc;
-
     this.bibliography = doc.getCollection('bib_item');
     this.bibliography.connect(this, {
       'bibliography:updated': this.update
@@ -24,10 +23,6 @@ var BibliographyComponent = React.createClass({
     });
   },
 
-  getInitialState: function() {
-    return {};
-  },
-
   // Rendering
   // -------------------
 
@@ -36,16 +31,18 @@ var BibliographyComponent = React.createClass({
     var state = this.state;
 
     if (state.bibItems) {
-      var bibItemEls = [$$('div', {className: 'content-node heading level-1'}, 'References')];
+      var bibItemEls = [
+        $$('div', { classNames: 'content-node heading level-1' }, 'References')
+      ];
       _.each(state.bibItems, function(bibItem) {
         if (bibItem.label) {
-          bibItemEls.push($$('div', {className: 'bib-item clearfix', key: bibItem.id},
-            $$('div', {className: 'label csl-left-margin'}, bibItem.label),
-            $$('div', {className: 'text csl-right-inline'}, bibItem.text)
+          bibItemEls.push($$('div', { classNames: 'bib-item clearfix' },
+            $$('div', { classNames: 'label csl-left-margin'}, bibItem.label),
+            $$('div', { classNames: 'text csl-right-inline'}, bibItem.text)
           ));
         }
       });
-      return $$('div', {className: 'bibliography-component bib-items'}, bibItemEls);
+      return $$('div', { classNames: 'bibliography-component bib-items'}, bibItemEls);
     } else {
       return $$('div', null, '');
     }

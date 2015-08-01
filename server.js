@@ -1,11 +1,8 @@
 var http = require('http');
 var express = require('express');
 var path = require('path');
-var Substance = require("substance");
-var fs = require('fs');
 var sass = require('node-sass');
 var bodyParser = require('body-parser');
-var _ = require('lodash');
 
 var app = express();
 var port = process.env.PORT || 5000;
@@ -28,10 +25,15 @@ app.use('/i18n', express.static(path.join(__dirname, "app/i18n")));
 app.get('/app.js', function (req, res, next) {
   // var startTime = Date.now();
   browserify({ debug: true, cache: false })
-    .transform(babelify.configure({ only: [ path.join(__dirname, 'src') ] }))
+    .transform(babelify.configure({
+      only: [
+        path.join(__dirname, 'app'),
+        path.join(__dirname, 'src')
+      ]
+    }))
     .add(path.join(__dirname, "app", "app.js"))
     .bundle()
-    .on('error', function(err, data){
+    .on('error', function(err){
       console.error(err.message);
       res.send('console.log("'+err.message+'");');
     })
