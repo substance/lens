@@ -1,34 +1,44 @@
-var $$ = React.createElement;
-var _ = require("substance/helpers");
+"use strict";
 
+var Component = require('substance/ui/component');
+var $$ = Component.$$;
 
-var CiteImageFigure = React.createClass({
-  displayName: "CiteImageFigure",
+class CiteImageFigure extends Component {
 
-  onClick: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-  },
+  constructor(parent, props) {
+    super(parent, props);
 
-  onMouseDown: function(e) {
-    e.preventDefault();
-    this.props.handleSelection(this.props.node.id);
-  },
+    this.onClick = this.onClick.bind(this);
+    this.onMouseDown = this.onMouseDown.bind(this);
+  }
+
+  get classNames() {
+    return 'figure border-bottom item pad clearfix small';
+  }
 
   render: function() {
-    var classNames = ['figure border-bottom item pad clearfix small'];
-    if (this.props.active) classNames.push('active');
-
-    return $$("div", {
-      className: classNames.join(" "),
-      onClick: this.onClick,
-      onMouseDown: this.onMouseDown
-    },
-      $$('img', {className: 'image', src: this.props.node.getContentNode().src}),
-      $$('div', {className: 'title'}, [this.props.node.label, this.props.node.title].join(' ')),
-      $$('div', {className: 'caption truncate'}, this.props.node.caption)
-    );
+    if (this.props.active) {
+      this.$el.addClass('active');
+    } else {
+      this.$el.removeClass('active');
+    }
+    return [
+      $$('img', {classNames: 'image', src: this.props.node.getContentNode().src}),
+      $$('div', {classNames: 'title'}, [this.props.node.label, this.props.node.title].join(' ')),
+      $$('div', {classNames: 'caption truncate'}, this.props.node.caption)
+    ];
   }
-});
+
+  onClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  onMouseDown(e) {
+    e.preventDefault();
+    this.props.handleSelection(this.props.node.id);
+  }
+
+}
 
 module.exports = CiteImageFigure;

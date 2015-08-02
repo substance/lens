@@ -2,7 +2,7 @@ var Substance = require("substance");
 var Article = require('../lib/article');
 
 var Backend = function() {
-  
+
 };
 
 Backend.Prototype = function() {
