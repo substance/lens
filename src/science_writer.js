@@ -1,26 +1,25 @@
 'use strict';
 
-var Component = require('substance/ui/component');
-var SubstanceWriter = require("substance-ui/writer");
-var $$ = Component.$$;
+var _ = require('substance/helpers');
+var Writer = require("substance/ui/writer");
 
 var tools = require('./tools');
 var components = require('./components');
 var stateHandlers = require('./state_handlers');
 
-/**
- * ScienceWriter Component
- */
-class ScienceWriter extends SubstanceWriter {
+class ScienceWriter extends Writer {
 
   constructor(parent, props) {
-    super(parent, props, {
-      contentContainer: 'main',
-      components: components,
-      tools: tools,
-      stateHandlers: stateHandlers
-    });
+    super(parent, _.extend(props, {
+      config: {
+        containerId: 'main',
+        components: components,
+        tools: tools,
+        stateHandlers: stateHandlers
+      }
+    }));
   }
+
 }
 
 module.exports = ScienceWriter;

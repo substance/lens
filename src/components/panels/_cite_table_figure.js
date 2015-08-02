@@ -1,34 +1,45 @@
-var $$ = React.createElement;
-var _ = require("substance/helpers");
+"use strict";
 
-var CiteTableFigure = React.createClass({
-  displayName: "CiteTableFigure",
+var Component = require('substance/ui/component');
+var $$ = Component.$$;
 
-  onClick: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-  },
+class CiteTableFigure extends Component {
 
-  onMouseDown: function(e) {
-    e.preventDefault();
-    this.props.handleSelection(this.props.node.id);
-  },
+  constructor(parent, props) {
+    super(parent, props);
 
-  render: function() {
-    var classNames = ['figure border-bottom item pad clearfix small'];
-    if (this.props.active) classNames.push('active');
+    this.onClick = this.onClick.bind(this);
+    this.onMouseDown = this.onMouseDown.bind(this);
+  }
 
-    return $$("div", {
-      className: classNames.join(" "),
-      onClick: this.onClick,
-      onMouseDown: this.onMouseDown
-    },
+  get classNames() {
+    return 'figure border-bottom item pad clearfix small';
+  }
+
+  render() {
+    if (this.props.active) {
+      this.$el.addClass('active');
+    } else {
+      this.$el.removeClass('active');
+    }
+    return [
       // TODO: display thumbnail version of table
       // $$('img', {className: 'image', src: this.props.node.src}),
       $$('div', {className: 'title'}, [this.props.node.label, this.props.node.title].join(' ')),
       $$('div', {className: 'caption truncate'}, this.props.node.caption)
-    );
+    ];
   }
-});
+
+  onClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  onMouseDown(e) {
+    e.preventDefault();
+    this.props.handleSelection(this.props.node.id);
+  }
+
+}
 
 module.exports = CiteTableFigure;

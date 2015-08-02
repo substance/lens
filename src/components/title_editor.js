@@ -1,24 +1,12 @@
 var $$ = React.createElement;
 var Substance = require("substance");
-var TextProperty = require("substance-ui/text_property");
+var TextProperty = require("substance/ui/text_property_compnent");
 
 var Surface = Substance.Surface;
 var FormEditor = Surface.FormEditor;
 
 var TitleEditor = React.createClass({
   displayName: "TitleEditor",
-
-  // State relevant things
-  // ------------
-
-  contextTypes: {
-    app: React.PropTypes.object.isRequired,
-    surfaceManager: React.PropTypes.object.isRequired
-  },
-
-  childContextTypes: {
-    surface: React.PropTypes.object
-  },
 
   getChildContext: function() {
     return {

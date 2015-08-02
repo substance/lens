@@ -1,8 +1,9 @@
-var Substance = require("substance");
-var _ = require("substance/helpers");
-var $$ = React.createElement;
+'use strict';
 
-var Icon = require("substance-ui/font_awesome_icon");
+var _ = require("substance/helpers");
+var Component = require('substance/ui/component');
+var Icon = require("substance/ui/font_awesome_icon");
+var $$ = Component.$$;
 
 var CONTEXTS = [
   {contextId: 'list', label: 'Manage', icon: 'fa-list'},
@@ -12,13 +13,49 @@ var CONTEXTS = [
 // List existing bib items
 // -----------------
 
-var ListBibItems = React.createClass({
+class ListBibItems extends Component {
 
-  contextTypes: {
-    app: React.PropTypes.object.isRequired,
-  },
+  constructor(parent, props) {
+    super(parent, props);
+  }
 
-  handleDeleteBibItem: function(e) {
+  getInitialState() {
+    var doc = this.props.doc;
+    var bibliography = doc.getBibliography();
+    bibliography.compile();
+    return {
+      bibItems: bibliography.getCompiledItems()
+    };
+  }
+
+  didMount() {
+    this.$el.on('click', '.delete-button', this.handleDeleteBibItem);
+  }
+
+  willUnmount() {
+    this.$el.off('click', '.delete-button', this.handleDeleteBibItem);
+  }
+
+  get classNames() {
+    return 'content bib-items';
+  }
+
+  render() {
+    var doc = this.props.doc;
+    var bibItems = _.map(this.state.bibItems, function(entry) {
+      return $$('div', { classNames: 'csl-entry clearfix border-bottom' },
+        $$('div', { classNames: 'csl-left-margin' }, entry.label),
+        $$('button', {
+          "data-id": entry.id,
+          classNames: 'button delete-button float-right small plain',
+        }, "Delete"),
+        $$('div', {classNames: 'csl-right-inline'}, entry.text)
+      );
+    }, this);
+    return bibItems;
+  }
+
+  handleDeleteBibItem(e) {
     e.preventDefault();
     var bibItemId = e.currentTarget.dataset.id;
     var doc = this.context.app.doc;
@@ -27,43 +64,12 @@ var ListBibItems = React.createClass({
     var bibliography = doc.getBibliography();
     // Recompile bibliography
     bibliography.compile();
-
     var bibItems = bibliography.getCompiledItems();
-
     this.setState({
       bibItems: bibItems
     });
-  },
-
-  getInitialState: function() {
-    var doc = this.props.doc;
-
-    var bibliography = doc.getBibliography();
-    bibliography.compile();
-
-    return {
-      bibItems: bibliography.getCompiledItems()
-    };
-  },
-
-  render: function() {
-    var doc = this.props.doc;
-    var bibItems = _.map(this.state.bibItems, function(entry) {
-      return $$('div', {className: 'csl-entry clearfix border-bottom'},
-        $$('div', {className: 'csl-left-margin'}, entry.label),
-        $$('button', {
-          "data-id": entry.id,
-          className: 'button float-right small plain',
-          onClick: this.handleDeleteBibItem
-        }, "Delete"),
-        $$('div', {className: 'csl-right-inline'}, entry.text)
-      );
-    }, this);
-    return $$('div', {className: 'content bib-items'}, bibItems);
   }
-});
-
-
+}
 
 // Create new bib items using cross ref search
 // -----------------

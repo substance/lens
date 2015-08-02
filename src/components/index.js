@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('substance/helpers');
 var nodes = require('./nodes');
 var panels = require('./panels');
