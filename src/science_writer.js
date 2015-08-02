@@ -11,27 +11,15 @@ var stateHandlers = require('./state_handlers');
 /**
  * ScienceWriter Component
  */
-class ScienceWriter extends Component {
+class ScienceWriter extends SubstanceWriter {
 
   constructor(parent, props) {
-    super(parent, props);
-  }
-
-  render() {
-    if (this.props.doc) {
-      return $$(SubstanceWriter, {
-        key: "writer",
-        config: {
-          components: components,
-          tools: tools,
-          stateHandlers: stateHandlers,
-        },
-        doc: this.state.doc,
-        contentContainer: 'main'
-      });
-    } else {
-      return $$('div', {}, "Loading...");
-    }
+    super(parent, props, {
+      contentContainer: 'main',
+      components: components,
+      tools: tools,
+      stateHandlers: stateHandlers
+    });
   }
 }
 
