@@ -12,22 +12,19 @@ class CiteTableFigure extends Component {
     this.onMouseDown = this.onMouseDown.bind(this);
   }
 
-  get classNames() {
-    return 'figure border-bottom item pad clearfix small';
-  }
-
   render() {
+    var el = $$('div', {
+      classNames: 'figure border-bottom item pad clearfix small'
+    });
     if (this.props.active) {
-      this.$el.addClass('active');
-    } else {
-      this.$el.removeClass('active');
+      el.addClass('active');
     }
-    return [
+    return el.append(
       // TODO: display thumbnail version of table
       // $$('img', {className: 'image', src: this.props.node.src}),
       $$('div', {className: 'title'}, [this.props.node.label, this.props.node.title].join(' ')),
       $$('div', {className: 'caption truncate'}, this.props.node.caption)
-    ];
+    );
   }
 
   onClick(e) {
@@ -39,7 +36,6 @@ class CiteTableFigure extends Component {
     e.preventDefault();
     this.props.handleSelection(this.props.node.id);
   }
-
 }
 
 module.exports = CiteTableFigure;

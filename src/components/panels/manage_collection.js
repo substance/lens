@@ -1,12 +1,10 @@
 'use strict';
 
 var _ = require("substance/helpers");
-var $$ = React.createElement;
-var Icon = require("substance-ui/font_awesome_icon");
-
-var Substance = require("substance");
-var Surface = Substance.Surface;
-var ContainerEditor = Surface.ContainerEditor;
+var Component = require('substance/ui/component');
+var $$ = Component.$$;
+var Icon = require("substance/ui/font_awesome_icon");
+var Surface = require("substance/surface");
 
 // var FormEditor = Surface.FormEditor;
 
@@ -16,7 +14,8 @@ var CONTEXTS = [
   // {contextId: 'list', label: 'Upload figures', icon: 'fa-plus'}
 ];
 
-class ManageCollection extends React.Component {
+class ManageCollection extends Component {
+
   constructor(props) {
     super(props);
   }
@@ -45,15 +44,13 @@ class ManageCollection extends React.Component {
     return [this.state.items.length, c.labelPrefix+'s'].join(' ');
   }
 
-  componentWillMount() {
+  didReceiveProps() {
     this.stateFromAppState();
-
     var doc = this.context.app.doc;
     var options = {
       name: 'collection',
       logger: this.context.notifications
     };
-
     this.surface = new Surface(this.context.surfaceManager, doc, new Surface.FormEditor(), options);
   }
 
@@ -133,32 +130,25 @@ class ManageCollection extends React.Component {
       itemEls = [$$('div', null, "No items found.")];
     }
 
-    return $$('div', {className: 'manage-collection-component'},
-      $$('div', {className: 'header toolbar clearfix menubar fill-light'},
-        $$('div', {className: 'title float-left large'}, this.getPanelLabel()),
-        $$('div', {className: 'menu-group small'}, navItems),
-        $$('button', {className: 'button close-modal float-right'}, $$(Icon, {icon: 'fa-close'}))
+    return $$('div', {classNames: 'manage-collection-component'},
+      $$('div', {classNames: 'header toolbar clearfix menubar fill-light'},
+        $$('div', {classNames: 'title float-left large'}, this.getPanelLabel()),
+        $$('div', {classNames: 'menu-group small'}, navItems),
+        $$('button', {classNames: 'button close-modal float-right'},
+          $$(Icon, {icon: 'fa-close'})
+        )
       ),
 
-      $$('div', {className: 'content collection', ref: 'collection', contentEditable: true},
+      $$('div', {
+          key: 'collection',
+          classNames: 'content collection',
+          contentEditable: true
+        },
         itemEls
       )
     );
   }
 }
-
-ManageCollection.displayName = "ManageCollection";
-
-ManageCollection.contextTypes = {
-  app: React.PropTypes.object.isRequired,
-  componentRegistry: React.PropTypes.object.isRequired,
-  surfaceManager: React.PropTypes.object.isRequired
-};
-
-ManageCollection.childContextTypes = {
-  // provided to editor components so that they know in which context they are
-  surface: React.PropTypes.object
-};
 
 // Panel Configuration
 // -----------------

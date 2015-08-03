@@ -12,41 +12,36 @@ class CitationComponent extends Component {
     this.onClick = this.onClick.bind(this);
   }
 
-  get tagName() {
-    return 'span'
+  render() {
+    var props = {
+      classNames: this.getClassNames(),
+      "data-id": this.props.node.id,
+      "data-external": 1,
+      "contentEditable": false
+    };
+    return $$('span', props,  this.props.node.label || "");
   }
 
-  get classNames() {
-    var classNames = this.props.node.getClassNames();
+  getClassNames() {
+    var classNames = this.props.node.getTypeNames().join(' ');
     if (this.props.classNames) {
       classNames += " " + this.props.classNames.join(' ');
     }
     return classNames.replace(/_/g, '-');
   }
 
-  get attributes() {
-    return {
-      "data-id": this.props.node.id,
-      "data-external": 1,
-      "contentEditable": false
-    }
-  }
-
   didMount() {
     this.props.node.connect(this, {
       "label:changed": this.onLabelChanged
     });
-
     this.$el.on('click', this.onClick);
     this.$el.on('mousedown', this.onMouseDown);
   }
 
   willUnmount() {
     this.props.node.disconnect(this);
-  }
-
-  render() {
-    return this.props.node.label || "";
+    this.$el.off('click', this.onClick);
+    this.$el.off('mousedown', this.onMouseDown);
   }
 
   onMouseDown(e) {

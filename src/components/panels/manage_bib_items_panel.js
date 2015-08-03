@@ -4,6 +4,7 @@ var _ = require("substance/helpers");
 var Component = require('substance/ui/component');
 var Icon = require("substance/ui/font_awesome_icon");
 var $$ = Component.$$;
+var uuid = require('substance/basics/uuid');
 
 var CONTEXTS = [
   {contextId: 'list', label: 'Manage', icon: 'fa-list'},
@@ -17,6 +18,8 @@ class ListBibItems extends Component {
 
   constructor(parent, props) {
     super(parent, props);
+
+    this.handleDeleteBibItem = this.handleDeleteBibItem.bind(this);
   }
 
   getInitialState() {
@@ -28,20 +31,8 @@ class ListBibItems extends Component {
     };
   }
 
-  didMount() {
-    this.$el.on('click', '.delete-button', this.handleDeleteBibItem);
-  }
-
-  willUnmount() {
-    this.$el.off('click', '.delete-button', this.handleDeleteBibItem);
-  }
-
-  get classNames() {
-    return 'content bib-items';
-  }
-
   render() {
-    var doc = this.props.doc;
+    var el = $$('div', {classNames: 'content bib-items'});
     var bibItems = _.map(this.state.bibItems, function(entry) {
       return $$('div', { classNames: 'csl-entry clearfix border-bottom' },
         $$('div', { classNames: 'csl-left-margin' }, entry.label),
@@ -52,7 +43,15 @@ class ListBibItems extends Component {
         $$('div', {classNames: 'csl-right-inline'}, entry.text)
       );
     }, this);
-    return bibItems;
+    return el.append(bibItems);
+  }
+
+  didMount() {
+    this.$el.on('click', '.delete-button', this.handleDeleteBibItem);
+  }
+
+  willUnmount() {
+    this.$el.off('click', '.delete-button', this.handleDeleteBibItem);
   }
 
   handleDeleteBibItem(e) {
@@ -74,66 +73,103 @@ class ListBibItems extends Component {
 // Create new bib items using cross ref search
 // -----------------
 
-var AddBibItems = React.createClass({
+class AddBibItems extends Component {
 
-  contextTypes: {
-    app: React.PropTypes.object.isRequired,
-    bibSearchEngines: React.PropTypes.object.isRequired,
-    surfaceManager: React.PropTypes.object.isRequired,
-  },
+  constructor(parent, props) {
+    super(parent, props);
 
-  componentDidMount: function() {
-    // push surface selection state so that we can recover it when closing
-    this.context.surfaceManager.pushState();
+    this.onClick = this.onClick.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
+  }
 
-    var $input = $(React.findDOMNode(this)).find('input');
-    $input.val(this.state.searchResult.searchStr).focus();
-  },
-
-  componentWillUnmount: function() {
-    this.context.surfaceManager.popState();
-  },
-
-  getInitialState: function() {
+  getInitialState() {
     return {
       searchResult: this.props.searchResult,
       runningQueries: [],
       addedItems: {}
     };
-  },
+  }
 
-  onClick: function(e) {
+  render() {
+    return $$('div', {className: 'content'},
+      $$('div', {className: 'toolbar tall border-bottom'},
+        $$('input', {
+          className: 'float-left', type: "text",
+          placeholder: "Enter search term",
+        }),
+        $$('button', {className: 'button float-right'}, "Search")
+      ),
+      $$('div', {className: 'bib-items'},
+        this.renderBibItems()
+      )
+    );
+  }
+
+  renderBibItems() {
+    return _.map(this.state.searchResult.items, function(entry) {
+      // TODO: usually we don't have a label
+      // but when the bib-entry is referenced already
+      var label = entry.label;
+      // Check if item is already in bibliography
+      var added = this.getBibItemIdByGuid(entry.data.DOI);
+      var text = entry.text;
+      return $$('div', {classNames: 'csl-entry clearfix border-bottom'},
+        $$('div', {classNames: 'csl-left-margin'}, label),
+        $$('button', {
+          classNames: 'button toggle-reference float-right small' +(added ? " plain" : " loud"),
+          "data-id": entry.data.DOI
+        }, /* $$(Icon, {icon: 'fa-trash-o'})*/ added ? "Remove" : "Add"),
+        $$('div', {classNames: 'csl-right-inline'}, text)
+      );
+    }, this);
+  }
+
+  didMount() {
+    // push surface selection state so that we can recover it when closing
+    this.context.surfaceManager.pushState();
+    var $input = this.$el.find('input');
+    $input.val(this.state.searchResult.searchStr).focus();
+    this.$el.on('click', 'button.toggle-reference', this.onClick);
+    this.$el.on('keypress', 'input', this.onKeyPress);
+  }
+
+  willUnmount() {
+    this.$el.off('click', 'button.toggle-reference', this.onClick);
+    this.$el.off('keypress', 'input', this.onKeyPress);
+    this.context.surfaceManager.popState();
+  }
+
+  onClick(e) {
     e.preventDefault();
     var itemGuid = e.currentTarget.dataset.id;
     this.toggleItem(itemGuid);
-  },
+  }
 
-  getBibItemIdByGuid: function(guid) {
+  getBibItemIdByGuid(guid) {
+    var doc = this.props.doc;
     return Object.keys(doc.bibItemByGuidIndex.get(guid))[0];
-  },
+  }
 
-  toggleItem: function(itemGuid) {
+  toggleItem(itemGuid) {
     if (this.getBibItemIdByGuid(itemGuid)) {
       this.removeItem(itemGuid);
     } else {
       this.addItem(itemGuid);
     }
-  },
+  }
 
-  getItem: function(itemGuid) {
+  getItem(itemGuid) {
     return _.find(this.state.searchResult.items, function(item) {
       return item.data.DOI === itemGuid;
     });
-  },
+  }
 
-  addItem: function(itemGuid) {
-    var addedItems = this.state.addedItems;
-    var app = this.context.app;
+  addItem(itemGuid) {
     var bibEntry = this.getItem(itemGuid);
-
-    doc.transaction({}, {}, function(tx, args) {
+    var doc = this.props.doc;
+    doc.transaction({}, {}, function(tx) {
       var bibItem = {
-        id: Substance.uuid('bib'),
+        id: uuid('bib'),
         type: "bib_item",
         source: JSON.stringify(bibEntry.data),
         format: 'citeproc'
@@ -142,61 +178,24 @@ var AddBibItems = React.createClass({
       tx.create(bibItem);
     });
 
-    this.forceUpdate();
-  },
+    this.rerender();
+  }
 
-  removeItem: function(itemGuid) {
-    var addedItems = this.state.addedItems;
-    var app = this.context.app;
-    var sel = app.getSelection();
+  removeItem(itemGuid) {
     var nodeId = this.getBibItemIdByGuid(itemGuid);
-
-    doc.transaction({}, {}, function(tx, args) {
+    this.props.doc.transaction({}, {}, function(tx) {
       tx.delete(nodeId);
     });
-    this.forceUpdate();
-  },
+    this.rerender();
+  }
 
-  render: function() {
-    var doc = this.props.doc;
-    var citeprocCompiler = doc.getCiteprocCompiler();
-    var bibItems = _.map(this.state.searchResult.items, function(entry) {
-      // TODO: usually we don't have a label
-      // but when the bib-entry is referenced already
-      var label = entry.label;
-
-      // Check if item is already in bibliography
-      var added = this.getBibItemIdByGuid(entry.data.DOI);
-
-      var text = entry.text;
-
-      return $$('div', {className: 'csl-entry clearfix border-bottom'},
-        $$('div', {className: 'csl-left-margin'}, label),
-        $$('button', {"data-id": entry.data.DOI, className: 'button float-right small' +(added ? " plain" : " loud"), onClick: this.onClick }, /* $$(Icon, {icon: 'fa-trash-o'})*/ added ? "Remove" : "Add"),
-        $$('div', {className: 'csl-right-inline'}, text)
-      );
-    }, this);
-
-    return $$('div', {className: 'content'},
-      $$('div', {className: 'toolbar tall border-bottom'},
-        $$('input', {
-            className: 'float-left', type: "text",
-            placeholder: "Enter search term",
-            onKeyPress: this.onKeyPress
-          }),
-        $$('button', {className: 'button float-right'}, "Search")
-      ),
-      $$('div', {className: 'bib-items'}, bibItems)
-    );
-  },
-
-  onKeyPress: function(e) {
+  onKeyPress(e) {
     if (e.which == 13 /* ENTER */) {
       this.startSearch($(e.currentTarget).val());
     }
-  },
+  }
 
-  startSearch: function(searchStr) {
+  startSearch(searchStr) {
     console.log('Start search', searchStr);
     var self = this;
     var doc = this.props.doc;
@@ -233,13 +232,19 @@ var AddBibItems = React.createClass({
     searchResult.items = [];
     this.setState({ searchResult: searchResult, runningQueries: runningQueries });
   }
-});
 
+}
 
-var ManageBibItemsPanel = React.createClass({
-  displayName: "ManageBibItemsPanel",
+class ManageBibItemsPanel extends Component {
 
-  getInitialState: function() {
+  constructor(parent, props) {
+    super(parent, props);
+
+    this.handleContextSwitch = this.handleContextSwitch.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+  }
+
+  getInitialState() {
     return {
       contextId: 'list',
       searchResult: {
@@ -247,16 +252,51 @@ var ManageBibItemsPanel = React.createClass({
         items: []
       }
     };
-  },
+  }
 
-  handleContextSwitch: function(e) {
+  render() {
+    var state = this.state;
+    var navItems = _.map(CONTEXTS, function(context) {
+      var classNames = ['pill'];
+      if (context.contextId === state.contextId) classNames.push('active');
+      return $$('button', {
+          "data-id": context.contextId,
+          classNames: classNames.join(' ')
+        },
+        $$(Icon, { icon: context.icon }),
+        " "+context.label
+      );
+    }.bind(this));
+
+    return $$('div', null,
+      $$('div', {classNames: 'header toolbar clearfix menubar fill-light'},
+        $$('div', {classNames: 'title float-left large'}, "References"),
+        $$('div', {classNames: 'menu-group small'}, navItems),
+        $$('button', { classNames: 'button close-modal float-right' },
+          $$(Icon, { icon: 'fa-close' })
+        )
+      ),
+      this.getContextElement()
+    );
+  }
+
+  didMount() {
+    this.$el.on('click', '.pill', this.handleContextSwitch);
+    this.$el.on('click', '.close-modal', this.handleCloseModal);
+  }
+
+  willUnmount() {
+    this.$el.off('click', '.pill', this.handleContextSwitch);
+    this.$el.off('click', '.close-modal', this.handleCloseModal);
+  }
+
+  handleContextSwitch(e) {
     e.preventDefault();
     var contextId = e.currentTarget.dataset.id;
     this.setState({contextId: contextId});
-  },
+  }
 
-  getContextElement: function() {
-
+  getContextElement() {
     if (this.state.contextId === "list") {
       return $$(ListBibItems, {
         doc: this.props.doc
@@ -267,34 +307,9 @@ var ManageBibItemsPanel = React.createClass({
         searchResult: this.state.searchResult
       });
     }
-  },
-
-  render: function() {
-    var doc = this.props.doc;
-    var citeprocCompiler = doc.getCiteprocCompiler();
-    var bibliography = doc.getBibliography();
-
-    var state = this.state;
-    var navItems = _.map(CONTEXTS, function(context) {
-      var classNames = ['pill'];
-      if (context.contextId === state.contextId) classNames.push('active');
-      return $$('button', {
-        "data-id": context.contextId,
-        className: classNames.join(' '),
-        onClick: this.handleContextSwitch,
-      }, $$(Icon, {icon: context.icon}), " "+context.label);
-    }.bind(this));
-
-    return $$('div', null,
-      $$('div', {className: 'header toolbar clearfix menubar fill-light'},
-        $$('div', {className: 'title float-left large'}, "References"),
-        $$('div', {className: 'menu-group small'}, navItems),
-        $$('button', {className: 'button close-modal float-right', onClick: this.handleCloseModal}, $$(Icon, {icon: 'fa-close'}))
-      ),
-      this.getContextElement()
-    );
   }
-});
+
+}
 
 // Panel Configuration
 // -----------------
