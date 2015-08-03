@@ -13,6 +13,20 @@ class CiteBibItem extends Component {
     this.onLabelChanged = this.onLabelChanged.bind(this);
   }
 
+  render() {
+    var el = $$('div', {
+      classNames: 'bib-item border-bottom pad item small clearfix'
+    });
+    if (this.props.active) {
+      el.addClass('active');
+    }
+    if (this.props.node.label) {
+      el.append($$('div', {classNames: 'label'}, this.props.node.label));
+    }
+    el.append($$('div', { classNames: 'text' }, this.props.node.text));
+    return el;
+  }
+
   didMount() {
     this.$el.on('click', this.onClick);
     this.$el.on('mousedown', this.onMouseDown);
@@ -25,23 +39,6 @@ class CiteBibItem extends Component {
     this.$el.off('click', this.onClick);
     this.$el.off('mousedown', this.onMouseDown);
     this.props.node.disconnect(this);
-  }
-
-  get classNames() {
-    return 'bib-item border-bottom pad item small clearfix';
-  }
-
-  render() {
-    if (this.props.active) {
-      this.$el.addClass('active');
-    } else {
-      this.$el.removeClass('active');
-    }
-    var children = [ $$('div', { classNames: 'text' }, this.props.node.text)];
-    if (this.props.node.label) {
-      children.unshift($$('div', {classNames: 'label'}, this.props.node.label));
-    }
-    return children;
   }
 
   onClick(e) {

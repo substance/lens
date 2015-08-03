@@ -1,10 +1,9 @@
 var _ = require('substance/helpers');
-var BuiltInTools = require('substance-ui/writer/tools');
 var SubstanceTools = require('substance').Surface.Tools;
 
-delete BuiltInTools.save;
-
-module.exports = _.extend({}, BuiltInTools, {
+module.exports = _.extend({}, {
+  "redo": SubstanceTools.Redo,
+  "undo": SubstanceTools.Undo,
   "export": require("./export_tool"),
   "text": SubstanceTools.SwitchTextType,
   "emphasis": SubstanceTools.Emphasis,

@@ -12,21 +12,18 @@ class CiteImageFigure extends Component {
     this.onMouseDown = this.onMouseDown.bind(this);
   }
 
-  get classNames() {
-    return 'figure border-bottom item pad clearfix small';
-  }
-
-  render: function() {
+  render() {
+    var el = $$('div', {
+      classNames: 'figure border-bottom item pad clearfix small';
+    })
     if (this.props.active) {
-      this.$el.addClass('active');
-    } else {
-      this.$el.removeClass('active');
+      el.addClass('active');
     }
-    return [
+    return el.append(
       $$('img', {classNames: 'image', src: this.props.node.getContentNode().src}),
       $$('div', {classNames: 'title'}, [this.props.node.label, this.props.node.title].join(' ')),
       $$('div', {classNames: 'caption truncate'}, this.props.node.caption)
-    ];
+    );
   }
 
   onClick(e) {
@@ -38,7 +35,6 @@ class CiteImageFigure extends Component {
     e.preventDefault();
     this.props.handleSelection(this.props.node.id);
   }
-
 }
 
 module.exports = CiteImageFigure;

@@ -32,7 +32,9 @@ class App extends Component.Root {
   }
 
   render() {
-    return $$(ScienceWriter, { key: 'writer' });
+    return $$('div', { classNames: 'app' },
+      $$(ScienceWriter, { key: 'writer' })
+    );
   }
 
   didMount() {
@@ -44,5 +46,5 @@ class App extends Component.Root {
 }
 
 $(function() {
-  new App().mount($('container'));
+  new App().mount($('#container'));
 });

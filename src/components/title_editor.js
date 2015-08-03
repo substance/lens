@@ -1,55 +1,53 @@
-var $$ = React.createElement;
-var Substance = require("substance");
-var TextProperty = require("substance/ui/text_property_compnent");
+"use strict";
 
-var Surface = Substance.Surface;
+var Component = require("substance/ui/component");
+var $$ = Component.$$;
+var TextProperty = require("substance/ui/text_property_component");
+var Surface = require("substance/surface");
 var FormEditor = Surface.FormEditor;
 
-var TitleEditor = React.createClass({
-  displayName: "TitleEditor",
+class TitleEditor extends Component {
 
-  getChildContext: function() {
+  constructor(parent, props) {
+    super(parent, props)
+  }
+
+  getChildContext() {
     return {
       surface: this.surface
     };
-  },
+  }
 
-  componentWillMount: function() {
+  render() {
     var doc = this.props.doc;
-    var editor = new FormEditor();
-    this.surface = new Surface(this.context.surfaceManager, doc, editor, { name: 'title' } );
-    return {};
-  },
-
-  componentDidMount: function() {
-    var app = this.context.app;
-    app.registerSurface(this.surface);
-    this.surface.attach(React.findDOMNode(this));
-  },
-
-  componentWillUnmount: function() {
-    var app = this.context.app;
-    app.unregisterSurface(this.surface);
-    this.surface.detach();
-  },
-
-  // Rendering
-  // -------------------
-
-  render: function() {
-    var app = this.context.app;
-    var doc = app.doc;
     var metaNode = doc.getDocumentMeta();
-
-    return $$("div", {className: "document-title", contentEditable: true, "data-id": "title-editor"},
+    return $$("div", {
+        className: "document-title",
+        contentEditable: true,
+        "data-id": "title-editor"
+      },
       $$(TextProperty, {
-        doc: app.doc,
+        doc: doc,
         tagName: "div",
         className: "title",
         path: [metaNode.id, "title"]
       })
     );
   }
-});
+
+  didReceiveProps() {
+    var doc = this.props.doc;
+    var editor = new FormEditor();
+    this.surface = new Surface(this.context.surfaceManager, doc, editor, { name: 'title' } );
+  }
+
+  didMount() {
+    this.surface.attach(this.$el[0]);
+  }
+
+  willUnmount() {
+    this.surface.detach();
+  }
+}
 
 module.exports = TitleEditor;

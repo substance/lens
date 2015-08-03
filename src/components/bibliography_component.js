@@ -6,22 +6,6 @@ var $$ = Component.$$;
 
 class BibliographyComponent extends Component {
 
-  didMount() {
-    var doc = this.props.doc;
-    this.bibliography = doc.getCollection('bib_item');
-    this.bibliography.connect(this, {
-      'bibliography:updated': this.update
-    });
-  }
-
-  update() {
-    console.log('bibliography:updated');
-    var bibItems = this.bibliography.getItems();
-    this.setState({
-      bibItems: bibItems
-    });
-  }
-
   render() {
     var state = this.state;
     if (state.bibItems) {
@@ -40,6 +24,22 @@ class BibliographyComponent extends Component {
     } else {
       return $$('div', null, '');
     }
+  }
+
+  didMount() {
+    var doc = this.props.doc;
+    this.bibliography = doc.getCollection('bib_item');
+    this.bibliography.connect(this, {
+      'bibliography:updated': this.update
+    });
+  }
+
+  update() {
+    console.log('bibliography:updated');
+    var bibItems = this.bibliography.getItems();
+    this.setState({
+      bibItems: bibItems
+    });
   }
 }
 

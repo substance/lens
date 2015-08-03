@@ -14,6 +14,38 @@ class CitePanel extends Component {
     this.onMouseDown = this.onMouseDown.bind(this);
   }
 
+  render() {
+    var componentRegistry = this.context.componentRegistry;
+    var items;
+    if (this.state.items.length > 0) {
+      items = this.state.items.map(function(item) {
+        var comp = componentRegistry.get("_cite_" + this.state.citationType);
+        return $$(comp, {
+          key: item.id,
+          node: item,
+          active: this.isItemActive(item.id),
+        });
+      }.bind(this));
+    } else {
+      items = [$$('div', {className: "no-results", text: "Nothing to reference."})];
+    }
+
+    return $$('div', {classNames:"panel dialog cite-panel-component"},
+      $$('div', {classNames: "dialog-header"},
+        $$('a', {
+          href: "#",
+          classNames: 'back',
+        }, $$(Icon, {icon: 'fa-chevron-left'})),
+        $$('div', {classNames: 'label'}, "Choose referenced items")
+      ),
+      $$('div', {classNames: "panel-content"},
+        $$('div', {classNames: "bib-items"},
+          items
+        )
+      )
+    );
+  }
+
   didMount() {
     this.$el.on('click', '.back', this.handleCancel);
     this.stateFromAppState();
@@ -38,49 +70,6 @@ class CitePanel extends Component {
     return _.includes(citation.targets, itemId);
   }
 
-  // Rendering
-  // -------------------
-
-  get classNames() {
-    return "panel dialog cite-panel-component";
-  }
-
-  render() {
-    var self = this;
-    var componentRegistry = this.context.componentRegistry;
-
-    var items = this.state.items;
-    var itemEls;
-
-    if (items.length > 0) {
-      itemEls = items.map(function(item) {
-        var comp = componentRegistry.get("_cite_" + this.state.citationType);
-        return $$(comp, {
-          key: item.id,
-          node: item,
-          active: this.isItemActive(item.id),
-        });
-      }.bind(this));
-    } else {
-      itemEls = [$$('div', {className: "no-results", text: "Nothing to reference."})];
-    }
-
-    return [
-      $$('div', {classNames: "dialog-header"},
-        $$('a', {
-          href: "#",
-          classNames: 'back',
-        }, $$(Icon, {icon: 'fa-chevron-left'})),
-        $$('div', {classNames: 'label'}, "Choose referenced items")
-      ),
-      $$('div', {classNames: "panel-content"},
-        $$('div', {classNames: "bib-items"},
-          itemEls
-        )
-      )
-    ];
-  }
-
   handleCancel(e) {
     e.preventDefault();
     this.send("switchContext", "toc");
@@ -92,7 +81,11 @@ class CitePanel extends Component {
     return collection.getItems();
   }
 
+  // TODO: this is not good. It is not at all clear how this
+  // panel is coupled with app... IMO it should not be coupled this way
   stateFromAppState() {
+    console.error('FIXME');
+    return;
     var app = this.context.app;
     this.state = {
       citationType: app.state.citationType,
