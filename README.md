@@ -7,13 +7,13 @@ Substance Science Writer is an attempt to build a full-featured scientific write
 Clone the repository.
 
 ```bash
-$ git clone https://github.com/substance/science-writer.git
+$ git clone https://github.com/substance/lens-writer.git
 ```
 
 Navigate to the source directory.
 
 ```bash
-$ cd science-writer
+$ cd lens-writer
 ```
 
 Install via npm
