@@ -5,25 +5,18 @@ var $$ = Component.$$;
 
 class CiteTableFigure extends Component {
 
-  constructor(parent, props) {
-    super(parent, props);
-
-    this.onClick = this.onClick.bind(this);
-    this.onMouseDown = this.onMouseDown.bind(this);
-  }
-
   render() {
-    var el = $$('div', {
-      classNames: 'figure border-bottom item pad clearfix small'
-    });
+    var el = $$('div').addClass('figure border-bottom item pad clearfix small');
+    el.on('click', this.onClick);
+    el.on('mousedown', this.onMouseDown);
     if (this.props.active) {
       el.addClass('active');
     }
     return el.append(
       // TODO: display thumbnail version of table
       // $$('img', {className: 'image', src: this.props.node.src}),
-      $$('div', {className: 'title'}, [this.props.node.label, this.props.node.title].join(' ')),
-      $$('div', {className: 'caption truncate'}, this.props.node.caption)
+      $$('div').addClass('title').append([this.props.node.label, this.props.node.title].join(' ')),
+      $$('div').addClass('caption truncate').append(this.props.node.caption)
     );
   }
 

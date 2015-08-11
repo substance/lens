@@ -16,12 +16,6 @@ var CONTEXTS = [
 
 class ListBibItems extends Component {
 
-  constructor(parent, props) {
-    super(parent, props);
-
-    this.handleDeleteBibItem = this.handleDeleteBibItem.bind(this);
-  }
-
   getInitialState() {
     var doc = this.props.doc;
     var bibliography = doc.getBibliography();
@@ -32,26 +26,23 @@ class ListBibItems extends Component {
   }
 
   render() {
-    var el = $$('div', {classNames: 'content bib-items'});
+    var el = $$('div').addClass('content bib-items');
     var bibItems = _.map(this.state.bibItems, function(entry) {
-      return $$('div', { classNames: 'csl-entry clearfix border-bottom' },
-        $$('div', { classNames: 'csl-left-margin' }, entry.label),
-        $$('button', {
-          "data-id": entry.id,
-          classNames: 'button delete-button float-right small plain',
-        }, "Delete"),
-        $$('div', {classNames: 'csl-right-inline'}, entry.text)
+      return $$('div').addClass('csl-entry clearfix border-bottom').append(
+        $$('div')
+          .addClass('csl-left-margin')
+          .append(entry.label),
+        $$('button')
+          .addClass('button delete-button float-right small plain')
+          .attr("data-id", entry.id)
+          .on('click', this.handleDeleteBibItem)
+          .append("Delete"),
+        $$('div')
+          .addClass('csl-right-inline')
+          .append(entry.text)
       );
     }, this);
     return el.append(bibItems);
-  }
-
-  didMount() {
-    this.$el.on('click', '.delete-button', this.handleDeleteBibItem);
-  }
-
-  willUnmount() {
-    this.$el.off('click', '.delete-button', this.handleDeleteBibItem);
   }
 
   handleDeleteBibItem(e) {
@@ -75,13 +66,6 @@ class ListBibItems extends Component {
 
 class AddBibItems extends Component {
 
-  constructor(parent, props) {
-    super(parent, props);
-
-    this.onClick = this.onClick.bind(this);
-    this.onKeyPress = this.onKeyPress.bind(this);
-  }
-
   getInitialState() {
     return {
       searchResult: this.props.searchResult,
@@ -91,15 +75,18 @@ class AddBibItems extends Component {
   }
 
   render() {
-    return $$('div', {className: 'content'},
-      $$('div', {className: 'toolbar tall border-bottom'},
-        $$('input', {
-          className: 'float-left', type: "text",
-          placeholder: "Enter search term",
-        }),
-        $$('button', {className: 'button float-right'}, "Search")
+    return $$('div').addClass('content').append(
+      $$('div').addClass('toolbar tall border-bottom').append(
+        $$('input').addClass('float-left')
+          .attr({
+            type: "text",
+            placeholder: "Enter search term",
+          })
+          .on('keypress', this.onKeyPress),
+        $$('button').addClass('button float-right')
+          .append("Search")
       ),
-      $$('div', {className: 'bib-items'},
+      $$('div').addClass('bib-items').append(
         this.renderBibItems()
       )
     );
@@ -113,13 +100,15 @@ class AddBibItems extends Component {
       // Check if item is already in bibliography
       var added = this.getBibItemIdByGuid(entry.data.DOI);
       var text = entry.text;
-      return $$('div', {classNames: 'csl-entry clearfix border-bottom'},
-        $$('div', {classNames: 'csl-left-margin'}, label),
-        $$('button', {
-          classNames: 'button toggle-reference float-right small' +(added ? " plain" : " loud"),
-          "data-id": entry.data.DOI
-        }, /* $$(Icon, {icon: 'fa-trash-o'})*/ added ? "Remove" : "Add"),
-        $$('div', {classNames: 'csl-right-inline'}, text)
+      return $$('div').addClass('csl-entry clearfix border-bottom').append(
+        $$('div').addClass('csl-left-margin')
+          .append(label),
+        $$('button').addClass('button toggle-reference float-right small' + (added ? " plain" : " loud"))
+          .attr("data-id", entry.data.DOI)
+          .on('click', this.onClick)
+          .append(added ? "Remove" : "Add"),
+        $$('div').addClass('csl-right-inline')
+          .append(text)
       );
     }, this);
   }
@@ -129,13 +118,9 @@ class AddBibItems extends Component {
     this.context.surfaceManager.pushState();
     var $input = this.$el.find('input');
     $input.val(this.state.searchResult.searchStr).focus();
-    this.$el.on('click', 'button.toggle-reference', this.onClick);
-    this.$el.on('keypress', 'input', this.onKeyPress);
   }
 
   willUnmount() {
-    this.$el.off('click', 'button.toggle-reference', this.onClick);
-    this.$el.off('keypress', 'input', this.onKeyPress);
     this.context.surfaceManager.popState();
   }
 
@@ -143,6 +128,12 @@ class AddBibItems extends Component {
     e.preventDefault();
     var itemGuid = e.currentTarget.dataset.id;
     this.toggleItem(itemGuid);
+  }
+
+  onKeyPress(e) {
+    if (e.which == 13 /* ENTER */) {
+      this.startSearch($(e.currentTarget).val());
+    }
   }
 
   getBibItemIdByGuid(guid) {
@@ -189,12 +180,6 @@ class AddBibItems extends Component {
     this.rerender();
   }
 
-  onKeyPress(e) {
-    if (e.which == 13 /* ENTER */) {
-      this.startSearch($(e.currentTarget).val());
-    }
-  }
-
   startSearch(searchStr) {
     console.log('Start search', searchStr);
     var self = this;
@@ -237,13 +222,6 @@ class AddBibItems extends Component {
 
 class ManageBibItemsPanel extends Component {
 
-  constructor(parent, props) {
-    super(parent, props);
-
-    this.handleContextSwitch = this.handleContextSwitch.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
-  }
-
   getInitialState() {
     return {
       contextId: 'list',
@@ -257,37 +235,28 @@ class ManageBibItemsPanel extends Component {
   render() {
     var state = this.state;
     var navItems = _.map(CONTEXTS, function(context) {
-      var classNames = ['pill'];
-      if (context.contextId === state.contextId) classNames.push('active');
-      return $$('button', {
-          "data-id": context.contextId,
-          classNames: classNames.join(' ')
-        },
-        $$(Icon, { icon: context.icon }),
-        " "+context.label
-      );
+      var button = $$('button').addClass('pill')
+        .attr("data-id", context.contextId)
+        .on('click', this.handleContextSwitch)
+        .append($$(Icon).addProps({ icon: context.icon })
+          .append(" "+context.label)
+        );
+      if (context.contextId === state.contextId) {
+        button.addClass('active');
+      }
+      return button;
     }.bind(this));
 
-    return $$('div', null,
-      $$('div', {classNames: 'header toolbar clearfix menubar fill-light'},
-        $$('div', {classNames: 'title float-left large'}, "References"),
-        $$('div', {classNames: 'menu-group small'}, navItems),
-        $$('button', { classNames: 'button close-modal float-right' },
-          $$(Icon, { icon: 'fa-close' })
-        )
+    return $$('div').append(
+      $$('div').addClass('header toolbar clearfix menubar fill-light').append(
+        $$('div').addClass('title float-left large').append("References"),
+        $$('div').addClass('menu-group small').append(navItems),
+        $$('button').addClass('button close-modal float-right').append(
+          $$(Icon).addProps({ icon: 'fa-close' })
+        ).on('click', this.handleCloseModal)
       ),
       this.getContextElement()
     );
-  }
-
-  didMount() {
-    this.$el.on('click', '.pill', this.handleContextSwitch);
-    this.$el.on('click', '.close-modal', this.handleCloseModal);
-  }
-
-  willUnmount() {
-    this.$el.off('click', '.pill', this.handleContextSwitch);
-    this.$el.off('click', '.close-modal', this.handleCloseModal);
   }
 
   handleContextSwitch(e) {
@@ -298,17 +267,16 @@ class ManageBibItemsPanel extends Component {
 
   getContextElement() {
     if (this.state.contextId === "list") {
-      return $$(ListBibItems, {
+      return $$(ListBibItems).addProps({
         doc: this.props.doc
       });
     } else {
-      return $$(AddBibItems, {
+      return $$(AddBibItems).addProps({
         doc: this.props.doc,
         searchResult: this.state.searchResult
       });
     }
   }
-
 }
 
 // Panel Configuration

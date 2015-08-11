@@ -18,8 +18,8 @@ var ScienceWriter = require("../src/science_writer");
 
 class App extends Component.Root {
 
-  constructor(props) {
-    super(props);
+  constructor(params) {
+    super(params);
 
     this.backend = new Backend();
     this.notifications = new NotificationService();
@@ -32,8 +32,8 @@ class App extends Component.Root {
   }
 
   render() {
-    return $$('div', { classNames: 'app' },
-      $$(ScienceWriter, { key: 'writer' })
+    return $$('div').addClass('app').append(
+      $$(ScienceWriter).key('writer')
     );
   }
 

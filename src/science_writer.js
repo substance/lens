@@ -9,8 +9,8 @@ var stateHandlers = require('./state_handlers');
 
 class ScienceWriter extends Writer {
 
-  constructor(parent, props) {
-    super(parent, _.extend(props, {
+  constructor(parent, params) {
+    super(parent, _.extend(params, {
       config: {
         containerId: 'main',
         components: components,

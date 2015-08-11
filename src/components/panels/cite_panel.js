@@ -9,9 +9,6 @@ class CitePanel extends Component {
 
   constructor(parent, props) {
     super(parent, props);
-
-    this.onClick = this.onClick.bind(this);
-    this.onMouseDown = this.onMouseDown.bind(this);
   }
 
   render() {
@@ -20,26 +17,23 @@ class CitePanel extends Component {
     if (this.state.items.length > 0) {
       items = this.state.items.map(function(item) {
         var comp = componentRegistry.get("_cite_" + this.state.citationType);
-        return $$(comp, {
-          key: item.id,
+        return $$(comp).key(item.id).addProps({
           node: item,
           active: this.isItemActive(item.id),
         });
       }.bind(this));
     } else {
-      items = [$$('div', {className: "no-results", text: "Nothing to reference."})];
+      items = [$$('div').addClass("no-results").append("Nothing to reference.")];
     }
-
-    return $$('div', {classNames:"panel dialog cite-panel-component"},
-      $$('div', {classNames: "dialog-header"},
-        $$('a', {
-          href: "#",
-          classNames: 'back',
-        }, $$(Icon, {icon: 'fa-chevron-left'})),
-        $$('div', {classNames: 'label'}, "Choose referenced items")
+    return $$('div').addClass("panel dialog cite-panel-component").append(
+      $$('div').addClass("dialog-header").append(
+        $$('a').addClass('back').attr('href', '#')
+          .on('click', this.handleCancel)
+          .append($$(Icon).addProps({icon: 'fa-chevron-left'})),
+        $$('div').addClass('label').append("Choose referenced items")
       ),
-      $$('div', {classNames: "panel-content"},
-        $$('div', {classNames: "bib-items"},
+      $$('div').addClass("panel-content").append(
+        $$('div').addClass("bib-items").append(
           items
         )
       )
@@ -47,7 +41,6 @@ class CitePanel extends Component {
   }
 
   didMount() {
-    this.$el.on('click', '.back', this.handleCancel);
     this.stateFromAppState();
     this.tool = this.context.toolRegistry.get('cite');
     if (!this.tool) throw new Error('cite tool not found in registry');

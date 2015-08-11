@@ -15,30 +15,26 @@ var ContainerEditor = Surface.ContainerEditor;
 
 class ContentEditor extends Component {
 
-  constructor(parent, props) {
-    super(parent, props);
-
+  constructor(parent, params) {
+    super(parent, params);
     this.editor = new ContainerEditor(this.props.node.id);
   }
 
   render() {
     var doc = this.props.doc;
-    return $$('div', {classNames: 'panel-content-inner'},
-      $$(TitleEditor, { key: 'title', doc: doc }),
+    return $$('div').addClass('panel-content-inner').append(
+      $$(TitleEditor).key('title').addProps({ doc: doc }),
       // The full fledged document (ContainerEditor)
-      $$("div", {
-          key: "main",
-          classNames: "document-content"
-        },
-        $$(ContainerNodeComponent, {
-          key: 'editor',
-          doc: doc,
-          node: this.props.node,
-          editor: this.editor,
-          contentEditable: true,
-        })
+      $$("div").key("main").addClass("document-content").append(
+        $$(ContainerNodeComponent).key('editor')
+          .attr('contentEditable', true)
+          .addProps({
+            doc: doc,
+            node: this.props.node,
+            editor: this.editor
+          })
       ),
-      $$(BibliographyComponent, { key: 'bib', doc: doc })
+      $$(BibliographyComponent).key('bib').addProps({ doc: doc })
     );
   }
 }
