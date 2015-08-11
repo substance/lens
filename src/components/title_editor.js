@@ -8,11 +8,7 @@ var FormEditor = Surface.FormEditor;
 
 class TitleEditor extends Component {
 
-  constructor(parent, props) {
-    super(parent, props)
-  }
-
-  getChildContext() {
+  get childContext() {
     return {
       surface: this.surface
     };
@@ -21,18 +17,20 @@ class TitleEditor extends Component {
   render() {
     var doc = this.props.doc;
     var metaNode = doc.getDocumentMeta();
-    return $$("div", {
-        className: "document-title",
+    return $$("div").addClass("document-title")
+      .attr({
         contentEditable: true,
         "data-id": "title-editor"
-      },
-      $$(TextProperty, {
-        doc: doc,
-        tagName: "div",
-        className: "title",
-        path: [metaNode.id, "title"]
       })
-    );
+      .append(
+        $$(TextProperty).addClass('title')
+          .addProps({
+            doc: doc,
+            tagName: "div",
+            className: "title",
+            path: [metaNode.id, "title"]
+          })
+      );
   }
 
   didReceiveProps() {

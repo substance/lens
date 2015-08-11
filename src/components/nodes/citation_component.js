@@ -5,21 +5,17 @@ var $$ = Component.$$;
 
 class CitationComponent extends Component {
 
-  constructor(parent, props) {
-    super(parent, props);
-
-    this.onMouseDown = this.onMouseDown.bind(this);
-    this.onClick = this.onClick.bind(this);
-  }
-
   render() {
-    var props = {
-      classNames: this.getClassNames(),
-      "data-id": this.props.node.id,
-      "data-external": 1,
-      "contentEditable": false
-    };
-    return $$('span', props,  this.props.node.label || "");
+    return $$('span')
+      .addClass(this.getClassNames())
+      .attr({
+        "data-id": this.props.node.id,
+        "data-external": 1,
+        "contentEditable": false
+      })
+      .on('click', this.onClick)
+      .on('mousedown', this.onMouseDown)
+      .append(this.props.node.label || "");
   }
 
   getClassNames() {
@@ -34,14 +30,10 @@ class CitationComponent extends Component {
     this.props.node.connect(this, {
       "label:changed": this.onLabelChanged
     });
-    this.$el.on('click', this.onClick);
-    this.$el.on('mousedown', this.onMouseDown);
   }
 
   willUnmount() {
     this.props.node.disconnect(this);
-    this.$el.off('click', this.onClick);
-    this.$el.off('mousedown', this.onMouseDown);
   }
 
   onMouseDown(e) {

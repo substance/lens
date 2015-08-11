@@ -8,13 +8,6 @@ var $$ = Component.$$;
 
 class CiteToolComponent extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.onMouseDown = this.onMouseDown.bind(this);
-    this.onClick = this.onClick.bind(this);
-  }
-
   getInitialState() {
     return {
       disabled: true
@@ -22,13 +15,17 @@ class CiteToolComponent extends Component {
   }
 
   render() {
-    var classNames = [];
-    if (this.props.classNames) classNames = this.props.classNames.slice();
-    if (this.state.disabled) classNames.push('disabled');
-    return $$("button", {
-      classNames: classNames.join(' '),
-      title: this.props.title,
-    }, this.props.children);
+    var el = $$("button").attr('title', this.props.title);
+    el.on('click', this.onClick);
+    el.on('mousedown', this.onMouseDown);
+    if (this.props.classNames){
+      el.addClass(this.props.classNames.join(' '));
+    }
+    if (this.state.disabled) {
+      el.addClass('disabled');
+    }
+    el.append(this.props.children);
+    return el;
   }
 
   didMount() {
@@ -39,15 +36,10 @@ class CiteToolComponent extends Component {
     this.tool.connect(this, {
       'toolstate:changed': this.onToolstateChanged
     });
-
-    this.$el.on('mousedown', this.onMouseDown);
-    this.$el.on('click', this.onClick);
   }
 
   willUnmount() {
     this.tool.disconnect(this);
-    this.$el.off('mousedown', this.onMouseDown);
-    this.$el.off('click', this.onClick);
   }
 
   onToolstateChanged(toolState) {
@@ -63,10 +55,8 @@ class CiteToolComponent extends Component {
   onMouseDown(e) {
     e.preventDefault();
     if (this.state.disabled) return;
-
     var citation = this.tool.createCitation(this.props.citationType);
-
-    this.context.app.replaceState({
+    this.context.app.setState({
       contextId: "cite",
       citationType: this.props.citationType,
       citationId: citation.id

@@ -15,57 +15,142 @@ var $$ = Component.$$;
 class ContentToolbarComponent extends Component {
 
   render() {
-    return $$("div", { classNames: "content-tools-component toolbar small fill-white" },
-      $$('div', {classNames: 'tool-group text clearfix'},
-        $$(TextToolComponent, { tool: 'text', title: i18n.t('menu.text_tool')})
-      ),
-      $$('div', {classNames: 'tool-group document clearfix'},
-        $$(ToolComponent, { tool: 'undo', title: i18n.t('menu.undo'), classNames: 'button tool'}, $$(Icon, {icon: "fa-undo"})),
-        $$(ToolComponent, { tool: 'redo', title: i18n.t('menu.redo'), classNames: 'button tool'}, $$(Icon, {icon: "fa-repeat"})),
-        // $$(ToolComponent, { tool: 'save', title: i18n.t('menu.save'), classNames: 'button tool'}, $$(Icon, {icon: "fa-save"})),
-        $$(ToolComponent, { tool: 'export', title: i18n.t('menu.export'), classNames: 'button tool'}, $$(Icon, {icon: "fa-download"}))
-      ),
-
-      $$('div', {classNames: 'tool-group actions clearfix'},
-        // Figure Actions
-        // ------------------
-        $$(DropdownComponent, { label: $$(Icon, {icon: "fa-image"}), title: i18n.t('figure')},
-          $$(ToolComponent, { tool: 'insert_figure', classNames: 'option'}, "Insert"),
-          $$(CiteToolComponent, { citationType: 'image_figure', classNames: 'option'}, "Cite"),
-          $$(NavigateTool, { newState: {modal: {contextId: 'manageCollection', itemType: 'image_figure'}}, title: i18n.t('menu.manage')})
-        ),
-        // Table Actions
-        // ------------------
-        $$(DropdownComponent, { label: $$(Icon, {icon: "fa-table"}), title: i18n.t('table'), classNames: 'table-dropdown'},
-          $$(ToolComponent, { tool: 'insert_table', classNames: 'option'}, "Insert"),
-          $$(CiteToolComponent, { citationType: 'table_figure', classNames: 'option'}, "Cite"),
-          $$(NavigateTool, { newState: {modal: {contextId: 'manageCollection', itemType: 'table_figure'}}, title: i18n.t('menu.manage')}),
-          $$("hr"),
-          $$(TableToolComponent, { tool: 'insert_columns', classNames: 'option', mode: "before"}),
-          $$(TableToolComponent, { tool: 'delete_columns', classNames: 'option'}),
-          $$(TableToolComponent, { tool: 'insert_columns', classNames: 'option', mode: "after"}),
-          $$("hr"),
-          $$(TableToolComponent, { tool: 'insert_rows', classNames: 'option', mode: "above"}),
-          $$(TableToolComponent, { tool: 'delete_rows', classNames: 'option'}),
-          $$(TableToolComponent, { tool: 'insert_rows', classNames: 'option', mode: "below"})
-        ),
-        // Bibitem Actions
-        // ------------------
-        $$(DropdownComponent, { label: $$(Icon, {icon: "fa-book"}), title: i18n.t('bibitem')},
-          $$(CiteToolComponent, { citationType: 'bib_item', classNames: 'option'}, "Cite"),
-          $$(NavigateTool, { newState: {modal: {contextId: 'manageBibItems'}}, title: i18n.t('menu.manage')})
-        )
-      ),
-
-      $$('div').addClass('tool-group formatting clearfix float-right').append(
-        $$(ToolComponent)
-          .addClass('button tool').append($$(Icon, {icon: "fa-italic"}))
-          .addProps({ tool: 'emphasis', title: i18n.t('menu.emphasis')}),
-        $$(ToolComponent)
-          .addClass('button tool').append($$(Icon, {icon: "fa-bold"}))
-          .addProps({ tool: 'strong', title: i18n.t('menu.strong') })
+    var el = $$("div").addClass("content-tools-component toolbar small fill-white");
+    el.append(
+      $$('div').addClass('tool-group text clearfix').append(
+        $$(TextToolComponent).addProps({ tool: 'text', title: i18n.t('menu.text_tool')})
       )
     );
+    el.append(
+      $$('div').addClass('tool-group document clearfix').append(
+        $$(ToolComponent)
+          .addProps({ tool: 'undo', title: i18n.t('menu.undo')})
+          .addClass('button tool')
+          .append($$(Icon).addProps({icon: "fa-undo"})),
+        $$(ToolComponent)
+          .addProps({ tool: 'redo', title: i18n.t('menu.redo')})
+          .addClass('button tool')
+          .append($$(Icon).addProps({icon: "fa-repeat"})),
+        // $$(ToolComponent, { tool: 'save', title: i18n.t('menu.save'), classNames: 'button tool'}, $$(Icon, {icon: "fa-save"})),
+        $$(ToolComponent)
+          .addProps({ tool: 'export', title: i18n.t('menu.export') })
+          .addClass('button tool')
+          .append($$(Icon).addProps({icon: "fa-download"}))
+      )
+    );
+    // Figure Actions
+    // ------------------
+    var figureActions = $$(DropdownComponent).addProps({
+        label: $$(Icon, {icon: "fa-image"}),
+        title: i18n.t('figure')
+      }).append(
+        $$(ToolComponent)
+          .addProps({ tool: 'insert_figure'})
+          .addClass('option')
+          .append("Insert"),
+        $$(CiteToolComponent)
+          .addProps({ citationType: 'image_figure'})
+          .addClass('option')
+          .append("Cite"),
+        $$(NavigateTool)
+          .addProps({
+            newState: {
+              modal: {
+                contextId: 'manageCollection',
+                itemType: 'image_figure'
+              }
+            },
+            title: i18n.t('menu.manage')
+          })
+    );
+
+    // Table Actions
+    // ------------------
+    var tableActions = $$(DropdownComponent)
+      .addProps({
+        label: $$(Icon, {icon: "fa-table"}),
+        title: i18n.t('table')
+      })
+      .addClass('table-dropdown')
+      .append(
+        $$(ToolComponent)
+          .addProps({ tool: 'insert_table'})
+          .addClass('option')
+          .append("Insert"),
+        $$(CiteToolComponent)
+          .addProps({ citationType: 'table_figure'})
+          .addClass('option')
+          .append("Cite"),
+        $$(NavigateTool)
+          .addProps({
+            newState: {
+              modal: {
+                contextId: 'manageCollection',
+                itemType: 'table_figure'
+              }
+            },
+            title: i18n.t('menu.manage')
+          }),
+        $$("hr"),
+        $$(TableToolComponent)
+          .addClass('option')
+          .addProps({ tool: 'insert_columns', mode: "before"}),
+        $$(TableToolComponent)
+          .addProps({ tool: 'delete_columns' })
+          .addClass('option'),
+        $$(TableToolComponent)
+          .addProps({ tool: 'insert_columns', mode: "after"})
+          .addClass('option'),
+        $$("hr"),
+        $$(TableToolComponent)
+          .addProps({ tool: 'insert_rows', mode: "above"})
+          .addClass('option'),
+        $$(TableToolComponent)
+          .addProps({ tool: 'delete_rows' })
+          .addClass('option'),
+        $$(TableToolComponent)
+          .addProps({ tool: 'insert_rows', mode: "below"})
+          .addClass('option')
+      );
+
+    // Bibitem Actions
+    // ------------------
+    var bibitemActions = $$(DropdownComponent)
+      .addProps({ label: $$(Icon, {icon: "fa-book"}), title: i18n.t('bibitem')})
+      .append(
+        $$(CiteToolComponent)
+          .addProps({ citationType: 'bib_item' })
+          .addClass('option')
+          .append("Cite"),
+        $$(NavigateTool)
+          .addProps({
+            newState: {
+              modal: {
+                contextId: 'manageBibItems'
+              }
+            },
+            title: i18n.t('menu.manage')
+          })
+      );
+
+    el.append(
+      $$('div').addClass('tool-group actions clearfix').append(
+        figureActions,
+        tableActions,
+        bibitemActions
+      ),
+      $$('div').addClass('tool-group formatting clearfix float-right').append(
+        $$(ToolComponent)
+          .addClass('button tool')
+          .addProps({ tool: 'emphasis', title: i18n.t('menu.emphasis')})
+          .append($$(Icon, {icon: "fa-italic"})),
+        $$(ToolComponent)
+          .addClass('button tool')
+          .addProps({ tool: 'strong', title: i18n.t('menu.strong') })
+          .append($$(Icon, {icon: "fa-bold"}))
+      )
+    );
+    return el;
   }
 }
 

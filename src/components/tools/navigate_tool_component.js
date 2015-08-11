@@ -1,6 +1,5 @@
 "use strict";
 
-var _ = require("substance/helpers");
 var Component = require('substance/ui/component');
 var $$ = Component.$$;
 
@@ -11,22 +10,17 @@ var $$ = Component.$$;
 
 class NavigateTool extends Component {
 
-  constructor(parent, props) {
-    super(parent, props);
-    this.handleMouseDown = this.handleMouseDown.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
   getInitialState() {
     return { disabled: true };
   }
 
   render() {
-    var classNames = ['option'];
-    return $$("button", {
-      classNames: classNames.join(' '),
-      title: this.props.title,
-    }, this.props.title);
+    return $$('button')
+      .addClass('option')
+      .attr('title', this.props.title)
+      .on('click', this.handleClick)
+      .on('mousedown', this.handleMouseDown)
+      .append(this.props.title);
   }
 
   handleClick(e) {
@@ -35,11 +29,7 @@ class NavigateTool extends Component {
 
   handleMouseDown(e) {
     e.preventDefault();
-    if (this.props.replace) {
-      this.context.app.replaceState(this.props.newState);
-    } else {
-      this.context.app.setState(this.props.newState);
-    }
+    this.context.app.setState(this.props.newState);
   }
 }
 

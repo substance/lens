@@ -10,19 +10,20 @@ class BibliographyComponent extends Component {
     var state = this.state;
     if (state.bibItems) {
       var bibItemEls = [
-        $$('div', { classNames: 'content-node heading level-1' }, 'References')
+        $$('div').addClass('content-node heading level-1').append('References')
       ];
       _.each(state.bibItems, function(bibItem) {
         if (bibItem.label) {
-          bibItemEls.push($$('div', { classNames: 'bib-item clearfix' },
-            $$('div', { classNames: 'label csl-left-margin'}, bibItem.label),
-            $$('div', { classNames: 'text csl-right-inline'}, bibItem.text)
+          bibItemEls.push($$('div').addClass('bib-item clearfix').append(
+            $$('div').addClass('label csl-left-margin').append(bibItem.label),
+            $$('div').addClass('text csl-right-inline').append(bibItem.text)
           ));
         }
       });
-      return $$('div', { classNames: 'bibliography-component bib-items'}, bibItemEls);
+      return $$('div').addClass('bibliography-component bib-items')
+        .append(bibItemEls);
     } else {
-      return $$('div', null, '');
+      return $$('div');
     }
   }
 

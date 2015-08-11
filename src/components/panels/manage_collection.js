@@ -16,22 +16,63 @@ var CONTEXTS = [
 
 class ManageCollection extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-  getChildContext() {
+  get childContext() {
     return {
       surface: this.surface
     };
   }
+
+  render() {
+    var state = this.state;
+    var doc = this.context.app.doc;
+    var navItems = _.map(CONTEXTS, function(context) {
+      return $$('button').addClass('pill')
+        .attr("data-id", context.contextId)
+        .on('click', this.handleContextSwitch)
+        .append(
+          $$(Icon).addProps({icon: context.icon}).append(" "+context.label)
+        );
+    }.bind(this));
+
+    var itemEls;
+    var componentRegistry = this.context.componentRegistry;
+    var ItemClass = componentRegistry.get(this.state.itemType);
+
+    if (state.items.length > 0 ) {
+      itemEls = _.map(state.items, function(item) {
+        return $$(ItemClass).key(item.id)
+          .addProps({
+            node: item,
+            doc: doc
+          });
+      }, this);
+    } else {
+      itemEls = [$$('div').append("No items found.")];
+    }
+
+    return $$('div').addClass('manage-collection-component').append(
+      $$('div').addClass('header toolbar clearfix menubar fill-light').append(
+        $$('div').addClass('title float-left large')
+          .append(this.getPanelLabel()),
+        $$('div').addClass('menu-group small')
+          .append(navItems),
+        $$('button').addClass('button close-modal float-right')
+          .append($$(Icon).addProps({icon: 'fa-close'})
+        )
+      ),
+      $$('div').key('collection')
+        .addClass('content collection')
+        .attr('contentEditable', true)
+        .append(itemEls)
+    );
+  }
+
 
   stateFromAppState() {
     var app = this.context.app;
     var doc = this.context.app.doc;
     var itemType = app.state.modal.itemType;
     var collection = doc.getCollection(itemType);
-
     this.state = {
       itemType: itemType,
       collection: collection,
@@ -54,39 +95,18 @@ class ManageCollection extends Component {
     this.surface = new Surface(this.context.surfaceManager, doc, new Surface.FormEditor(), options);
   }
 
-  componentDidMount() {
+  didMount() {
     var surface = this.surface;
     var app = this.context.app;
     // push surface selection state so that we can recover it when closing
     this.context.surfaceManager.pushState();
-
     app.registerSurface(surface, {
       enabledTools: [ENABLED_TOOLS]
     });
-
     surface.attach(React.findDOMNode(this.refs.collection));
-    var self = this;
-
-    // This needed?
-    this.forceUpdate(function() {
-      self.surface.rerenderDomSelection();
-    });
   }
 
-
-  componentDidUpdate() {
-    // HACK: when the state is changed this and particularly TextProperties
-    // get rerendered (e.g., as the highlights might have changed)
-    // Unfortunately we loose the DOM selection then.
-    // Thus, we are resetting it here, but(!) delayed as otherwise the surface itself
-    // might not have finished setting the selection to the desired and a proper state.
-    var self = this;
-    setTimeout(function() {
-      self.surface.rerenderDomSelection();
-    });
-  }
-
-  componentWillUnmount() {
+  willUnmount() {
     var app = this.context.app;
     var surface = this.surface;
     // remove the selection explicitly so that we don't have a tool
@@ -98,55 +118,6 @@ class ManageCollection extends Component {
 
   handleItemDeletion(itemId) {
     console.log('handling item deletion', itemId);
-  }
-
-  render() {
-    var state = this.state;
-    var doc = this.context.app.doc;
-    var navItems = _.map(CONTEXTS, function(context) {
-      var classNames = ['pill'];
-      return $$('button', {
-        "data-id": context.contextId,
-        className: classNames.join(' '),
-        onClick: this.handleContextSwitch,
-      }, $$(Icon, {icon: context.icon}), " "+context.label);
-    }.bind(this));
-
-    var itemEls;
-
-    var componentRegistry = this.context.componentRegistry;
-    var ItemClass = componentRegistry.get(this.state.itemType);
-
-    if (state.items.length > 0 ) {
-      itemEls = _.map(state.items, function(item) {
-        return $$(ItemClass, {
-          node: item,
-          key: item.id,
-          doc: doc
-          // handleDeletion: this.handleItemDeletion.bind(this)
-        });
-      }, this);
-    } else {
-      itemEls = [$$('div', null, "No items found.")];
-    }
-
-    return $$('div', {classNames: 'manage-collection-component'},
-      $$('div', {classNames: 'header toolbar clearfix menubar fill-light'},
-        $$('div', {classNames: 'title float-left large'}, this.getPanelLabel()),
-        $$('div', {classNames: 'menu-group small'}, navItems),
-        $$('button', {classNames: 'button close-modal float-right'},
-          $$(Icon, {icon: 'fa-close'})
-        )
-      ),
-
-      $$('div', {
-          key: 'collection',
-          classNames: 'content collection',
-          contentEditable: true
-        },
-        itemEls
-      )
-    );
   }
 }
 
