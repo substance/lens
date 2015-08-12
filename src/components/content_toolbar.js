@@ -31,7 +31,6 @@ class ContentToolbarComponent extends Component {
           .addProps({ tool: 'redo', title: i18n.t('menu.redo')})
           .addClass('button tool')
           .append($$(Icon).addProps({icon: "fa-repeat"})),
-        // $$(ToolComponent, { tool: 'save', title: i18n.t('menu.save'), classNames: 'button tool'}, $$(Icon, {icon: "fa-save"})),
         $$(ToolComponent)
           .addProps({ tool: 'export', title: i18n.t('menu.export') })
           .addClass('button tool')
@@ -41,7 +40,7 @@ class ContentToolbarComponent extends Component {
     // Figure Actions
     // ------------------
     var figureActions = $$(DropdownComponent).addProps({
-        label: $$(Icon, {icon: "fa-image"}),
+        label: $$(Icon).addProps({icon: "fa-image"}),
         title: i18n.t('figure')
       }).append(
         $$(ToolComponent)
@@ -68,7 +67,7 @@ class ContentToolbarComponent extends Component {
     // ------------------
     var tableActions = $$(DropdownComponent)
       .addProps({
-        label: $$(Icon, {icon: "fa-table"}),
+        label: $$(Icon).addProps({icon: "fa-table"}),
         title: i18n.t('table')
       })
       .addClass('table-dropdown')
@@ -116,7 +115,10 @@ class ContentToolbarComponent extends Component {
     // Bibitem Actions
     // ------------------
     var bibitemActions = $$(DropdownComponent)
-      .addProps({ label: $$(Icon, {icon: "fa-book"}), title: i18n.t('bibitem')})
+      .addProps({
+        label: $$(Icon).addProps({icon: "fa-book"}),
+        title: i18n.t('bibitem')
+      })
       .append(
         $$(CiteToolComponent)
           .addProps({ citationType: 'bib_item' })
@@ -143,11 +145,11 @@ class ContentToolbarComponent extends Component {
         $$(ToolComponent)
           .addClass('button tool')
           .addProps({ tool: 'emphasis', title: i18n.t('menu.emphasis')})
-          .append($$(Icon, {icon: "fa-italic"})),
+          .append($$(Icon).addProps({icon: "fa-italic"})),
         $$(ToolComponent)
           .addClass('button tool')
           .addProps({ tool: 'strong', title: i18n.t('menu.strong') })
-          .append($$(Icon, {icon: "fa-bold"}))
+          .append($$(Icon).addProps({icon: "fa-bold"}))
       )
     );
     return el;
