@@ -1,7 +1,9 @@
 'use strict';
 
-var _ = require("substance/helpers");
-var Component = require('substance/ui/component');
+var Substance = require('substance');
+var _ = Substance._;
+var OO = Substance.OO;
+var Component = Substance.Component;
 var $$ = Component.$$;
 var Icon = require("substance/ui/font_awesome_icon");
 var Surface = require("substance/surface");
@@ -14,17 +16,18 @@ var CONTEXTS = [
   // {contextId: 'list', label: 'Upload figures', icon: 'fa-plus'}
 ];
 
-class ManageCollection extends Component {
+function ManageCollection() {
+  Component.apply(this, arguments);
 
-  get childContext() {
-    return {
-      surface: this.surface
-    };
-  }
+  this.childContext = {
+    surface: this.surface
+  };
+}
 
-  render() {
-    var state = this.state;
-    var doc = this.context.app.doc;
+ManageCollection.Prototype = function() {
+
+  this.render = function() {
+    var doc = this.props.doc;
     var navItems = _.map(CONTEXTS, function(context) {
       return $$('button').addClass('pill')
         .attr("data-id", context.contextId)
@@ -36,10 +39,11 @@ class ManageCollection extends Component {
 
     var itemEls;
     var componentRegistry = this.context.componentRegistry;
-    var ItemClass = componentRegistry.get(this.state.itemType);
+    var ItemClass = componentRegistry.get(this.props.itemType);
 
-    if (state.items.length > 0 ) {
-      itemEls = _.map(state.items, function(item) {
+    var items = this.collection.getItems();
+    if (items.length > 0 ) {
+      itemEls = _.map(items, function(item) {
         return $$(ItemClass).key(item.id)
           .addProps({
             node: item,
@@ -65,61 +69,47 @@ class ManageCollection extends Component {
         .attr('contentEditable', true)
         .append(itemEls)
     );
-  }
+  };
 
+  this.getPanelLabel = function() {
+    var items = this.collection.getItems();
+    var prefix = this.collection.labelPrefix;
+    if (items.length > 1) prefix += 's';
+    return [items.length, prefix].join(' ');
+  };
 
-  stateFromAppState() {
-    var app = this.context.app;
-    var doc = this.context.app.doc;
-    var itemType = app.state.modal.itemType;
-    var collection = doc.getCollection(itemType);
-    this.state = {
-      itemType: itemType,
-      collection: collection,
-      items: collection.getItems()
-    };
-  }
-
-  getPanelLabel() {
-    var c = this.state.collection;
-    return [this.state.items.length, c.labelPrefix+'s'].join(' ');
-  }
-
-  didReceiveProps() {
-    this.stateFromAppState();
-    var doc = this.context.app.doc;
-    var options = {
+  this.didReceiveProps = function() {
+    var doc = this.props.doc;
+    // retrieve items from collection
+    this.collection = doc.getCollection(this.props.itemType);
+    // create surface
+    var surfaceOptions = {
       name: 'collection',
       logger: this.context.notifications
     };
-    this.surface = new Surface(this.context.surfaceManager, doc, new Surface.FormEditor(), options);
-  }
+    this.surface = new Surface(this.context.surfaceManager, doc,
+      new Surface.FormEditor(), surfaceOptions);
+  };
 
-  didMount() {
+  this.didMount = function() {
     var surface = this.surface;
     var app = this.context.app;
     // push surface selection state so that we can recover it when closing
     this.context.surfaceManager.pushState();
-    app.registerSurface(surface, {
-      enabledTools: [ENABLED_TOOLS]
-    });
-    surface.attach(React.findDOMNode(this.refs.collection));
-  }
+    surface.attach(this.refs.collection.$el[0]);
+  };
 
-  willUnmount() {
-    var app = this.context.app;
-    var surface = this.surface;
-    // remove the selection explicitly so that we don't have a tool
-    // attached to this surface afterwards
-    app.unregisterSurface(surface);
-    surface.dispose();
+  this.willUnmount = function() {
+    this.surface.dispose();
     this.context.surfaceManager.popState();
-  }
+  };
 
-  handleItemDeletion(itemId) {
+  this.handleItemDeletion = function(itemId) {
     console.log('handling item deletion', itemId);
-  }
-}
+  };
+};
+
+OO.inherit(ManageCollection, Component);
 
 // Panel Configuration
 // -----------------

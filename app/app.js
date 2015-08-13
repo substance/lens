@@ -3,12 +3,9 @@
 // i18n
 require('./i18n/load');
 
-// Substance Journal
-// ---------------
-//
-// Main entry point of the Substance Journal web client
-
-var Component = require("substance/ui/component");
+var Substance = require('substance');
+var OO = Substance.OO;
+var Component = Substance.Component;
 var $$ = Component.$$;
 
 var Backend = require("./backend");
@@ -16,34 +13,37 @@ var NotificationService = require("./notification_service");
 var CrossrefSearch = require('../lib/article/bib/crossref_search');
 var ScienceWriter = require("../src/science_writer");
 
-class App extends Component.Root {
+function App() {
+  Component.Root.apply(this, arguments);
 
-  constructor(params) {
-    super(params);
+  this.backend = new Backend();
+  this.notifications = new NotificationService();
 
-    this.backend = new Backend();
-    this.notifications = new NotificationService();
+  this.childContext = {
+    backend: this.backend,
+    notifications: this.notifications,
+    bibSearchEngines: [new CrossrefSearch()],
+  };
+}
 
-    this.childContext = {
-      backend: this.backend,
-      notifications: this.notifications,
-      bibSearchEngines: [new CrossrefSearch()],
-    };
-  }
+App.Prototype = function() {
 
-  render() {
+  this.render = function() {
     return $$('div').addClass('app').append(
       $$(ScienceWriter).key('writer')
     );
-  }
+  };
 
-  didMount() {
+  this.didMount = function() {
     var self = this;
     this.backend.getDocument('sample', function(err, doc) {
       self.refs.writer.setProps({doc: doc});
     });
-  }
-}
+  };
+
+};
+
+OO.inherit(App, Component.Root);
 
 $(function() {
   new App().mount($('#container'));

@@ -1,12 +1,18 @@
 "use strict";
 
+var Substance = require('substance');
 var _ = require('substance/helpers');
-var Component = require('substance/ui/component');
+var OO = Substance.OO;
+var Component = Substance.Component;
 var $$ = Component.$$;
 
-class BibliographyComponent extends Component {
+function BibliographyComponent() {
+  Component.apply(this, arguments);
+}
 
-  render() {
+BibliographyComponent.Prototype = function() {
+
+  this.render = function() {
     var state = this.state;
     if (state.bibItems) {
       var bibItemEls = [
@@ -25,23 +31,25 @@ class BibliographyComponent extends Component {
     } else {
       return $$('div');
     }
-  }
+  };
 
-  didMount() {
+  this.didMount = function() {
     var doc = this.props.doc;
     this.bibliography = doc.getCollection('bib_item');
     this.bibliography.connect(this, {
       'bibliography:updated': this.update
     });
-  }
+  };
 
-  update() {
+  this.update = function() {
     console.log('bibliography:updated');
     var bibItems = this.bibliography.getItems();
     this.setState({
       bibItems: bibItems
     });
-  }
-}
+  };
+};
+
+OO.inherit(BibliographyComponent, Component);
 
 module.exports = BibliographyComponent;

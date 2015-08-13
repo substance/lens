@@ -1,6 +1,8 @@
 "use strict";
 
-var Component = require('substance/ui/component');
+var Substance = require('substance');
+var OO = Substance.OO;
+var Component = Substance.Component;
 var $$ = Component.$$;
 
 // Navigate Tool Component
@@ -8,29 +10,35 @@ var $$ = Component.$$;
 //
 // Just used to trigger app state changes
 
-class NavigateTool extends Component {
+function NavigateTool() {
+  Component.apply(this, arguments);
+}
 
-  getInitialState() {
+NavigateTool.Prototype = function() {
+
+  this.getInitialState = function() {
     return { disabled: true };
-  }
+  };
 
-  render() {
+  this.render = function() {
     return $$('button')
       .addClass('option')
       .attr('title', this.props.title)
       .on('click', this.handleClick)
       .on('mousedown', this.handleMouseDown)
       .append(this.props.title);
-  }
+  };
 
-  handleClick(e) {
+  this.handleClick = function(e) {
     e.preventDefault();
-  }
+  };
 
-  handleMouseDown(e) {
+  this.handleMouseDown = function(e) {
     e.preventDefault();
-    this.context.app.setState(this.props.newState);
-  }
-}
+    this.send('switchState', this.props.newState);
+  };
+};
+
+OO.inherit(NavigateTool, Component);
 
 module.exports = NavigateTool;

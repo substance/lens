@@ -1,20 +1,26 @@
 'use strict';
 
-var Component = require('substance/ui/component');
+var Substance = require('substance');
+var OO = Substance.OO;
+var Component = Substance.Component;
 var $$ = Component.$$;
 
 // CiteToolComponent
 // -------------
 
-class CiteToolComponent extends Component {
+function CiteToolComponent() {
+  Component.apply(this, arguments);
+}
 
-  getInitialState() {
+CiteToolComponent.Prototype = function() {
+
+  this.getInitialState = function() {
     return {
       disabled: true
     };
-  }
+  };
 
-  render() {
+  this.render = function() {
     var el = $$("button").attr('title', this.props.title);
     el.on('click', this.onClick);
     el.on('mousedown', this.onMouseDown);
@@ -26,9 +32,9 @@ class CiteToolComponent extends Component {
     }
     el.append(this.props.children);
     return el;
-  }
+  };
 
-  didMount() {
+  this.didMount = function() {
     this.tool = this.context.toolRegistry.get("cite");
     if (!this.tool) {
       throw new Error('No tool registered with name "cite"');
@@ -36,23 +42,23 @@ class CiteToolComponent extends Component {
     this.tool.connect(this, {
       'toolstate:changed': this.onToolstateChanged
     });
-  }
+  };
 
-  willUnmount() {
+  this.willUnmount = function() {
     this.tool.disconnect(this);
-  }
+  };
 
-  onToolstateChanged(toolState) {
+  this.onToolstateChanged = function(toolState) {
     this.setState({
       disabled: toolState.disabled
     });
-  }
+  };
 
-  onClick(e) {
+  this.onClick = function(e) {
     e.preventDefault();
-  }
+  };
 
-  onMouseDown(e) {
+  this.onMouseDown = function(e) {
     e.preventDefault();
     if (this.state.disabled) return;
     var citation = this.tool.createCitation(this.props.citationType);
@@ -61,7 +67,9 @@ class CiteToolComponent extends Component {
       citationType: this.props.citationType,
       citationId: citation.id
     });
-  }
-}
+  };
+};
+
+OO.inherit(CiteToolComponent, Component);
 
 module.exports = CiteToolComponent;

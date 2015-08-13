@@ -1,20 +1,25 @@
 "use strict";
 
-var Component = require("substance/ui/component");
+var Substance = require('substance');
+var OO = Substance.OO;
+var Component = Substance.Component;
 var $$ = Component.$$;
+
 var TextProperty = require("substance/ui/text_property_component");
-var Surface = require("substance/surface");
+var Surface = Substance.Surface;
 var FormEditor = Surface.FormEditor;
 
-class TitleEditor extends Component {
+function TitleEditor() {
+  Component.apply(this, arguments);
 
-  get childContext() {
-    return {
-      surface: this.surface
-    };
-  }
+  this.childContext = {
+    surface: this.surface
+  };
+}
 
-  render() {
+TitleEditor.Prototype = function() {
+
+  this.render = function() {
     var doc = this.props.doc;
     var metaNode = doc.getDocumentMeta();
     return $$("div").addClass("document-title")
@@ -31,21 +36,23 @@ class TitleEditor extends Component {
             path: [metaNode.id, "title"]
           })
       );
-  }
+  };
 
-  didReceiveProps() {
+  this.didReceiveProps = function() {
     var doc = this.props.doc;
     var editor = new FormEditor();
     this.surface = new Surface(this.context.surfaceManager, doc, editor, { name: 'title' } );
-  }
+  };
 
-  didMount() {
+  this.didMount = function() {
     this.surface.attach(this.$el[0]);
-  }
+  };
 
-  willUnmount() {
+  this.willUnmount = function() {
     this.surface.detach();
-  }
-}
+  };
+};
+
+OO.inherit(TitleEditor, Component);
 
 module.exports = TitleEditor;
