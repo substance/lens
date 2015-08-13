@@ -50,9 +50,10 @@ ManageBibItemsPanel.Prototype = function() {
       $$('div').addClass('header toolbar clearfix menubar fill-light').append(
         $$('div').addClass('title float-left large').append("References"),
         $$('div').addClass('menu-group small').append(navItems),
-        $$('button').addClass('button close-modal float-right').append(
-          $$(Icon).addProps({ icon: 'fa-close' })
-        ).on('click', this.handleCloseModal)
+        $$('button')
+          .addClass('button close-modal float-right')
+          .append($$(Icon).addProps({ icon: 'fa-close' }))
+          .on('click', this.onCloseModal)
       ),
       this.getContextElement()
     );
@@ -75,6 +76,11 @@ ManageBibItemsPanel.Prototype = function() {
         searchResult: this.state.searchResult
       });
     }
+  };
+
+  this.onCloseModal = function(e) {
+    e.preventDefault();
+    this.send('close-modal');
   };
 };
 
