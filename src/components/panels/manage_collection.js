@@ -61,8 +61,8 @@ ManageCollection.Prototype = function() {
         $$('div').addClass('menu-group small')
           .append(navItems),
         $$('button').addClass('button close-modal float-right')
-          .append($$(Icon).addProps({icon: 'fa-close'})
-        )
+          .append($$(Icon).addProps({icon: 'fa-close'}))
+          .on('click', this.onCloseModal)
       ),
       $$('div').key('collection')
         .addClass('content collection')
@@ -107,6 +107,12 @@ ManageCollection.Prototype = function() {
   this.handleItemDeletion = function(itemId) {
     console.log('handling item deletion', itemId);
   };
+
+  this.onCloseModal = function(e) {
+    e.preventDefault();
+    this.send('close-modal');
+  };
+
 };
 
 OO.inherit(ManageCollection, Component);
