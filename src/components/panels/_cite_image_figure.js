@@ -1,33 +1,49 @@
 "use strict";
 
-var Component = require('substance/ui/component');
+var Substance = require('substance');
+var OO = Substance.OO;
+var Component = Substance.Component;
 var $$ = Component.$$;
 
-class CiteImageFigure extends Component {
+function CiteImageFigure() {
+  Component.apply(this, arguments);
+}
 
-  render() {
-    var el = $$('div').addClass('figure border-bottom item pad clearfix small');
-    el.on('click', this.onClick);
-    el.on('mousedown', this.onMouseDown);
+CiteImageFigure.Prototype = function() {
+
+  this.render = function() {
+    var el = $$('div')
+      .addClass('figure border-bottom item pad clearfix small')
+      .on('click', this.onClick)
+      .on('mousedown', this.onMouseDown);
     if (this.props.active) {
       el.addClass('active');
     }
-    return el.append(
-      $$('img').addClass('image').attr('src', this.props.node.getContentNode().src),
-      $$('div'.addClass('title').append([this.props.node.label, this.props.node.title].join(' ')),
-      $$('div'.addClass('caption truncate').append(this.props.node.caption)
+    el.append($$('img')
+      .addClass('image')
+      .attr('src', this.props.node.getContentNode().src)
     );
-  }
+    el.append($$('div')
+      .addClass('title')
+      .append([this.props.node.label, this.props.node.title].join(' '))
+    );
+    el.append($$('div')
+      .addClass('caption truncate').append(this.props.node.caption)
+    );
+    return el;
+  };
 
-  onClick(e) {
+  this.onClick = function(e) {
     e.preventDefault();
     e.stopPropagation();
-  }
+  };
 
-  onMouseDown(e) {
+  this.onMouseDown = function(e) {
     e.preventDefault();
     this.props.handleSelection(this.props.node.id);
-  }
-}
+  };
+};
+
+OO.inherit(CiteImageFigure, Component);
 
 module.exports = CiteImageFigure;

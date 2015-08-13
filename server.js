@@ -25,12 +25,6 @@ app.use('/i18n', express.static(path.join(__dirname, "app/i18n")));
 app.get('/app.js', function (req, res, next) {
   // var startTime = Date.now();
   browserify({ debug: true, cache: false })
-    .transform(babelify.configure({
-      only: [
-        path.join(__dirname, 'app'),
-        path.join(__dirname, 'src')
-      ]
-    }))
     .add(path.join(__dirname, "app", "app.js"))
     .bundle()
     .on('error', function(err){

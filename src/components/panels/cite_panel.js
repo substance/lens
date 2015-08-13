@@ -1,22 +1,25 @@
 'use strict';
 
-var _ = require("substance/helpers");
-var Component = require('substance/ui/component');
+var Substance = require('substance');
+var _ = Substance._;
+var OO = Substance.OO;
+var Component = Substance.Component;
 var Icon = require("substance/ui/font_awesome_icon");
 var $$ = Component.$$;
 
-class CitePanel extends Component {
+function CitePanel() {
+  Component.apply(this, arguments);
+  debugger;
+}
 
-  constructor(parent, props) {
-    super(parent, props);
-  }
+CitePanel.Prototype = function() {
 
-  render() {
+  this.render = function() {
     var componentRegistry = this.context.componentRegistry;
     var items;
-    if (this.state.items.length > 0) {
-      items = this.state.items.map(function(item) {
-        var comp = componentRegistry.get("_cite_" + this.state.citationType);
+    if (this.items.length > 0) {
+      items = this.items.map(function(item) {
+        var comp = componentRegistry.get("_cite_" + this.props.citationType);
         return $$(comp).key(item.id).addProps({
           node: item,
           active: this.isItemActive(item.id),
@@ -38,62 +41,50 @@ class CitePanel extends Component {
         )
       )
     );
-  }
+  };
 
-  didMount() {
-    this.stateFromAppState();
+  this.didMount = function() {
     this.tool = this.context.toolRegistry.get('cite');
     if (!this.tool) throw new Error('cite tool not found in registry');
-  }
+  };
 
-  willReceiveProps() {
-    this.stateFromAppState();
-  }
+  this.didReceiveProps = function() {
+    this.items = this.getItems(this.props.citationType);
+  };
 
-  willUnmount() {
+  this.willUnmount = function() {
     this.$el.off('click', '.back', this.handleCancel);
     this.tool.disconnect(this);
-  }
+  };
 
   // Determines wheter an item is active
-  isItemActive(itemId) {
-    if (!this.state.citationId) return false;
+  this.isItemActive = function(itemId) {
+    if (!this.props.citationId) return false;
     var doc = this.props.doc;
-    var citation = doc.get(this.state.citationId);
+    var citation = doc.get(this.props.citationId);
     return _.includes(citation.targets, itemId);
-  }
+  };
 
-  handleCancel(e) {
+  this.handleCancel = function(e) {
     e.preventDefault();
     this.send("switchContext", "toc");
-  }
+  };
 
-  getItems(citationType) {
+  this.getItems = function(citationType) {
     var doc = this.props.doc;
     var collection = doc.getCollection(citationType);
     return collection.getItems();
-  }
-
-  // TODO: this is not good. It is not at all clear how this
-  // panel is coupled with app... IMO it should not be coupled this way
-  stateFromAppState() {
-    console.error('FIXME');
-    return;
-    var app = this.context.app;
-    this.state = {
-      citationType: app.state.citationType,
-      items: this.getItems(app.state.citationType),
-      citationId: app.state.citationId
-    };
-  }
+  };
 
   // Called with entityId when an entity has been clicked
-  handleSelection(targetId) {
-    var citationId = this.state.citationId;
+  this.handleSelection = function(targetId) {
+    var citationId = this.props.citationId;
     this.tool.toggleTarget(citationId, targetId);
     this.rerender();
-  }
-}
+  };
+};
+
+OO.inherit(CitePanel, Component);
 
 // Panel configuration
 // ----------------

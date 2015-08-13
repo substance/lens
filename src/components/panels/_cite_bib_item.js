@@ -1,11 +1,16 @@
 "use strict";
 
-var Component = require('substance/ui/component');
+var Substance = require('substance');
+var OO = Substance.OO;
+var Component = Substance.Component;
 var $$ = Component.$$;
 
-class CiteBibItem extends Component {
+function CiteBibItem() {
+  Component.apply(this, arguments);
+}
 
-  render() {
+CiteBibItem.Prototype = function() {
+  this.render = function() {
     var el = $$('div').addClass('bib-item border-bottom pad item small clearfix');
     el.on('click', this.onClick);
     el.on('mousedown', this.onMouseDown);
@@ -17,31 +22,33 @@ class CiteBibItem extends Component {
     }
     el.append($$('div').addClass('text').append(this.props.node.text));
     return el;
-  }
+  };
 
-  didMount() {
+  this.didMount = function() {
     this.props.node.connect(this, {
       'label': this.onLabelChanged
     });
-  }
+  };
 
-  willUnmount() {
+  this.willUnmount = function() {
     this.props.node.disconnect(this);
-  }
+  };
 
-  onClick(e) {
+  this.onClick = function(e) {
     e.preventDefault();
     e.stopPropagation();
-  }
+  };
 
-  onMouseDown(e) {
+  this.onMouseDown = function(e) {
     e.preventDefault();
     this.props.handleSelection(this.props.node.id);
-  }
+  };
 
-  onLabelChanged() {
+  this.onLabelChanged = function() {
     this.rerender();
-  }
-}
+  };
+};
+
+OO.inherit(CiteBibItem, Component);
 
 module.exports = CiteBibItem;

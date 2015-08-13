@@ -1,11 +1,17 @@
 "use strict";
 
-var Component = require('substance/ui/component');
+var Substance = require('substance');
+var OO = Substance.OO;
+var Component = Substance.Component;
 var $$ = Component.$$;
 
-class CiteTableFigure extends Component {
+function CiteTableFigure() {
+  Component.apply(this, arguments);
+}
 
-  render() {
+CiteTableFigure.Prototype = function() {
+
+  this.render = function() {
     var el = $$('div').addClass('figure border-bottom item pad clearfix small');
     el.on('click', this.onClick);
     el.on('mousedown', this.onMouseDown);
@@ -18,17 +24,19 @@ class CiteTableFigure extends Component {
       $$('div').addClass('title').append([this.props.node.label, this.props.node.title].join(' ')),
       $$('div').addClass('caption truncate').append(this.props.node.caption)
     );
-  }
+  };
 
-  onClick(e) {
+  this.onClick = function(e) {
     e.preventDefault();
     e.stopPropagation();
-  }
+  };
 
-  onMouseDown(e) {
+  this.onMouseDown = function(e) {
     e.preventDefault();
     this.props.handleSelection(this.props.node.id);
-  }
-}
+  };
+};
+
+OO.inherit(CiteTableFigure, Component);
 
 module.exports = CiteTableFigure;

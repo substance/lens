@@ -1,13 +1,9 @@
-var $$ = React.createElement;
-
 // HACK: remember previous selection so we can check if a selection has changed
 var prevSelection;
 
 var stateHandlers = {
 
-  handleSelectionChange: function(app, sel) {
-    var surface = app.getSurface();
-
+  handleSelectionChange: function(writer, surface, sel) {
     if (surface.name !== "main") return;
     if (sel.isNull() || !sel.isPropertySelection()) {
       return;
@@ -16,14 +12,15 @@ var stateHandlers = {
       return;
     }
     prevSelection = sel;
-    var citations = app.doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "citation");
+    var doc = surface.getDocument();
+    var state = writer.getState();
+    var citations = doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "citation");
     if (citations.length === 1) {
       var citation = citations[0];
-
       if (citation.getSelection().equals(sel)) {
         var citationType = citation.type.replace("_citation", "");
         // Show cite panel in edit mode
-        app.replaceState({
+        writer.setState({
           contextId: "cite_"+citationType,
           citationType: citationType,
           citationId: citation.id
@@ -31,9 +28,8 @@ var stateHandlers = {
         return true;
       }
     }
-
-    if (app.state.contextId !== "toc") {
-      app.replaceState({
+    if (state.contextId !== "toc") {
+      writer.setState({
         contextId: 'toc'
       });
     }
@@ -49,11 +45,10 @@ var stateHandlers = {
   // Based on app state, determine which nodes should be highlighted in the content panel
   // @returns a list of nodes to be highlighted
 
-  getHighlightedNodes: function(app) {
-    var doc = app.doc;
-    var state = app.state;
+  getHighlightedNodes: function(writer) {
+    var doc = writer.getDocument();
+    var state = writer.getState();
     var highlightedNodes = [];
-
     if (state.citationId) {
       var citation = doc.get(state.citationId);
       // HACK: when typing over a selected citation
@@ -65,7 +60,6 @@ var stateHandlers = {
         highlightedNodes = highlightedNodes.concat(citation.targets);
       }
     }
-
     if (highlightedNodes.length > 0) return highlightedNodes;
   }
 

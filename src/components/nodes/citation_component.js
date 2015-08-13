@@ -1,11 +1,17 @@
 'use strict';
 
-var Component = require('substance/ui/component');
+var Substance = require('substance');
+var OO = Substance.OO;
+var Component = Substance.Component;
 var $$ = Component.$$;
 
-class CitationComponent extends Component {
+function CitationComponent() {
+  Component.apply(this, arguments);
+}
 
-  render() {
+CitationComponent.Prototype = function() {
+
+  this.render = function() {
     return $$('span')
       .addClass(this.getClassNames())
       .attr({
@@ -16,43 +22,45 @@ class CitationComponent extends Component {
       .on('click', this.onClick)
       .on('mousedown', this.onMouseDown)
       .append(this.props.node.label || "");
-  }
+  };
 
-  getClassNames() {
+  this.getClassNames = function() {
     var classNames = this.props.node.getTypeNames().join(' ');
     if (this.props.classNames) {
       classNames += " " + this.props.classNames.join(' ');
     }
     return classNames.replace(/_/g, '-');
-  }
+  };
 
-  didMount() {
+  this.didMount = function() {
     this.props.node.connect(this, {
       "label:changed": this.onLabelChanged
     });
-  }
+  };
 
-  willUnmount() {
+  this.willUnmount = function() {
     this.props.node.disconnect(this);
-  }
+  };
 
-  onMouseDown(e) {
+  this.onMouseDown = function(e) {
     e.preventDefault();
     var citation = this.props.node;
     var surface = this.context.surface;
 
     surface.setSelection(citation.getSelection());
     surface.rerenderDomSelection();
-  }
+  };
 
-  onClick(e) {
+  this.onClick = function(e) {
     e.preventDefault();
     e.stopPropagation();
-  }
+  };
 
-  onLabelChanged() {
+  this.onLabelChanged = function() {
     this.rerender();
-  }
-}
+  };
+};
+
+OO.inherit(CitationComponent, Component);
 
 module.exports = CitationComponent;

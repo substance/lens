@@ -1,6 +1,10 @@
 "use strict";
 
-var Component = require("substance/ui/component");
+var Substance = require('substance');
+var OO = Substance.OO;
+var Component = Substance.Component;
+var $$ = Component.$$;
+
 var ToolComponent = require("substance/ui/tools/tool_component");
 var TextToolComponent = require("substance/ui/tools/text_tool_component");
 var TableToolComponent = require("substance/ui/tools/table_tool_component");
@@ -10,11 +14,13 @@ var Icon = require("substance/ui/font_awesome_icon");
 var CiteToolComponent = require("./tools/cite_tool_component");
 var NavigateTool = require("./tools/navigate_tool_component");
 
-var $$ = Component.$$;
+function ContentToolbarComponent() {
+  Component.apply(this, arguments);
+}
 
-class ContentToolbarComponent extends Component {
+ContentToolbarComponent.Prototype = function() {
 
-  render() {
+  this.render = function() {
     var el = $$("div").addClass("content-tools-component toolbar small fill-white");
     el.append(
       $$('div').addClass('tool-group text clearfix').append(
@@ -24,8 +30,11 @@ class ContentToolbarComponent extends Component {
     el.append(
       $$('div').addClass('tool-group document clearfix').append(
         $$(ToolComponent)
-          .addProps({ tool: 'undo', title: i18n.t('menu.undo')})
           .addClass('button tool')
+          .addProps({
+            tool: 'undo',
+            title: i18n.t('menu.undo')
+          })
           .append($$(Icon).addProps({icon: "fa-undo"})),
         $$(ToolComponent)
           .addProps({ tool: 'redo', title: i18n.t('menu.redo')})
@@ -153,8 +162,10 @@ class ContentToolbarComponent extends Component {
       )
     );
     return el;
-  }
-}
+  };
+};
+
+OO.inherit(ContentToolbarComponent, Component);
 
 module.exports = ContentToolbarComponent;
 
