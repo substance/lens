@@ -1,6 +1,7 @@
 {
-  "name": "substance-science-writer",
+  "name": "lens-writer",
   "description": "An embeddable scientific writer based on Substance",
+  "version": "0.1.0",
   "dependencies": {
     "babelify": "^6.1.2",
     "body-parser": "^1.12.4",
@@ -24,6 +25,5 @@
   },
   "scripts": {
     "bundle": "gulp"
-  },
-  "version": "0.1.0"
+  }
 }
