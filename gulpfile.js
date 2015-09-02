@@ -14,9 +14,10 @@ gulp.task('sass', function () {
     .pipe(gulp.dest('./dist'));
 });
 
+
 gulp.task('assets', function () {
-  gulp.src('./app/assets/*')
-    .pipe(gulp.dest('./dist'));
+  gulp.src('./app/assets/**/*', {base:"./app/assets"})
+        .pipe(gulp.dest('dist'));
 });
 
 gulp.task('data', function () {
