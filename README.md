@@ -1,6 +1,6 @@
 # Lens Writer
 
-Lens Writer is an attempt to build a full-featured scientific writer that is easily customizable and can be integrated into publishing workflows. In short: Lens Writer offers you everything you need to produce an article like [this one](http://lens.elifesciences.org/05098/#figures)
+Lens Writer is an attempt to build a full-featured scientific writer that is easily customizable and can be integrated into publishing workflows. In short: Lens Writer offers you everything you need to produce an article like [this one](http://lens.elifesciences.org/05098/#figures). Lens Writer is built with [Substance](http://substance.io).
 
 # Install
 
