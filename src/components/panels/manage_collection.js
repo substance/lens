@@ -6,9 +6,7 @@ var OO = Substance.OO;
 var Component = Substance.Component;
 var $$ = Component.$$;
 var Icon = require("substance/ui/font_awesome_icon");
-var Surface = require("substance/surface");
-
-// var FormEditor = Surface.FormEditor;
+var Surface = require("substance/ui/surface");
 
 var ENABLED_TOOLS = ["strong", "emphasis", "comment"];
 

@@ -26,7 +26,7 @@ var ExportTool = Tool.extend({
 
   name: "export",
 
-  init: function() {
+  didInitialize: function() {
     this.state.disabled = false;
   },
 

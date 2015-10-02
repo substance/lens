@@ -1,9 +1,8 @@
 {
   "name": "lens-writer",
   "description": "An embeddable scientific writer based on Substance",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "dependencies": {
-    "babelify": "^6.1.2",
     "body-parser": "^1.12.4",
     "browserify": "^10.2.4",
     "cheerio": "^0.19.0",
@@ -13,8 +12,7 @@
     "lodash": "3.3.1",
     "node-polyglot": "^0.4.1",
     "node-sass": "3.x",
-    "substance": "substance/substance#components",
-    "substance-ui": "substance/ui#master"
+    "substance": "substance/substance#surface-as-central-api"
   },
   "devDependencies": {
     "gulp": "^3.8.11",
