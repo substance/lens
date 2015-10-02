@@ -29,22 +29,26 @@ function App() {
 App.Prototype = function() {
 
   this.render = function() {
-    return $$('div').addClass('app').append(
-      $$(ScienceWriter).key('writer')
-    );
+    var el = $$('div').addClass('app');
+    if (this.state.doc) {
+      el.append($$(ScienceWriter, {doc: this.state.doc}).ref('writer'))
+    }
+    return el;
   };
 
   this.didMount = function() {
-    var self = this;
     this.backend.getDocument('sample', function(err, doc) {
-      self.refs.writer.setProps({doc: doc});
-    });
+      this.setState({
+        doc: doc
+      });
+    }.bind(this));
   };
+
 
 };
 
-OO.inherit(App, Component.Root);
+OO.inherit(App, Component);
 
 $(function() {
-  new App().mount($('#container'));
+  Component.mount($$(App), $('#container'));
 });
