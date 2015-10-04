@@ -1,7 +1,6 @@
 'use strict';
 
 var Substance = require('substance');
-var _ = require('substance/helpers');
 var OO = Substance.OO;
 var Component = Substance.Component;
 var $$ = Component.$$;
@@ -13,9 +12,6 @@ var ContainerNodeComponent = require('substance/ui/nodes/container_node_componen
 var Surface = Substance.Surface;
 var ContainerEditor = Surface.ContainerEditor;
 
-// FIXME: make disabling of tools work again
-// var ENABLED_TOOLS = ["strong", "emphasis", "comment", "text"];
-
 function ContentEditor() {
   Component.apply(this, arguments);
   this.editor = new ContainerEditor(this.props.node.id);
@@ -26,18 +22,17 @@ ContentEditor.Prototype = function() {
   this.render = function() {
     var doc = this.props.doc;
     return $$('div').addClass('panel-content-inner').append(
-      // $$(TitleEditor).key('title').addProps({ doc: doc }),
+      // $$(TitleEditor, {doc: doc}).ref('title')
       // The full fledged document (ContainerEditor)
-      $$("div").key("main").addClass("document-content").append(
-        $$(ContainerNodeComponent).key('editor')
+      $$("div").ref("main").addClass("document-content").append(
+        $$(ContainerNodeComponent, {
+          doc: doc,
+          node: this.props.node,
+          editor: this.editor          
+        }).ref('editor')
           .attr('contentEditable', true)
-          .addProps({
-            doc: doc,
-            node: this.props.node,
-            editor: this.editor
-          })
       ),
-      $$(BibliographyComponent).key('bib').addProps({ doc: doc })
+      $$(BibliographyComponent, {doc: doc}).ref('bib')
     );
   };
 };

@@ -12,7 +12,7 @@
     "lodash": "3.3.1",
     "node-polyglot": "^0.4.1",
     "node-sass": "3.x",
-    "substance": "substance/substance#surface-as-central-api"
+    "substance": "substance/substance#controller-refactor"
   },
   "devDependencies": {
     "gulp": "^3.8.11",
