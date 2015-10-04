@@ -26,7 +26,7 @@ ContentToolbarComponent.Prototype = function() {
     var el = $$("div").addClass("content-tools-component toolbar small fill-white");
     el.append(
       $$('div').addClass('tool-group text clearfix').append(
-        $$(TextTool).addProps({ tool: 'text', title: i18n.t('menu.text_tool')})
+        $$(TextTool)
       )
     );
     el.append(
