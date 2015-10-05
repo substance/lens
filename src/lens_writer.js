@@ -43,6 +43,11 @@ LensWriter.Prototype = function() {
     return {'contextId': 'toc'};
   };
 
+  this.willReceiveProps = function() {
+    console.log('got new props(doc) clearing the whole thing');
+    this.empty();
+  };
+
   this.render = function() {
     var doc = this.props.doc;
     var el = $$('div').addClass('writer-component');

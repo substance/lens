@@ -10,6 +10,7 @@ var React = require('react');
 //   }
 // });
 
+
 // Lens + Substance
 var LensWriter = require('./src/lens_writer');
 var Article = require('./lib/article');
@@ -18,35 +19,23 @@ var $$ = Component.$$;
 
 var ReactLensWriter = React.createClass({
 
-  // handleSave: function(doc, cb) {
-  //   this.props.handleSave(doc, cb);
-  // },
+  handleSave: function(doc, cb) {
+    this.props.handleSave(doc, cb);
+  },
 
-  // componentWillUnmount: function() {
-  //   // this.state.writer.empty();
-  // },
+  // New props arrived, update the editor
+  componentDidUpdate: function() {
+    var doc = Article.fromXml(this.props.content);
+    this.writer.extendProps({
+      doc: doc
+    });
+  },
 
-  // /*  If we get updated, we should tear down the writer and bring it up again. */
-  // componentWillUpdate: function() {
-  //   this.componentWillUnmount();
-  // },
-
-  // // New props arrived, update the editor
-  // componentDidUpdate: function() {
-  //   var doc = Article.fromXml(this.props.content);
-  //   this.state.writer.setProps({
-  //     doc: doc
-  //   });
-  // },
-
-  componentDidMount() {
+  componentDidMount: function() {
     var el = React.findDOMNode(this);
     var doc = Article.fromXml(this.props.content);
 
-    var writer = Component.mount($$(LensWriter, {doc: doc}), el);
-    this.setState({
-      writer: writer
-    });
+    this.writer = Component.mount($$(LensWriter, {doc: doc}), el);
   },
 
   render: function() {
