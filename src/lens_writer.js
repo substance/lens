@@ -13,6 +13,8 @@ var StatusBar = require("substance/ui/writer/status_bar");
 // var ModalPanel = require('substance/ui/writer/modal_panel');
 var ContentToolbar = require('./components/content_toolbar');
 
+var CrossrefSearch = require('../lib/article/bib/crossref_search');
+
 var Component = require('substance/ui/component');
 var $$ = Component.$$;
 
@@ -25,9 +27,19 @@ function LensWriter(parent, params) {
     stateHandlers: stateHandlers
   };
   Writer.call(this, parent, params);
+
+
 }
 
 LensWriter.Prototype = function() {
+
+  this.getChildContext = function() {
+    return {
+      controller: this.controller,
+      componentRegistry: this.controller.componentRegistry,
+      bibSearchEngines: [new CrossrefSearch()]
+    };
+  };
 
   this.getInitialState = function() {
     return {'contextId': 'toc'};
