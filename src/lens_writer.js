@@ -27,8 +27,6 @@ function LensWriter(parent, params) {
     stateHandlers: stateHandlers
   };
   Writer.call(this, parent, params);
-
-
 }
 
 LensWriter.Prototype = function() {
