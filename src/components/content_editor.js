@@ -22,7 +22,7 @@ ContentEditor.Prototype = function() {
   this.render = function() {
     var doc = this.props.doc;
     return $$('div').addClass('panel-content-inner').append(
-      // $$(TitleEditor, {doc: doc}).ref('title')
+      $$(TitleEditor, {doc: doc}).ref('title'),
       // The full fledged document (ContainerEditor)
       $$("div").ref("main").addClass("document-content").append(
         $$(ContainerNodeComponent, {
