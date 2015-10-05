@@ -11,7 +11,7 @@ var $$ = Component.$$;
 var Backend = require("./backend");
 var NotificationService = require("./notification_service");
 var CrossrefSearch = require('../lib/article/bib/crossref_search');
-var ScienceWriter = require("../src/science_writer");
+var ScienceWriter = require("../src");
 
 function App() {
   Component.Root.apply(this, arguments);
@@ -43,7 +43,6 @@ App.Prototype = function() {
       });
     }.bind(this));
   };
-
 
 };
 

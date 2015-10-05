@@ -1,1 +1,1 @@
-module.exports = require('./science_writer');
+module.exports = require('./lens_writer');

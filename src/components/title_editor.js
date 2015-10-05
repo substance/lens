@@ -12,6 +12,9 @@ var FormEditor = Surface.FormEditor;
 function TitleEditor() {
   Component.apply(this, arguments);
 
+  var doc = this.props.doc;
+  var editor = new FormEditor();
+  this.surface = new Surface(this.context.controller, editor, { name: 'title' } );
   this.childContext = {
     surface: this.surface
   };
@@ -28,20 +31,13 @@ TitleEditor.Prototype = function() {
         "data-id": "title-editor"
       })
       .append(
-        $$(TextProperty).addClass('title')
-          .addProps({
-            doc: doc,
-            tagName: "div",
-            className: "title",
-            path: [metaNode.id, "title"]
-          })
+        $$(TextProperty, {
+          doc: doc,
+          tagName: "div",
+          className: "title",
+          path: [metaNode.id, "title"]
+        }).addClass('title')
       );
-  };
-
-  this.didReceiveProps = function() {
-    var doc = this.props.doc;
-    var editor = new FormEditor();
-    this.surface = new Surface(this.context.surfaceManager, doc, editor, { name: 'title' } );
   };
 
   this.didMount = function() {
