@@ -12,9 +12,9 @@ var React = require('react');
 
 // Lens + Substance
 var LensWriter = require('./src/lens_writer');
-// var Article = require('./lib/article');
-// var Component = require('substance');
-// var $$ = Component.$$;
+var Article = require('./lib/article');
+var Component = require('substance/ui/component');
+var $$ = Component.$$;
 
 var ReactLensWriter = React.createClass({
 
@@ -39,20 +39,20 @@ var ReactLensWriter = React.createClass({
   //   });
   // },
 
-  // componentDidMount() {
-  //   var el = React.findDOMNode(this);
-  //   var doc = Article.fromXml(this.props.content);
+  componentDidMount() {
+    var el = React.findDOMNode(this);
+    var doc = Article.fromXml(this.props.content);
 
-  //   var writer = Component.mount($$(LensWriter, {doc: doc}), el);
-  //   this.setState({
-  //     writer: writer
-  //   });
-  // },
+    var writer = Component.mount($$(LensWriter, {doc: doc}), el);
+    this.setState({
+      writer: writer
+    });
+  },
 
   render: function() {
     return React.DOM.div({
       className: 'lens-writer-wrapper'
-    }, null, 'HELLO WORLD');
+    });
   }
 });
 
