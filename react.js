@@ -33,16 +33,19 @@ var ReactLensWriter = React.createClass({
 
   // New props arrived, update the editor
   componentDidUpdate: function() {
-    var doc = Article.fromXml(this.props.content);
+    var doc = this.createDoc(this.props.content);
     this.writer.extendProps({
       doc: doc
     });
   },
 
+  createDoc: function(content) {
+    return Article.fromXml(content || Article.XML_TEMPLATE);
+  },
+
   componentDidMount: function() {
     var el = React.findDOMNode(this);
-    var doc = Article.fromXml(this.props.content);
-
+    var doc = this.createDoc(this.props.content);
     this.writer = Component.mount($$(LensWriter, {doc: doc}), el);
   },
 
