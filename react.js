@@ -46,7 +46,10 @@ var ReactLensWriter = React.createClass({
   componentDidMount: function() {
     var el = React.findDOMNode(this);
     var doc = this.createDoc(this.props.content);
-    this.writer = Component.mount($$(LensWriter, {doc: doc}), el);
+    this.writer = Component.mount($$(LensWriter, {
+      doc: doc,
+      onSave: this.props.onSave
+    }), el);
   },
 
   render: function() {
