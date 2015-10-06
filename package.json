@@ -9,7 +9,6 @@
     "express": "*",
     "js-beautify": "^1.5.6",
     "lodash": "3.3.1",
-    "node-polyglot": "^0.4.1",
     "node-sass": "3.x",
     "substance": "substance/substance#controller-refactor"
   },
