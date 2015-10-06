@@ -9,7 +9,6 @@ var $$ = Component.$$;
 
 function CitePanel() {
   Component.apply(this, arguments);
-  debugger;
 }
 
 CitePanel.Prototype = function() {
@@ -44,17 +43,27 @@ CitePanel.Prototype = function() {
   };
 
   this.didMount = function() {
-    this.tool = this.context.toolRegistry.get('cite');
-    if (!this.tool) throw new Error('cite tool not found in registry');
+    // this.tool = this.context.toolRegistry.get('cite');
+    // if (!this.tool) throw new Error('cite tool not found in registry');
   };
 
-  this.didReceiveProps = function() {
+  this.willMount = function(props, state) {
+    console.log('CitePanel.willMount', this.props);
+    this._initialize(props);
+  };
+
+  this.willReceiveProps = function(nextProps) {
+    console.log('CitePanel.willReceiveProps', nextProps);
+    this._initialize(nextProps);
+  };
+
+  this._initialize = function() {
     this.items = this.getItems(this.props.citationType);
   };
 
   this.willUnmount = function() {
     this.$el.off('click', '.back', this.handleCancel);
-    this.tool.disconnect(this);
+    // this.tool.disconnect(this);
   };
 
   // Determines wheter an item is active

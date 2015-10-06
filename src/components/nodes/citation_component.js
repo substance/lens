@@ -44,6 +44,7 @@ CitationComponent.Prototype = function() {
 
   this.onMouseDown = function(e) {
     e.preventDefault();
+    e.stopPropagation();
     var citation = this.props.node;
     var surface = this.context.surface;
 

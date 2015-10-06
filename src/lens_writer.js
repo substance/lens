@@ -15,6 +15,8 @@ var ContentToolbar = require('./components/content_toolbar');
 
 var CrossrefSearch = require('../lib/article/bib/crossref_search');
 
+var docHelpers = require('substance/document/helpers');
+
 var Component = require('substance/ui/component');
 var $$ = Component.$$;
 
@@ -102,6 +104,43 @@ LensWriter.Prototype = function() {
   //     })
   //   }
   // };
+
+
+  this.onSelectionChanged = function(sel, surface) {
+
+    function getActiveAnno(type) {
+      return docHelpers.getAnnotationsForSelection(doc, sel, type, 'main')[0];
+    }
+
+    if (surface.name !== "main") return;
+    if (sel.isNull() || !sel.isPropertySelection()) {
+      return;
+    }
+    if (sel.equals(this.prevSelection)) {
+      return;
+    }
+    this.prevSelection = sel;
+
+    var doc = surface.getDocument();
+    var citation = getActiveAnno('citation');
+
+    if (citation && citation.getSelection().equals(sel)) {
+      // Trigger state change
+      var citationType = citation.type.replace('_citation', '');
+      this.setState({
+        contextId: "cite_"+citationType,
+        citationType: citationType,
+        citationId: citation.id
+      });
+    } else {
+      if (this.state.contextId !== 'toc') {
+        this.setState({
+          contextId: "toc"
+        });
+      }
+    }
+    
+  };
 
   // this.onSelectionChanged = function(sel, surface) {
   //   var contentContainer = surface.getContainer();
