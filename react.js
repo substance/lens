@@ -5,11 +5,10 @@ var React = require('react');
 // 
 // React.createElement(LensWriter, {
 //   content: LENS_ARTICLE_XML,
-//   handleSave: function(doc, cb) {
-//     var xml = doc.toXml();
+//   onSave: function(xml, cb) {
+//     
 //   }
 // });
-
 
 // Lens + Substance
 var LensWriter = require('./src/lens_writer');
@@ -19,8 +18,17 @@ var $$ = Component.$$;
 
 var ReactLensWriter = React.createClass({
 
-  handleSave: function(doc, cb) {
-    this.props.handleSave(doc, cb);
+  getWriter: function() {
+    return this;
+  },
+
+  onSave: function(doc, changes, cb) {
+    var xml = doc.toXml();
+    this.props.onSave(xml, cb);
+  },
+
+  getContent: function() {
+    return this.writer.getDocument().toXml();
   },
 
   // New props arrived, update the editor
