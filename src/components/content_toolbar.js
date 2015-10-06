@@ -7,6 +7,7 @@ var $$ = Component.$$;
 
 var UndoTool = require('substance/ui/tools/undo_tool');
 var RedoTool = require('substance/ui/tools/redo_tool');
+var SaveTool = require('substance/ui/tools/save_tool');
 var TextTool = require('substance/ui/tools/text_tool');
 var StrongTool = require('substance/ui/tools/strong_tool');
 var EmphasisTool = require('substance/ui/tools/emphasis_tool');
@@ -32,7 +33,8 @@ ContentToolbarComponent.Prototype = function() {
     el.append(
       $$('div').addClass('tool-group document clearfix').append(
         $$(UndoTool).append($$(Icon, {icon: 'fa-undo'})),
-        $$(RedoTool).append($$(Icon, {icon: 'fa-repeat'}))
+        $$(RedoTool).append($$(Icon, {icon: 'fa-repeat'})),
+        $$(SaveTool).append($$(Icon, {icon: 'fa-save'}))
       )
     );
     // Figure Actions
