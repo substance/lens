@@ -99,13 +99,11 @@ CitePanel.Prototype = function() {
     }
 
     var ctrl = this.context.controller;
-
     ctrl.transaction(function(tx, args) {
       tx.set([citation.id, "targets"], newTargets);
       return args;
     });
 
-    // this.tool.toggleTarget(citationId, targetId);
     this.rerender();
   };
 };

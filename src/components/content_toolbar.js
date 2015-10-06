@@ -13,6 +13,10 @@ var StrongTool = require('substance/ui/tools/strong_tool');
 var EmphasisTool = require('substance/ui/tools/emphasis_tool');
 var LinkTool = require('substance/ui/tools/link_tool');
 
+var ToggleImageFigureCitation = require('../tools/toggle_image_figure_citation');
+
+var DropdownComponent = require('substance/ui/dropdown_component');
+
 var Icon = require("substance/ui/font_awesome_icon");
 
 // var CiteTool = require("./tools/cite_tool_component");
@@ -37,27 +41,31 @@ ContentToolbarComponent.Prototype = function() {
         $$(SaveTool).append($$(Icon, {icon: 'fa-save'}))
       )
     );
+
     // Figure Actions
     // ------------------
-    // var figureActions = $$(DropdownComponent).addProps({
-    //     label: $$(Icon).addProps({icon: "fa-image"}),
-    //     title: i18n.t('figure')
-    //   }).append(
-    //     $$(Tool)
-    //       .addProps({ tool: 'insert_figure'})
-    //       .addClass('option')
-    //       .append("Insert"),
-    //     $$(CiteTool)
-    //       .addProps({ citationType: 'image_figure'})
-    //       .addClass('option')
-    //       .append("Cite"),
-    //     $$(OpenModalTool)
-    //       .addProps({
-    //         contextId: 'manageCollection',
-    //         itemType: 'image_figure',
-    //         title: i18n.t('menu.manage')
-    //       })
-    // );
+    var figureActions = $$(DropdownComponent, {
+      label: $$(Icon, {icon: "fa-image"}),
+      title: 'Figure' // this.i18n.t('figure')
+    }).append(
+        // $$(Tool)
+        //   .addProps({ tool: 'insert_figure'})
+        //   .addClass('option')
+        //   .append("Insert"),
+        $$(ToggleImageFigureCitation).append('Cite')
+
+        // $$(CiteTool)
+        //   .addProps({ citationType: 'image_figure'})
+        //   .addClass('option')
+        //   .append("Cite"),
+
+        // $$(OpenModalTool)
+        //   .addProps({
+        //     contextId: 'manageCollection',
+        //     itemType: 'image_figure',
+        //     title: i18n.t('menu.manage')
+        //   })
+    );
 
     // Table Actions
     // ------------------
@@ -126,11 +134,11 @@ ContentToolbarComponent.Prototype = function() {
     //   );
 
     el.append(
-      // $$('div').addClass('tool-group actions clearfix').append(
-      //   figureActions,
-      //   tableActions,
-      //   bibitemActions
-      // ),
+      $$('div').addClass('tool-group actions clearfix').append(
+        figureActions
+        // tableActions,
+        // bibitemActions
+      ),
       $$('div').addClass('tool-group formatting clearfix float-right').append(
         $$(StrongTool).append($$(Icon, {icon: 'fa-bold'})),
         $$(EmphasisTool).append($$(Icon, {icon: 'fa-italic'})),
