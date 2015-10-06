@@ -22,6 +22,7 @@ CitePanel.Prototype = function() {
         return $$(comp).key(item.id).addProps({
           node: item,
           active: this.isItemActive(item.id),
+          handleSelection: this.handleSelection.bind(this)
         });
       }.bind(this));
     } else {
@@ -47,7 +48,7 @@ CitePanel.Prototype = function() {
     // if (!this.tool) throw new Error('cite tool not found in registry');
   };
 
-  this.willMount = function(props, state) {
+  this.willMount = function(props /*, state*/) {
     console.log('CitePanel.willMount', this.props);
     this._initialize(props);
   };
@@ -88,7 +89,23 @@ CitePanel.Prototype = function() {
   // Called with entityId when an entity has been clicked
   this.handleSelection = function(targetId) {
     var citationId = this.props.citationId;
-    this.tool.toggleTarget(citationId, targetId);
+    var doc = this.props.doc;
+    var citation = doc.get(citationId);
+    var newTargets = citation.targets.slice();
+    if (_.includes(newTargets, targetId)) {
+      newTargets = _.without(newTargets, targetId);
+    } else {
+      newTargets.push(targetId);
+    }
+
+    var ctrl = this.context.controller;
+
+    ctrl.transaction(function(tx, args) {
+      tx.set([citation.id, "targets"], newTargets);
+      return args;
+    });
+
+    // this.tool.toggleTarget(citationId, targetId);
     this.rerender();
   };
 };
