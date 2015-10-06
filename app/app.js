@@ -1,8 +1,5 @@
 'use strict';
 
-// i18n
-require('./i18n/load');
-
 var Substance = require('substance');
 var OO = Substance.OO;
 var Component = Substance.Component;
