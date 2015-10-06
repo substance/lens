@@ -49,7 +49,7 @@ ManageCollection.Prototype = function() {
           });
       }, this);
     } else {
-      itemEls = [$$('div').append("No items found.")];
+      itemEls = [$$('div').append(this.i18n.t("no_items_found"))];
     }
 
     return $$('div').addClass('manage-collection-component').append(

@@ -30,7 +30,7 @@ AddBibItems.Prototype = function() {
         $$('input').addClass('float-left')
           .attr({
             type: "text",
-            placeholder: "Enter search term",
+            placeholder: this.i18n.t('enter_search_term'),
           })
           .on('keypress', this.onKeyPress),
         $$('button').addClass('button float-right')
