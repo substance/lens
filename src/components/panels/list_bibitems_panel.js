@@ -35,7 +35,7 @@ ListBibItems.Prototype = function() {
           .addClass('button delete-button float-right small plain')
           .attr("data-id", entry.id)
           .on('click', this.handleDeleteBibItem)
-          .append("Delete"),
+          .append(this.i18n.t("delete")),
         $$('div')
           .addClass('csl-right-inline')
           .append(entry.text)

@@ -32,7 +32,7 @@ CitePanel.Prototype = function() {
         $$('a').addClass('back').attr('href', '#')
           .on('click', this.handleCancel)
           .append($$(Icon).addProps({icon: 'fa-chevron-left'})),
-        $$('div').addClass('label').append("Choose referenced items")
+        $$('div').addClass('label').append(this.i18n.t("choose_referenced_items"))
       ),
       $$('div').addClass("panel-content").append(
         $$('div').addClass("bib-items").append(
