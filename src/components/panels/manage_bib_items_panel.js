@@ -11,8 +11,8 @@ var ListBibItems = require('./list_bibitems_panel');
 var AddBibItems = require('./add_bibitems_panel');
 
 var CONTEXTS = [
-  {contextId: 'list', label: 'Manage', icon: 'fa-list'},
-  {contextId: 'add', label: 'Add references', icon: 'fa-plus'},
+  {contextId: 'list', label: 'manage', icon: 'fa-list'},
+  {contextId: 'add', label: 'add_references', icon: 'fa-plus'},
 ];
 
 function ManageBibItemsPanel() {
@@ -38,7 +38,7 @@ ManageBibItemsPanel.Prototype = function() {
         .attr("data-id", context.contextId)
         .on('click', this.handleContextSwitch)
         .append($$(Icon).addProps({ icon: context.icon })
-          .append(" "+context.label)
+          .append(" " + this.i18n.t(context.label))
         );
       if (context.contextId === state.contextId) {
         button.addClass('active');

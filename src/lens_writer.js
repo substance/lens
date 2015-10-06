@@ -20,6 +20,16 @@ var docHelpers = require('substance/document/helpers');
 var Component = require('substance/ui/component');
 var $$ = Component.$$;
 
+// Substance is i18n ready, but by now we did not need it
+// Thus, we configure I18n statically as opposed to loading
+// language files for the current locale
+var I18n = require('substance/ui/i18n');
+I18n.instance.load(require('substance/ui/i18n/en'));
+I18n.instance.load(require('./i18n/en'));
+// e.g. in german
+// I18n.instance.load(require('substance/ui/i18n/de'));
+// I18n.instance.load(require('./i18n/de'));
+
 function LensWriter(parent, params) {
   params.props.config = {
     panelOrder: ['toc'],
@@ -37,7 +47,8 @@ LensWriter.Prototype = function() {
     return {
       controller: this.controller,
       componentRegistry: this.controller.componentRegistry,
-      bibSearchEngines: [new CrossrefSearch()]
+      bibSearchEngines: [new CrossrefSearch()],
+      i18n: I18n.instance
     };
   };
 
@@ -139,7 +150,7 @@ LensWriter.Prototype = function() {
         });
       }
     }
-    
+
   };
 
   // this.onSelectionChanged = function(sel, surface) {
@@ -155,7 +166,7 @@ LensWriter.Prototype = function() {
 
 
   //   function activeAnno(type) {
-  //     return helpers.getAnnotationsForSelection(doc, sel, type, "body")[0]; 
+  //     return helpers.getAnnotationsForSelection(doc, sel, type, "body")[0];
   //   }
 
   //   var topicCitation = activeAnno("topic_citation");
@@ -188,7 +199,7 @@ LensWriter.Prototype = function() {
 
   // Hande Writer state change updates
   // --------------
-  // 
+  //
   // Here we update highlights
 
   // this.handleStateUpdate = function(newState) {
