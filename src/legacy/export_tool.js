@@ -1,7 +1,6 @@
 var Substance = require('substance');
 var Tool = Substance.Surface.Tool;
 
-
 function slug(str) {
   str = str.replace(/^\s+|\s+$/g, ''); // trim
   str = str.toLowerCase();
@@ -20,13 +19,11 @@ function slug(str) {
   return str;
 }
 
-
-
 var ExportTool = Tool.extend({
 
   name: "export",
 
-  didInitialize: function() {
+  initialize: function() {
     this.state.disabled = false;
   },
 
