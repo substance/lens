@@ -150,74 +150,29 @@ LensWriter.Prototype = function() {
         });
       }
     }
-
   };
 
-  // this.onSelectionChanged = function(sel, surface) {
-  //   var contentContainer = surface.getContainer();
-  //   var doc = this.getDocument();
-
-  //   if (sel.isNull() || !sel.isPropertySelection() || !sel.isCollapsed()) return false;
-  //   if (surface.getContainerId() !== "body") return false;
-
-  //   // From topics panel
-  //   // ---------------
-  //   //
-
-
-  //   function activeAnno(type) {
-  //     return helpers.getAnnotationsForSelection(doc, sel, type, "body")[0];
-  //   }
-
-  //   var topicCitation = activeAnno("topic_citation");
-  //   var comment = activeAnno("comment");
-
-  //   if (topicCitation) {
-  //     // Trigger state change
-  //     this.setState({
-  //       contextId: "editTopicCitation",
-  //       topicCitationId: topicCitation.id,
-  //       noScroll: true
-  //     });
-  //     return true;
-  //   } else if (comment) {
-  //     this.setState({
-  //       contextId: "editComment",
-  //       commentId: comment.id,
-  //       noScroll: true
-  //     });
-  //     return true;
-  //   } else {
-  //     if (this.state.contextId !== 'toc') {
-  //       this.setState({
-  //         contextId: "toc"
-  //       });
-  //     }
-  //     return true;
-  //   }
-  // };
 
   // Hande Writer state change updates
   // --------------
   //
   // Here we update highlights
 
-  // this.handleStateUpdate = function(newState) {
-  //   var oldState = this.state;
-  //   var doc = this.getDocument();
+  this.handleStateUpdate = function(newState) {
+    // var oldState = this.state;
+    var doc = this.getDocument();
 
-  //   function getActiveNodes(state) {
-  //     if (state.topicCitationId) {
-  //       return [ state.topicCitationId ];
-  //     } else if (state.commentId) {
-  //       return [ state.commentId ];
-  //     }
-  //     return [];
-  //   }
+    function getActiveNodes(state) {
+      if (state.citationId) {
+        var targets = doc.get(state.citationId).targets;
+        return [ state.citationId ].concat(targets);
+      }
+      return [];
+    }
 
-  //   var activeAnnos = getActiveNodes(newState);
-  //   doc.setHighlights(activeAnnos);
-  // }
+    var activeAnnos = getActiveNodes(newState);
+    doc.setHighlights(activeAnnos);
+  };
 
 };
 

@@ -9,7 +9,7 @@ var $$ = Component.$$;
 
 function CitePanel() {
   Component.apply(this, arguments);
-  this._initialize(props);
+  this._initialize(this.props);
 }
 
 CitePanel.Prototype = function() {
