@@ -49,7 +49,7 @@ CitationComponent.Prototype = function() {
     var surface = this.context.surface;
 
     surface.setSelection(citation.getSelection());
-    surface.rerenderDomSelection();
+    // surface.rerenderDomSelection();
   };
 
   this.onClick = function(e) {
