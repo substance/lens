@@ -1,5 +1,6 @@
 var Substance = require("substance");
 var Article = require('../lib/article');
+var $ = Substance.$;
 
 var Backend = function() {
 
@@ -65,7 +66,7 @@ Backend.Prototype = function() {
 
   this.uploadFigure = function(file, cb) {
     // This is a fake implementation
-    var objectURL = URL.createObjectURL(file);
+    var objectURL = window.URL.createObjectURL(file);
     cb(null, objectURL);
   };
 };

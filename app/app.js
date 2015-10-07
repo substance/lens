@@ -5,8 +5,8 @@ var OO = Substance.OO;
 var Component = Substance.Component;
 var $$ = Component.$$;
 var Backend = require("./backend");
-
-var ScienceWriter = require("../src");
+var $ = Substance.$;
+var LensWriter = require("../src");
 
 function App() {
   Component.Root.apply(this, arguments);
@@ -18,7 +18,7 @@ App.Prototype = function() {
   this.render = function() {
     var el = $$('div').addClass('app');
     if (this.state.doc) {
-      el.append($$(ScienceWriter, {doc: this.state.doc}).ref('writer'))
+      el.append($$(LensWriter, {doc: this.state.doc}).ref('writer'));
     }
     return el;
   };
