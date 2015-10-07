@@ -17,12 +17,37 @@ var CONTEXTS = [
 function ManageCollection() {
   Component.apply(this, arguments);
 
+  var doc = this.props.doc;
+  // retrieve items from collection
+  this.collection = doc.getCollection(this.props.itemType);
+  
+  // create surface
+  var surfaceOptions = {
+    name: 'collection',
+    logger: this.context.notifications
+  };
+  this.surface = new Surface(this.context.surfaceManager, doc,
+    new Surface.FormEditor(), surfaceOptions);
+
   this.childContext = {
     surface: this.surface
   };
 }
 
 ManageCollection.Prototype = function() {
+
+  this.didMount = function() {
+    var surface = this.surface;
+    var app = this.context.app;
+    // push surface selection state so that we can recover it when closing
+    this.context.surfaceManager.pushState();
+    surface.attach(this.refs.collection.$el[0]);
+  };
+
+  this.dispose = function() {
+    this.surface.dispose();
+    this.context.surfaceManager.popState();
+  };
 
   this.render = function() {
     var doc = this.props.doc;
@@ -76,31 +101,6 @@ ManageCollection.Prototype = function() {
     return [items.length, prefix].join(' ');
   };
 
-  this.didReceiveProps = function() {
-    var doc = this.props.doc;
-    // retrieve items from collection
-    this.collection = doc.getCollection(this.props.itemType);
-    // create surface
-    var surfaceOptions = {
-      name: 'collection',
-      logger: this.context.notifications
-    };
-    this.surface = new Surface(this.context.surfaceManager, doc,
-      new Surface.FormEditor(), surfaceOptions);
-  };
-
-  this.didMount = function() {
-    var surface = this.surface;
-    var app = this.context.app;
-    // push surface selection state so that we can recover it when closing
-    this.context.surfaceManager.pushState();
-    surface.attach(this.refs.collection.$el[0]);
-  };
-
-  this.willUnmount = function() {
-    this.surface.dispose();
-    this.context.surfaceManager.popState();
-  };
 
   this.handleItemDeletion = function(itemId) {
     console.log('handling item deletion', itemId);

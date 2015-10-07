@@ -7,9 +7,17 @@ var $$ = Component.$$;
 
 function CitationComponent() {
   Component.apply(this, arguments);
+
+  this.props.node.connect(this, {
+    "label:changed": this.onLabelChanged
+  });
 }
 
 CitationComponent.Prototype = function() {
+
+  this.dispose = function() {
+    this.props.node.disconnect(this);
+  };
 
   this.render = function() {
     return $$('span')
@@ -30,16 +38,6 @@ CitationComponent.Prototype = function() {
       classNames += " " + this.props.classNames.join(' ');
     }
     return classNames.replace(/_/g, '-');
-  };
-
-  this.didMount = function() {
-    this.props.node.connect(this, {
-      "label:changed": this.onLabelChanged
-    });
-  };
-
-  this.willUnmount = function() {
-    this.props.node.disconnect(this);
   };
 
   this.onMouseDown = function(e) {

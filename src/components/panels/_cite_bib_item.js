@@ -7,9 +7,18 @@ var $$ = Component.$$;
 
 function CiteBibItem() {
   Component.apply(this, arguments);
+
+  this.props.node.connect(this, {
+    'label': this.onLabelChanged
+  });
 }
 
 CiteBibItem.Prototype = function() {
+
+  this.dispose = function() {
+    this.props.node.disconnect(this);
+  };
+
   this.render = function() {
     var el = $$('div').addClass('bib-item border-bottom pad item small clearfix');
     el.on('click', this.onClick);
@@ -22,16 +31,6 @@ CiteBibItem.Prototype = function() {
     }
     el.append($$('div').addClass('text').append(this.props.node.text));
     return el;
-  };
-
-  this.didMount = function() {
-    this.props.node.connect(this, {
-      'label': this.onLabelChanged
-    });
-  };
-
-  this.willUnmount = function() {
-    this.props.node.disconnect(this);
   };
 
   this.onClick = function(e) {

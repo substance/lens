@@ -16,6 +16,17 @@ function AddBibItems() {
 
 AddBibItems.Prototype = function() {
 
+  this.didMount = function() {
+    // push surface selection state so that we can recover it when closing
+    this.context.surfaceManager.pushState();
+    var $input = this.$el.find('input');
+    $input.val(this.state.searchResult.searchStr).focus();
+  };
+
+  this.dispose = function() {
+    this.context.surfaceManager.popState();
+  };
+
   this.getInitialState = function() {
     return {
       searchResult: this.props.searchResult,
@@ -63,17 +74,6 @@ AddBibItems.Prototype = function() {
     }, this);
   };
 
-  this.didMount = function() {
-    // push surface selection state so that we can recover it when closing
-    this.context.surfaceManager.pushState();
-    var $input = this.$el.find('input');
-    $input.val(this.state.searchResult.searchStr).focus();
-  };
-
-  this.willUnmount = function() {
-    this.context.surfaceManager.popState();
-  };
-
   this.onClick = function(e) {
     e.preventDefault();
     var itemGuid = e.currentTarget.dataset.id;
@@ -115,7 +115,6 @@ AddBibItems.Prototype = function() {
         source: JSON.stringify(bibEntry.data),
         format: 'citeproc'
       };
-
       tx.create(bibItem);
     });
 

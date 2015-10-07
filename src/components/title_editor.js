@@ -21,6 +21,14 @@ function TitleEditor() {
 }
 
 TitleEditor.Prototype = function() {
+  
+  this.didMount = function() {
+    this.surface.attach(this.$el[0]);
+  };
+
+  this.dispose = function() {
+    this.surface.detach();
+  };
 
   this.render = function() {
     var doc = this.props.doc;
@@ -40,13 +48,6 @@ TitleEditor.Prototype = function() {
       );
   };
 
-  this.didMount = function() {
-    this.surface.attach(this.$el[0]);
-  };
-
-  this.willUnmount = function() {
-    this.surface.detach();
-  };
 };
 
 OO.inherit(TitleEditor, Component);
