@@ -48,6 +48,7 @@ LensWriter.Prototype = function() {
       config: this.config,
       controller: this.controller,
       componentRegistry: this.controller.componentRegistry,
+      toolManager: this.controller.toolManager,
       bibSearchEngines: [new CrossrefSearch()],
       i18n: I18n.instance
     };
