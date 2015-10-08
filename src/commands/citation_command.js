@@ -9,20 +9,14 @@ var ToggleBibItemCitationCommand = AnnotationCommand.extend({
     return annos.length === 0;
   },
 
-  // executeCreate: function() {
-  //   return {
-  //     mode: 'create'
-  //   };
-  // },
+  canDelete: function() {
+    return false;
+  },
 
   getAnnotationData: function() {
     return {
       target: []
     };
-  },
-
-  canDelete: function() {
-    return false;
   }
 });
 

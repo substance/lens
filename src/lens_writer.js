@@ -45,6 +45,7 @@ LensWriter.Prototype = function() {
 
   this.getChildContext = function() {
     return {
+      config: this.config,
       controller: this.controller,
       componentRegistry: this.controller.componentRegistry,
       bibSearchEngines: [new CrossrefSearch()],
@@ -151,7 +152,6 @@ LensWriter.Prototype = function() {
       }
     }
   };
-
 
   // Hande Writer state change updates
   // --------------
