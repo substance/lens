@@ -28,6 +28,7 @@ function ContentToolbarComponent() {
 ContentToolbarComponent.Prototype = function() {
 
   this.render = function() {
+    console.log('############ ContentToolbarComponent.render');
     var el = $$("div").addClass("content-tools-component toolbar small fill-white");
     el.append(
       $$('div').addClass('tool-group text clearfix').append(

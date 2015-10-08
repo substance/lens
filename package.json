@@ -10,7 +10,7 @@
     "express": "*",
     "lodash": "3.3.1",
     "node-sass": "3.x",
-    "substance": "substance/substance#controller-refactor"
+    "substance": "substance/substance#commands-on-surface"
   },
   "devDependencies": {
     "gulp": "^3.8.11",
