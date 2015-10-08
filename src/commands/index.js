@@ -4,7 +4,7 @@ var commands = {
     require('substance/ui/commands/redo'),
     require('substance/ui/commands/save'),
   ],
-  body: [
+  main: [
     // Core-commands (this should live be on everywhere)
     // maybe directly register on Surface
     require('substance/ui/commands/select_all'),

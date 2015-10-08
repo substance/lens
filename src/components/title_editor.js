@@ -12,9 +12,12 @@ var FormEditor = Surface.FormEditor;
 function TitleEditor() {
   Component.apply(this, arguments);
 
-  var doc = this.props.doc;
+  // var doc = this.props.doc;
   var editor = new FormEditor();
-  this.surface = new Surface(this.context.controller, editor, { name: 'title' } );
+  this.surface = new Surface(this.context.controller, editor, { 
+    name: 'title',
+    commands: this.props.commands
+  });
   this.childContext = {
     surface: this.surface
   };

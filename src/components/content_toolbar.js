@@ -28,7 +28,6 @@ function ContentToolbarComponent() {
 ContentToolbarComponent.Prototype = function() {
 
   this.render = function() {
-    console.log('############ ContentToolbarComponent.render');
     var el = $$("div").addClass("content-tools-component toolbar small fill-white");
     el.append(
       $$('div').addClass('tool-group text clearfix').append(
@@ -142,8 +141,8 @@ ContentToolbarComponent.Prototype = function() {
       ),
       $$('div').addClass('tool-group formatting clearfix float-right').append(
         $$(StrongTool).append($$(Icon, {icon: 'fa-bold'})),
-        $$(EmphasisTool).append($$(Icon, {icon: 'fa-italic'})),
-        $$(LinkTool).append($$(Icon, {icon: 'fa-link'}))
+        $$(EmphasisTool).append($$(Icon, {icon: 'fa-italic'}))//,
+        // $$(LinkTool).append($$(Icon, {icon: 'fa-link'}))
       )
     );
     return el;
