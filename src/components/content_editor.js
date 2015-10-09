@@ -5,11 +5,9 @@ var OO = Substance.OO;
 var Component = Substance.Component;
 var $$ = Component.$$;
 
-// var TitleEditor = require('./title_editor');
 var BibliographyComponent = require('./bibliography_component');
 
-// var Surface = Substance.Surface;
-// var ContainerEditor = Surface.ContainerEditor;
+var TitleEditor = require('./title_editor');
 var ContainerEditor = require('substance/ui/container_editor');
 
 function ContentEditor() {
@@ -21,25 +19,18 @@ ContentEditor.Prototype = function() {
   this.render = function() {
     var doc = this.props.doc;
     return $$('div').addClass('panel-content-inner').append(
-      // $$(TitleEditor, {
-      //   doc: doc,
-      //   commands: this.context.config.commands.title,
-      // }).ref('title'),
+      $$(TitleEditor, {
+        doc: doc,
+        commands: this.context.config.commands.title,
+      }).ref('title'),
 
       // The full fledged document (ContainerEditor)
-      $$("div").ref("main").addClass("document-content").append(
+      $$("div").ref('main').addClass('document-content').append(
         $$(ContainerEditor, {
           containerId: 'main',
           doc: doc,
-          commands: this.context.config.commands.title
+          commands: this.context.config.commands.main
         }).ref('editor')
-        // $$(ContainerNodeComponent, {
-        //   doc: doc,
-        //   node: this.props.node,
-        //   commands: this.context.config.commands[this.props.node.id],
-        //   editor: this.editor          
-        // }).ref('editor')
-        //   .attr('contentEditable', true)
       ),
       $$(BibliographyComponent, {doc: doc}).ref('bib')
     );
