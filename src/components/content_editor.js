@@ -5,16 +5,15 @@ var OO = Substance.OO;
 var Component = Substance.Component;
 var $$ = Component.$$;
 
-var TitleEditor = require('./title_editor');
+// var TitleEditor = require('./title_editor');
 var BibliographyComponent = require('./bibliography_component');
-var ContainerNodeComponent = require('substance/ui/nodes/container_node_component');
 
-var Surface = Substance.Surface;
-var ContainerEditor = Surface.ContainerEditor;
+// var Surface = Substance.Surface;
+// var ContainerEditor = Surface.ContainerEditor;
+var ContainerEditor = require('substance/ui/container_editor');
 
 function ContentEditor() {
   Component.apply(this, arguments);
-  this.editor = new ContainerEditor(this.props.node.id);
 }
 
 ContentEditor.Prototype = function() {
@@ -22,19 +21,25 @@ ContentEditor.Prototype = function() {
   this.render = function() {
     var doc = this.props.doc;
     return $$('div').addClass('panel-content-inner').append(
-      $$(TitleEditor, {
-        doc: doc,
-        commands: this.context.config.commands.title,
-      }).ref('title'),
+      // $$(TitleEditor, {
+      //   doc: doc,
+      //   commands: this.context.config.commands.title,
+      // }).ref('title'),
+
       // The full fledged document (ContainerEditor)
       $$("div").ref("main").addClass("document-content").append(
-        $$(ContainerNodeComponent, {
+        $$(ContainerEditor, {
+          containerId: 'main',
           doc: doc,
-          node: this.props.node,
-          commands: this.context.config.commands[this.props.node.id],
-          editor: this.editor          
+          commands: this.context.config.commands.title
         }).ref('editor')
-          .attr('contentEditable', true)
+        // $$(ContainerNodeComponent, {
+        //   doc: doc,
+        //   node: this.props.node,
+        //   commands: this.context.config.commands[this.props.node.id],
+        //   editor: this.editor          
+        // }).ref('editor')
+        //   .attr('contentEditable', true)
       ),
       $$(BibliographyComponent, {doc: doc}).ref('bib')
     );

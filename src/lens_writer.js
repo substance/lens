@@ -12,7 +12,6 @@ var ContentPanel = require("substance/ui/writer/content_panel");
 var StatusBar = require("substance/ui/writer/status_bar");
 // var ModalPanel = require('substance/ui/writer/modal_panel');
 var ContentToolbar = require('./components/content_toolbar');
-
 var CrossrefSearch = require('../lib/article/bib/crossref_search');
 
 var docHelpers = require('substance/document/helpers');
@@ -119,6 +118,7 @@ LensWriter.Prototype = function() {
   // };
 
 
+
   this.onSelectionChanged = function(sel, surface) {
 
     function getActiveAnno(type) {
@@ -174,7 +174,6 @@ LensWriter.Prototype = function() {
     var activeAnnos = getActiveNodes(newState);
     doc.setHighlights(activeAnnos);
   };
-
 };
 
 OO.inherit(LensWriter, Writer);
