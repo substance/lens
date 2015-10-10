@@ -29,6 +29,7 @@ I18n.instance.load(require('./i18n/en'));
 // I18n.instance.load(require('substance/ui/i18n/de'));
 // I18n.instance.load(require('./i18n/de'));
 
+
 function LensWriter(parent, params) {
   params.props.config = {
     panelOrder: ['toc'],
@@ -41,13 +42,13 @@ function LensWriter(parent, params) {
 }
 
 LensWriter.Prototype = function() {
-
+  // Some things should go into controller
   this.getChildContext = function() {
     return {
-      config: this.config,
-      controller: this.controller,
-      componentRegistry: this.controller.componentRegistry,
-      toolManager: this.controller.toolManager,
+      config: this.props.config,
+      controller: this,
+      componentRegistry: this.componentRegistry,
+      toolManager: this.toolManager,
       bibSearchEngines: [new CrossrefSearch()],
       i18n: I18n.instance
     };
@@ -70,7 +71,7 @@ LensWriter.Prototype = function() {
         $$(ContentToolbar).ref('toolbar'),
         $$(ContentPanel, {
           doc: doc,
-          containerId: this.config.containerId
+          containerId: this.props.config.containerId
         }).ref('content')
       )
     );
@@ -80,14 +81,14 @@ LensWriter.Prototype = function() {
       $$('div').ref('resource-container')
         .addClass("resource-container")
         .append(
-          $$(ContextToggles, {panelOrder: this.config.panelOrder}).ref("context-toggles"),
+          $$(ContextToggles, {panelOrder: this.props.config.panelOrder}).ref("context-toggles"),
           this.renderContextPanel()
         )
     );
 
     // Status bar
     el.append(
-      $$(StatusBar).ref('statusBar').setProps({ doc: doc })
+      $$(StatusBar, {doc: doc}).ref('statusBar')
     );
     // Clipboard
     el.append(
