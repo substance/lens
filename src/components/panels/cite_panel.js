@@ -20,11 +20,11 @@ CitePanel.Prototype = function() {
     if (this.items.length > 0) {
       items = this.items.map(function(item) {
         var comp = componentRegistry.get("_cite_" + this.props.citationType);
-        return $$(comp).key(item.id).addProps({
+        return $$(comp, {
           node: item,
           active: this.isItemActive(item.id),
           handleSelection: this.handleSelection.bind(this)
-        });
+        }).ref(item.id);
       }.bind(this));
     } else {
       items = [$$('div').addClass("no-results").append("Nothing to reference.")];
@@ -33,7 +33,7 @@ CitePanel.Prototype = function() {
       $$('div').addClass("dialog-header").append(
         $$('a').addClass('back').attr('href', '#')
           .on('click', this.handleCancel)
-          .append($$(Icon).addProps({icon: 'fa-chevron-left'})),
+          .append($$(Icon, {icon: 'fa-chevron-left'})),
         $$('div').addClass('label').append(this.i18n.t("choose_referenced_items"))
       ),
       $$('div').addClass("panel-content").append(
