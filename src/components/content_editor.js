@@ -20,6 +20,7 @@ ContentEditor.Prototype = function() {
     var doc = this.props.doc;
     return $$('div').addClass('panel-content-inner').append(
       $$(TitleEditor, {
+        name: 'title',
         doc: doc,
         commands: this.context.config.commands.title,
       }).ref('title'),
@@ -27,6 +28,7 @@ ContentEditor.Prototype = function() {
       // The full fledged document (ContainerEditor)
       $$("div").ref('main').addClass('document-content').append(
         $$(ContainerEditor, {
+          name: 'main',
           containerId: 'main',
           doc: doc,
           commands: this.context.config.commands.main
