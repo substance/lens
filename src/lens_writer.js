@@ -1,12 +1,12 @@
 'use strict';
 
 var Substance = require('substance');
+var _ = require('substance/basics/helpers');
+
 var OO = Substance.OO;
 var Writer = require("substance/ui/writer");
 var components = require('./components');
 var commands = require('./commands');
-var stateHandlers = require('./state_handlers');
-
 var ContextToggles = require('substance/ui/writer/context_toggles');
 var ContentPanel = require("substance/ui/writer/content_panel");
 var StatusBar = require("substance/ui/writer/status_bar");
@@ -29,29 +29,40 @@ I18n.instance.load(require('./i18n/en'));
 // I18n.instance.load(require('substance/ui/i18n/de'));
 // I18n.instance.load(require('./i18n/de'));
 
-
 function LensWriter(parent, params) {
   params.props.config = {
-    panelOrder: ['toc'],
-    containerId: 'main',
-    components: components,
-    commands: commands,
-    stateHandlers: stateHandlers
+
   };
   Writer.call(this, parent, params);
 }
 
 LensWriter.Prototype = function() {
+
+  this.static = {
+    config: {
+      controller: {
+        commands: commands.controller,
+        components: components,
+      },
+      main: {
+        commands: commands.main,
+      },
+      title: {
+        commands: commands.title
+      },
+      panelOrder: ['toc'],
+      containerId: 'main'      
+    }
+  };
+
   // Some things should go into controller
   this.getChildContext = function() {
-    return {
-      config: this.props.config,
-      controller: this,
-      componentRegistry: this.componentRegistry,
-      toolManager: this.toolManager,
+    var childContext = Writer.prototype.getChildContext.call(this);
+
+    return _.extend(childContext, {
       bibSearchEngines: [new CrossrefSearch()],
       i18n: I18n.instance
-    };
+    });
   };
 
   this.getInitialState = function() {
@@ -60,6 +71,7 @@ LensWriter.Prototype = function() {
 
   this.render = function() {
     var doc = this.props.doc;
+    var config = this.getConfig();
     var el = $$('div').addClass('writer-component');
 
     // Basic 2-column layout
@@ -71,7 +83,7 @@ LensWriter.Prototype = function() {
         $$(ContentToolbar).ref('toolbar'),
         $$(ContentPanel, {
           doc: doc,
-          containerId: this.props.config.containerId
+          containerId: config.containerId
         }).ref('content')
       )
     );

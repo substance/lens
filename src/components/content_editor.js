@@ -21,7 +21,7 @@ ContentEditor.Prototype = function() {
       $$(TitleEditor, {
         name: 'title',
         doc: doc,
-        commands: this.context.config.commands.title,
+        commands: this.context.config.title.commands,
       }).ref('title'),
 
       // The full fledged document (ContainerEditor)
@@ -30,7 +30,7 @@ ContentEditor.Prototype = function() {
           name: 'main',
           containerId: 'main',
           doc: doc,
-          commands: this.context.config.commands.main
+          commands: this.context.config.main.commands
         }).ref('editor')
       ),
       $$(BibliographyComponent, {doc: doc}).ref('bib')
