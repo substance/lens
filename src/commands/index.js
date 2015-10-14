@@ -14,6 +14,7 @@ var commands = {
     require('substance/ui/commands/make_heading1'),
     require('substance/ui/commands/make_heading2'),
     require('substance/ui/commands/make_heading3'),
+    require('substance/ui/commands/switch_text_type'),
     require('substance/ui/commands/make_blockquote'),
     require('substance/ui/commands/toggle_strong'),
     require('substance/ui/commands/toggle_emphasis'),
