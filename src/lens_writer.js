@@ -13,9 +13,7 @@ var StatusBar = require("substance/ui/writer/status_bar");
 // var ModalPanel = require('substance/ui/writer/modal_panel');
 var ContentToolbar = require('./components/content_toolbar');
 var CrossrefSearch = require('../lib/article/bib/crossref_search');
-
 var docHelpers = require('substance/document/helpers');
-
 var Component = require('substance/ui/component');
 var $$ = Component.$$;
 
@@ -173,6 +171,10 @@ LensWriter.Prototype = function() {
 
     function getActiveNodes(state) {
       if (state.citationId) {
+        // TODO: targets only works for figures
+        // However if we click on a bib ref [1-4]
+        // it would maybe be useful to show all citations that
+        // reference 1,2,3, or 4.
         var targets = doc.get(state.citationId).targets;
         return [ state.citationId ].concat(targets);
       }
@@ -180,7 +182,11 @@ LensWriter.Prototype = function() {
     }
 
     var activeAnnos = getActiveNodes(newState);
-    doc.setHighlights(activeAnnos);
+    // HACK: updates the highlights when state
+    // transition has finished
+    setTimeout(function() {
+      doc.setHighlights(activeAnnos);  
+    }, 0);
   };
 };
 
