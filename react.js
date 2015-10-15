@@ -1,16 +1,4 @@
 var React = require('react');
-
-// Usage:
-// var LensWriter = require('lens-writer/adapters/react');
-// 
-// React.createElement(LensWriter, {
-//   content: LENS_ARTICLE_XML,
-//   onSave: function(xml, cb) {
-//     
-//   }
-// });
-
-// Lens + Substance
 var LensWriter = require('./src/lens_writer');
 var Article = require('./lib/article');
 var Component = require('substance/ui/component');
@@ -22,9 +10,14 @@ var ReactLensWriter = React.createClass({
     return this;
   },
 
-  onSave: function(doc, changes, cb) {
+  // Delegators
+  _onSave: function(doc, changes, cb) {
     var xml = doc.toXml();
     this.props.onSave(xml, cb);
+  },
+
+  _onFileUpload: function(file, cb) {
+    this.props.onFileUpload(file, cb);
   },
 
   getContent: function() {
@@ -48,7 +41,8 @@ var ReactLensWriter = React.createClass({
     var doc = this.createDoc(this.props.content);
     this.writer = Component.mount($$(LensWriter, {
       doc: doc,
-      onSave: this.onSave
+      onSave: this._onSave,
+      onFileUpload: this._onFileUpload
     }), el);
   },
 
