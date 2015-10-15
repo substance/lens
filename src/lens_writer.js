@@ -30,9 +30,6 @@ I18n.instance.load(require('./i18n/en'));
 // I18n.instance.load(require('./i18n/de'));
 
 function LensWriter(parent, params) {
-  params.props.config = {
-
-  };
   Writer.call(this, parent, params);
 }
 
@@ -93,7 +90,7 @@ LensWriter.Prototype = function() {
       $$('div').ref('resource-container')
         .addClass("resource-container")
         .append(
-          $$(ContextToggles, {panelOrder: this.props.config.panelOrder}).ref("context-toggles"),
+          $$(ContextToggles, {panelOrder: config.panelOrder}).ref("context-toggles"),
           this.renderContextPanel()
         )
     );
@@ -129,8 +126,6 @@ LensWriter.Prototype = function() {
   //     })
   //   }
   // };
-
-
 
   this.onSelectionChanged = function(sel, surface) {
 

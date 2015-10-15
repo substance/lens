@@ -19,6 +19,9 @@ var commands = {
     require('substance/ui/commands/toggle_strong'),
     require('substance/ui/commands/toggle_emphasis'),
     require('substance/ui/commands/toggle_link'),
+    
+    // Insert figure
+    require('./insert_figure'),
     require('./toggle_bib_item_citation'),
     require('./toggle_image_figure_citation')
   ],

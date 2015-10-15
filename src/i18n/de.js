@@ -3,4 +3,8 @@ module.exports = {
   'choose_referenced_items': 'Referenzen auswählen',
   'no_items_found': 'Keine Ergebnisse gefunden.',
   'add_references': 'Referenzen hinzufügen',
+  'figure': 'Abbildung',
+  'insert': 'Einfügen',
+  'cite': 'Zitieren',
+  'bib_item': 'Referenz'
 };

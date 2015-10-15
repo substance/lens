@@ -13,13 +13,11 @@ var StrongTool = require('substance/ui/tools/strong_tool');
 var EmphasisTool = require('substance/ui/tools/emphasis_tool');
 var LinkTool = require('substance/ui/tools/link_tool');
 
+var InsertFigureTool = require('../tools/insert_figure');
 var ToggleImageFigureCitation = require('../tools/toggle_image_figure_citation');
 
 var DropdownComponent = require('substance/ui/dropdown_component');
-
 var Icon = require("substance/ui/font_awesome_icon");
-
-// var CiteTool = require("./tools/cite_tool_component");
 
 function ContentToolbarComponent() {
   Component.apply(this, arguments);
@@ -46,103 +44,31 @@ ContentToolbarComponent.Prototype = function() {
     // ------------------
     var figureActions = $$(DropdownComponent, {
       label: $$(Icon, {icon: "fa-image"}),
-      title: 'Figure' // this.i18n.t('figure')
+      title: this.i18n.t('figure')
     }).append(
-        // $$(Tool)
-        //   .addProps({ tool: 'insert_figure'})
-        //   .addClass('option')
-        //   .append("Insert"),
-        $$(ToggleImageFigureCitation).append('Cite')
-
-        // $$(CiteTool)
-        //   .addProps({ citationType: 'image_figure'})
-        //   .addClass('option')
-        //   .append("Cite"),
-
-        // $$(OpenModalTool)
-        //   .addProps({
-        //     contextId: 'manageCollection',
-        //     itemType: 'image_figure',
-        //     title: i18n.t('menu.manage')
-        //   })
+        $$(InsertFigureTool).removeClass('tool').addClass('option').append(this.i18n.t('insert')),
+        $$(ToggleImageFigureCitation).addClass('option').append(this.i18n.t('cite'))
     );
-
-    // Table Actions
-    // ------------------
-
-    // var tableActions = $$(DropdownComponent)
-    //   .addProps({
-    //     label: $$(Icon).addProps({icon: "fa-table"}),
-    //     title: i18n.t('table')
-    //   })
-    //   .addClass('table-dropdown')
-    //   .append(
-    //     $$(Tool)
-    //       .addProps({ tool: 'insert_table'})
-    //       .addClass('option')
-    //       .append("Insert"),
-    //     $$(CiteTool)
-    //       .addProps({ citationType: 'table_figure'})
-    //       .addClass('option')
-    //       .append("Cite"),
-    //     $$(OpenModalTool)
-    //       .addProps({
-    //         contextId: 'manageCollection',
-    //         itemType: 'table_figure',
-    //         title: i18n.t('menu.manage')
-    //       }),
-    //     $$("hr"),
-    //     $$(TableTool)
-    //       .addClass('option')
-    //       .addProps({ tool: 'insert_columns', mode: "before"}),
-    //     $$(TableTool)
-    //       .addProps({ tool: 'delete_columns' })
-    //       .addClass('option'),
-    //     $$(TableTool)
-    //       .addProps({ tool: 'insert_columns', mode: "after"})
-    //       .addClass('option'),
-    //     $$("hr"),
-    //     $$(TableTool)
-    //       .addProps({ tool: 'insert_rows', mode: "above"})
-    //       .addClass('option'),
-    //     $$(TableTool)
-    //       .addProps({ tool: 'delete_rows' })
-    //       .addClass('option'),
-    //     $$(TableTool)
-    //       .addProps({ tool: 'insert_rows', mode: "below"})
-    //       .addClass('option')
-    //   );
 
     // Bibitem Actions
     // ------------------
 
-    // var bibitemActions = $$(DropdownComponent)
-    //   .addProps({
-    //     label: $$(Icon).addProps({icon: "fa-book"}),
-    //     title: i18n.t('bibitem')
-    //   })
-    //   .append(
-    //     $$(CiteTool)
-    //       .addProps({ citationType: 'bib_item' })
-    //       .addClass('option')
-    //       .append("Cite"),
-    //     $$(OpenModalTool)
-    //       .addProps({
-    //         contextId: 'manageBibItems',
-    //         title: i18n.t('menu.manage')
-    //       })
-    //   );
+    var bibitemActions = $$(DropdownComponent, {
+      label: $$(Icon, {icon: 'fa-book'}),
+      title: this.i18n.t('bib_item')
+    }).append(
+      $$(ToggleImageFigureCitation).addClass('option').append(this.i18n.t('cite'))
+    );
 
     el.append(
       $$('div').addClass('tool-group actions clearfix').append(
-        figureActions
-        // tableActions,
-        // bibitemActions
+        figureActions,
+        bibitemActions
       ),
       $$('div').addClass('tool-group formatting clearfix float-right').append(
         $$(StrongTool).append($$(Icon, {icon: 'fa-bold'})),
-        $$(EmphasisTool).append($$(Icon, {icon: 'fa-italic'}))//,
-        // $$(LinkTool).append($$(Icon, {icon: 'fa-link'}))
+        $$(EmphasisTool).append($$(Icon, {icon: 'fa-italic'})),
+        $$(LinkTool).append($$(Icon, {icon: 'fa-link'}))
       )
     );
     return el;
