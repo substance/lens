@@ -9,7 +9,7 @@
     "express": "*",
     "lodash": "3.3.1",
     "node-sass": "3.x",
-    "substance": "substance/substance#ui-polish"
+    "substance": "substance/substance#writer-improvements"
   },
   "devDependencies": {
     "gulp": "^3.8.11",
