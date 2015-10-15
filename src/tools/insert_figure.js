@@ -2,7 +2,7 @@ var SurfaceTool = require('substance/ui/tools/surface_tool');
 
 var InsertFigureTool = SurfaceTool.extend({
   static: {
-    name: 'Figure',
+    name: 'insertFigure',
     command: 'insertFigure'
   }
 });
