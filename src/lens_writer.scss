@@ -166,7 +166,7 @@
 
 .cite-panel-component .item {
   cursor: pointer;
-
+  padding: 20px;
   border-left: 2px solid transparent;
 
   &.active { background: white; border-left: 2px solid #444; }
@@ -192,7 +192,6 @@
 }
 
 .cite-panel-component .item.bib-item {
-  padding: 20px;
 
   &.active { background: white; border-left: 2px solid rgba(11, 157, 217, 1); }
 
