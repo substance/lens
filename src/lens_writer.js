@@ -45,7 +45,7 @@ LensWriter.Prototype = function() {
       title: {
         commands: commands.title
       },
-      panelOrder: ['toc'],
+      panelOrder: ['toc', 'manageBibItems'],
       containerId: 'main'      
     }
   };
@@ -88,7 +88,10 @@ LensWriter.Prototype = function() {
       $$('div').ref('resource-container')
         .addClass("resource-container")
         .append(
-          $$(ContextToggles, {panelOrder: config.panelOrder}).ref("context-toggles"),
+          $$(ContextToggles, {
+            panelOrder: config.panelOrder,
+            contextId: this.state.contextId
+          }).ref("context-toggles"),
           this.renderContextPanel()
         )
     );

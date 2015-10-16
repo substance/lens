@@ -6,5 +6,6 @@ module.exports = {
   'figure': 'Figure',
   'insert': 'Insert',
   'cite': 'Cite',
-  'bib_item': 'Reference'
+  'bib_item': 'Reference',
+  'manageBibItems': 'References'
 };

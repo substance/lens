@@ -8,7 +8,6 @@
   background: #aaa;
 }
 
-
 .scrollbar-component.cite_bib_item .highlight {
   background-color: #0b9dd9;
 }
@@ -246,6 +245,14 @@
 /* Custom Annotation styles
 -----------------------------------------------------*/
 
+/* Manage BibItem Component
+-----------------------------------------------------*/
+
+.manage-bib-items-panel {
+  .panel-content {
+    top: 40px;
+  }
+}
 
 /* Manage Collection Component
 -----------------------------------------------------*/

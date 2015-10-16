@@ -46,7 +46,7 @@ ManageBibItemsPanel.Prototype = function() {
       return button;
     }.bind(this));
 
-    return $$('div').append(
+    return $$('div').addClass('panel manage-bib-items-panel').append(
       $$('div').addClass('header toolbar clearfix menubar fill-light').append(
         $$('div').addClass('title float-left large').append("References"),
         $$('div').addClass('menu-group small').append(navItems),
@@ -55,7 +55,9 @@ ManageBibItemsPanel.Prototype = function() {
           .append($$(Icon).addProps({ icon: 'fa-close' }))
           .on('click', this.onCloseModal)
       ),
-      this.getContextElement()
+      $$('div').addClass('panel-content').append(
+        this.getContextElement()
+      )
     );
   };
 
@@ -90,6 +92,6 @@ OO.inherit(ManageBibItemsPanel, Component);
 // -----------------
 
 ManageBibItemsPanel.contextId = "manageBibItems";
-ManageBibItemsPanel.icon = "fa-align-left";
+ManageBibItemsPanel.icon = "fa-link";
 
 module.exports = ManageBibItemsPanel;

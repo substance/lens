@@ -16,6 +16,7 @@ var ManageCollection = require("./manage_collection");
 module.exports = {
   "toc": TocPanel,
   "cite": CitePanel,
+  
   // We use different states for the same panel, so we can distinguish
   // the citation type based on state.contextId
   "cite_bib_item": CitePanel,
@@ -25,6 +26,7 @@ module.exports = {
   "_cite_bib_item": CiteBibItem,
   "_cite_image_figure": CiteImageFigure,
   "_cite_table_figure": CiteTableFigure,
+
   // Manage BibItems
   "manageBibItems": ManageBibItemsPanel,
 

@@ -1,6 +1,8 @@
 module.exports = {
   "paragraph": require('substance/ui/nodes/paragraph_component'),
   "heading": require('substance/ui/nodes/heading_component'),
+  "blockquote": require('substance/ui/nodes/blockquote_component'),
+  "codeblock": require('substance/ui/nodes/codeblock_component'),
   "image": require('substance/ui/nodes/image_component'),
   "table": require('substance/ui/nodes/table_component'),
   "image_figure": require('substance/ui/nodes/figure_component'),
