@@ -1,11 +1,13 @@
 'use strict';
 
 var Substance = require('substance');
+var $ = require('substance/basics/jquery');
 var _ = Substance._;
 var OO = Substance.OO;
 var Component = Substance.Component;
 var $$ = Component.$$;
 var uuid = Substance.uuid;
+
 
 // Create new bib items using cross ref search
 // -----------------
@@ -18,13 +20,13 @@ AddBibItems.Prototype = function() {
 
   this.didMount = function() {
     // push surface selection state so that we can recover it when closing
-    this.context.surfaceManager.pushState();
+    // this.context.surfaceManager.pushState();
     var $input = this.$el.find('input');
     $input.val(this.state.searchResult.searchStr).focus();
   };
 
   this.dispose = function() {
-    this.context.surfaceManager.popState();
+    // this.context.surfaceManager.popState();
   };
 
   this.getInitialState = function() {
@@ -150,7 +152,7 @@ AddBibItems.Prototype = function() {
           label: '',
           text: citeprocCompiler.renderReference(data)
         });
-        self.forceUpdate();
+        self.rerender();
       });
       promise.done(function() {
         var idx = runningQueries.indexOf(promise);

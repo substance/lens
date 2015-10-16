@@ -49,11 +49,11 @@ ManageBibItemsPanel.Prototype = function() {
     return $$('div').addClass('panel manage-bib-items-panel').append(
       $$('div').addClass('header toolbar clearfix menubar fill-light').append(
         $$('div').addClass('title float-left large').append("References"),
-        $$('div').addClass('menu-group small').append(navItems),
-        $$('button')
-          .addClass('button close-modal float-right')
-          .append($$(Icon).addProps({ icon: 'fa-close' }))
-          .on('click', this.onCloseModal)
+        $$('div').addClass('menu-group small').append(navItems)
+        // $$('button')
+        //   .addClass('button close-modal float-right')
+        //   .append($$(Icon).addProps({ icon: 'fa-close' }))
+        //   .on('click', this.onCloseModal)
       ),
       $$('div').addClass('panel-content').append(
         this.getContextElement()
@@ -64,7 +64,7 @@ ManageBibItemsPanel.Prototype = function() {
   this.handleContextSwitch = function(e) {
     e.preventDefault();
     var contextId = e.currentTarget.dataset.id;
-    this.setState({contextId: contextId});
+    this.extendState({contextId: contextId});
   };
 
   this.getContextElement = function() {

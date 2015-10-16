@@ -7,5 +7,7 @@ module.exports = {
   'insert': 'Insert',
   'cite': 'Cite',
   'bib_item': 'Reference',
-  'manageBibItems': 'References'
+  'manageBibItems': 'References',
+  'manage': 'Manage',
+  'add_reference': 'Add References'
 };
