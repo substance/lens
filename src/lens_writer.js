@@ -10,12 +10,12 @@ var commands = require('./commands');
 var ContextToggles = require('substance/ui/writer/context_toggles');
 var ContentPanel = require("substance/ui/writer/content_panel");
 var StatusBar = require("substance/ui/writer/status_bar");
-// var ModalPanel = require('substance/ui/writer/modal_panel');
 var ContentToolbar = require('./components/content_toolbar');
 var CrossrefSearch = require('../lib/article/bib/crossref_search');
 var docHelpers = require('substance/document/helpers');
 var Component = require('substance/ui/component');
 var $$ = Component.$$;
+var $ = require('substance/basics/jquery');
 
 // Substance is i18n ready, but by now we did not need it
 // Thus, we configure I18n statically as opposed to loading
@@ -56,7 +56,17 @@ LensWriter.Prototype = function() {
 
     return _.extend(childContext, {
       bibSearchEngines: [new CrossrefSearch()],
-      i18n: I18n.instance
+      i18n: I18n.instance,
+      // Used for turning embed urls to HTML content
+      embedResolver: function(srcUrl, cb) {
+        $.get('http://iframe.ly/api/iframely?url='+encodeURIComponent(srcUrl)+'&api_key=712fe98e864c79e054e2da')
+          .success(function(res) {
+            cb(null, res.html);
+          })
+          .error(function(err) {
+            cb(err);
+          });
+      }
     });
   };
 

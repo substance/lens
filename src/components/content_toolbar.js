@@ -11,6 +11,7 @@ var SaveTool = require('substance/ui/tools/save_tool');
 var TextTool = require('substance/ui/tools/text_tool');
 var StrongTool = require('substance/ui/tools/strong_tool');
 var EmphasisTool = require('substance/ui/tools/emphasis_tool');
+var EmbedTool = require('substance/ui/tools/embed_tool');
 var LinkTool = require('substance/ui/tools/link_tool');
 
 var InsertFigureTool = require('../tools/insert_figure');
@@ -63,7 +64,8 @@ ContentToolbarComponent.Prototype = function() {
     el.append(
       $$('div').addClass('tool-group actions clearfix').append(
         figureActions,
-        bibitemActions
+        bibitemActions,
+        $$(EmbedTool).append($$(Icon, {icon: 'fa-code'}))
       ),
       $$('div').addClass('tool-group formatting clearfix float-right').append(
         $$(StrongTool).append($$(Icon, {icon: 'fa-bold'})),

@@ -10,6 +10,7 @@ var commands = {
     require('substance/ui/commands/select_all'),
 
     // Special commands
+    require('substance/ui/commands/embed'),
     require('substance/ui/commands/make_paragraph'),
     require('substance/ui/commands/make_heading1'),
     require('substance/ui/commands/make_heading2'),
