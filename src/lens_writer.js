@@ -42,8 +42,8 @@ LensWriter.Prototype = function() {
       main: {
         commands: commands.main,
       },
-      title: {
-        commands: commands.title
+      cover: {
+        commands: commands.cover
       },
       panelOrder: ['toc', 'manageBibItems'],
       containerId: 'main'      

@@ -6,7 +6,7 @@ var Component = Substance.Component;
 var $$ = Component.$$;
 
 var BibliographyComponent = require('./bibliography_component');
-var TitleEditor = require('./title_editor');
+var CoverEditor = require('./cover_editor');
 var ContainerEditor = require('substance/ui/surface/container_editor');
 
 function ContentEditor() {
@@ -18,11 +18,11 @@ ContentEditor.Prototype = function() {
   this.render = function() {
     var doc = this.props.doc;
     return $$('div').addClass('panel-content-inner').append(
-      $$(TitleEditor, {
-        name: 'title',
+      $$(CoverEditor, {
+        name: 'cover',
         doc: doc,
-        commands: this.context.config.title.commands,
-      }).ref('title'),
+        commands: this.context.config.cover.commands,
+      }).ref('cover'),
 
       // The full fledged document (ContainerEditor)
       $$("div").ref('main').addClass('document-content').append(

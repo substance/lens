@@ -277,7 +277,6 @@
   }
 }
 
-
 /* Bibliography in manuscript area
 -----------------------------------------------------*/
 
@@ -288,4 +287,29 @@
 .bibliography-component .bib-item {
   padding-bottom: 10px;
   font-size: 14px;
+}
+
+/* Document Cover
+-----------------------------------------------------*/
+
+.content-panel-component .document-cover {
+  padding-bottom: 30px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 40px;
+
+  .title {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 40px;
+  }
+
+  .authors {
+    padding: 30px 0px;
+
+    .author {
+      display: block;
+      float: left;
+      margin-right: 20px;
+    }
+  }
 }

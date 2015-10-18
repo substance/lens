@@ -27,7 +27,7 @@ var commands = {
     require('./toggle_bib_item_citation'),
     require('./toggle_image_figure_citation')
   ],
-  title: [
+  cover: [
     require('substance/ui/commands/toggle_emphasis')
   ]
 };

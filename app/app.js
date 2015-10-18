@@ -26,7 +26,7 @@ App.Prototype = function() {
           cb(null, fileUrl);  
         },
         onSave: function(doc, changes, cb) {
-          console.log('custom save handler in action...');
+          console.log('custom save handler in action...', doc.toXml());
           cb(null);
         }
       }).ref('writer'));
