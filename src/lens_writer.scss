@@ -293,9 +293,9 @@
 -----------------------------------------------------*/
 
 .content-panel-component .document-cover {
-  padding-bottom: 30px;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 40px;
+  padding-bottom: 60px;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 60px;
 
   .title {
     font-size: 30px;
@@ -303,7 +303,15 @@
     line-height: 40px;
   }
 
+  .abstract {
+    padding-top: 15px;
+    // color: #666;
+    font-size: 18px;
+    line-height: 26px;
+  }
+
   .authors {
+    font-size: 20px;
     padding: 30px 0px;
 
     .author {

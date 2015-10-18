@@ -4,7 +4,6 @@ var OO = require('substance/basics/oo');
 var FormEditor = require('substance/ui/surface').FormEditor;
 var $$ = require('substance/ui/component').$$;
 var TextProperty = require("substance/ui/text_property_component");
-
 var map = require('lodash/collection/map');
 
 var CoverEditor = function() {
@@ -22,7 +21,7 @@ CoverEditor.Prototype = function() {
         "data-id": "title-editor"
       })
       .append(
-        // Editable Title
+        // Editable title
         $$(TextProperty, {
           doc: doc,
           tagName: "div",
@@ -30,7 +29,7 @@ CoverEditor.Prototype = function() {
           path: [metaNode.id, "title"]
         }).addClass('title'),
 
-        // Editable Authors
+        // Editable authors
         $$('div').addClass('authors clearfix').append(
           map(metaNode.authors, function(authorId) {
             return $$(TextProperty, {
@@ -40,8 +39,9 @@ CoverEditor.Prototype = function() {
             }).addClass('author');
           })
         ),
+        // Editable abstract
         $$('div').addClass('abstract').append(
-          $$('div').attr({contenteditable: false}).html('<strong>Abstract:</strong>'),
+          $$('div').attr({contenteditable: false})/*.html('<strong>Abstract:</strong>')*/,
           $$(TextProperty, {
             doc: doc,
             tagName: "div",
