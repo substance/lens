@@ -32,9 +32,9 @@ Article.Prototype = function() {
     this.citeprocCompiler = new CiteprocCompiler();
 
     this.collections = {
-      "bib_item": new Bibliography(this, 'main'),
-      "image_figure": new Collection(this, 'main', 'image_figure', 'Figure'),
-      "table_figure": new Collection(this, 'main', 'table_figure', 'Table'),
+      "bib-item": new Bibliography(this, 'main'),
+      "image-figure": new Collection(this, 'main', 'image-figure', 'Figure'),
+      "table-figure": new Collection(this, 'main', 'table-figure', 'Table'),
     };
 
     this.includesIndex = this.addIndex('includes', Substance.Data.Index.create({
@@ -44,7 +44,7 @@ Article.Prototype = function() {
 
     // Needed in AddBibItemComponent so we can map guid (aka DOI's) withour internal substance ids
     this.bibItemByGuidIndex = this.addIndex('bibItemByGuid', Substance.Data.Index.create({
-      type: "bib_item",
+      type: "bib-item",
       property: "guid"
     }));
 
@@ -98,16 +98,16 @@ Article.Prototype = function() {
   };
 
   this.getBibliography = function() {
-    return this.collections["bib_item"];
+    return this.collections["bib-item"];
   };
 
   // Legacy delete
   this.getFiguresCollection = function() {
-    return this.collections["image_figure"];
+    return this.collections["image-figure"];
   };
 
   this.getTablesCollection = function() {
-    return this.collections["table_figure"];
+    return this.collections["table-figure"];
   };
 
   this.getCollection = function(itemType) {

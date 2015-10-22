@@ -35,7 +35,7 @@ BibliographyComponent.Prototype = function() {
 
   this.didMount = function() {
     var doc = this.props.doc;
-    this.bibliography = doc.getCollection('bib_item');
+    this.bibliography = doc.getCollection('bib-item');
     this.bibliography.connect(this, {
       'bibliography:updated': this.update
     });

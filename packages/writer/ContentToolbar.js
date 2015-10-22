@@ -58,7 +58,7 @@ ContentToolbarComponent.Prototype = function() {
 
     var bibitemActions = $$(Dropdown, {
       label: $$(Icon, {icon: 'fa-book'}),
-      title: this.i18n.t('bib_item')
+      title: this.i18n.t('bib-item')
     }).append(
       // $$(ToggleImageFigureCitation).addClass('option').append(this.i18n.t('cite'))
     );

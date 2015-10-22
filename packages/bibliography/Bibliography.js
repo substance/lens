@@ -51,7 +51,7 @@ Bibliography.Prototype = function() {
     }, this);
 
     // get citation nodes sorted by occurrence position.
-    var citations = doc.getIndex('type').get('bib_item_citation');
+    var citations = doc.getIndex('type').get('bib-item-citation');
     // generate information for sorting
     var citationItems = _.map(citations, function(citation) {
       var address = container.getAddress(citation.path);

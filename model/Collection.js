@@ -125,7 +125,7 @@ Collection.Prototype = function() {
   // get citation nodes sorted by occurence in container.
   this.determineCitations = function() {
     var doc = this.doc;
-    var citations = doc.getIndex('type').get(this.itemType+'_citation');
+    var citations = doc.getIndex('type').get(this.itemType+'-citation');
     var container = doc.get(this.containerId);
     // generate information for sorting
     var _citations = _.map(citations, function(citation) {

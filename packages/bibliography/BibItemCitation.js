@@ -2,10 +2,10 @@ var Substance = require('substance');
 var Citation = require('../citations/Citation');
 
 var BibItemCitation = Citation.extend({
-  name: "bib_item_citation",
+  name: "bib-item-citation",
 
   getItemType: function() {
-    return 'bib_item';
+    return 'bib-item';
   }
 });
 

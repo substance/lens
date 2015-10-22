@@ -36,17 +36,17 @@ ArticleHtmlExporter.Prototype = function() {
     var articleMeta = doc.get('article-meta');
     $header.append(articleMeta.toHtml(this));
 
-    var figures = doc.getIndex('type').get('image_figure');
+    var figures = doc.getIndex('type').get('image-figure');
     _.each(figures, function(figure) {
       $header.append(figure.toHtml(this));
     }, this);
 
-    var tables = doc.getIndex('type').get('table_figure');
+    var tables = doc.getIndex('type').get('table-figure');
     _.each(tables, function(table) {
       $header.append(table.toHtml(this));
     }, this);
 
-    var bibItems = doc.getIndex('type').get('bib_item');
+    var bibItems = doc.getIndex('type').get('bib-item');
     _.each(bibItems, function(bibItem) {
       $header.append(bibItem.toHtml(this));
     }, this);

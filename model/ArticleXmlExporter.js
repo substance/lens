@@ -43,17 +43,17 @@ ArticleXmlExporter.Prototype = function() {
     var doc = this.state.doc;
     var $resources = $('<resources>');
 
-    var figures = doc.getIndex('type').get('image_figure');
+    var figures = doc.getIndex('type').get('image-figure');
     _.each(figures, function(figure) {
       $resources.append(figure.toHtml(this));
     }, this);
 
-    var tables = doc.getIndex('type').get('table_figure');
+    var tables = doc.getIndex('type').get('table-figure');
     _.each(tables, function(table) {
       $resources.append(table.toHtml(this));
     }, this);
 
-    var bibItems = doc.getIndex('type').get('bib_item');
+    var bibItems = doc.getIndex('type').get('bib-item');
     _.each(bibItems, function(bibItem) {
       $resources.append(bibItem.toHtml(this));
     }, this);

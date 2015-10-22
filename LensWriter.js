@@ -155,7 +155,7 @@ LensWriter.Prototype = function() {
 
     if (citation && citation.getSelection().equals(sel)) {
       // Trigger state change
-      var citationType = citation.type.replace('_citation', '').replace('_', '-');
+      var citationType = citation.type.replace('-citation', '').replace('_', '-');
 
       this.setState({
         contextId: "cite-"+citationType,

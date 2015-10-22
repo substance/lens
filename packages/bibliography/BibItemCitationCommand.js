@@ -4,8 +4,8 @@ var CitationCommand = require('../citations/CitationCommand');
 
 var BibItemCitationCommand = CitationCommand.extend({
   static: {
-    name: 'toggleBibItemCitation',
-    annotationType: 'bib_item_citation'
+    name: 'bibItemCitation',
+    annotationType: 'bib-item-citation'
   }
 });
 

@@ -113,7 +113,7 @@ AddBibItemsPanel.Prototype = function() {
     doc.transaction({}, {}, function(tx) {
       var bibItem = {
         id: uuid('bib'),
-        type: "bib_item",
+        type: "bib-item",
         source: JSON.stringify(bibEntry.data),
         format: 'citeproc'
       };
