@@ -1,5 +1,60 @@
-// Pull in common writer styles
-@import '../node_modules/substance/ui/styles/writer';
+/* Container Annotations
+-----------------------------------------------------*/
+
+.container-annotation.active.annotation-fragment {
+  background-color: rgba(145, 187, 4, 0.2);
+}
+
+/* Selection style sheets
+-----------------------------------------------------*/
+
+// ::selection {
+//   background: rgba(0,0,0,0.1);
+// }
+
+// ::-moz-selection {
+//   background: rgba(0,0,0,0.1);
+// }
+
+
+/* CSL Styles
+-----------------------------------------------------*/
+
+.csl-entry {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 25px;
+  padding: 5px 20px;
+}
+
+.csl-block {
+  padding:0.4em 0px 0.4em 0em;
+}
+
+.csl-left-margin {
+  float: left;
+  // color: #aaa;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.csl-right-inline {
+  margin-left: 40px;
+}
+
+/* Content Tools
+-----------------------------------------------------*/
+
+.content-tools-component {
+  height: 40px;
+  border-bottom: 1px solid #ddd;
+  position: absolute;
+  z-index: 40000;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+}
+
 
 /* Custom Scrollbar styles
 -----------------------------------------------------*/
@@ -52,112 +107,6 @@
 
 .annotation.bib-item-citation.active {
   background: rgba(11, 157, 217, 0.15);
-}
-
-
-/* TOC Panel
------------------------------------------------------*/
-
-.toc-panel-component .toc-entries {
-  padding: 20px 0px;
-}
-
-.toc-panel-component .toc-entry {
-  color: #777;
-  font-weight: 600;
-  display: block;
-  padding: 5px 0px;
-}
-
-.toc-panel-component .toc-entry.active {
-  color: #222;
-}
-
-.toc-panel-component .toc-entry:hover {
-  color: #444;
-}
-
-.toc-panel-component .toc-entry.level-1 {
-  font-size: 20px;
-  padding-left: 20px;
-}
-
-.toc-panel-component .toc-entry.level-2 {
-  font-size: 18px;
-  padding-left: 40px;
-}
-
-.toc-panel-component .toc-entry.level-3 {
-  font-size: 16px;
-  padding-left: 60px;
-}
-
-/* Text Annotations
------------------------------------------------------*/
-
-.annotation.strong {
-  font-weight: bold;
-}
-
-.annotation.emphasis {
-  font-style: italic;
-}
-
-.content-tools-component .tools a.publish-tool-component {
-  width: 120px;
-}
-
-/* Science Writer Specific
------------------------------------------------------*/
-
-.resource-container {
-  width: 35%;
-}
-
-.main-container {
-  width: 65%;
-  z-index: 30;
-}
-
-
-/* CSL Styles
------------------------------------------------------*/
-
-.csl-entry {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  line-height: 25px;
-  padding: 5px 20px;
-}
-
-.csl-block {
-  padding:0.4em 0px 0.4em 0em;
-}
-
-.csl-left-margin {
-  float: left;
-  // color: #aaa;
-  font-weight: 600;
-  font-size: 13px;
-}
-
-.csl-right-inline {
-  margin-left: 40px;
-}
-
-/* Toolbar
------------------------------------------------------*/
-
-.table-dropdown {
-// TODO: how to make the dropdown take more width
-// As some entries get broken in 2 lines
-}
-
-/* Non-Editables
-*/
-
-*[contenteditable="false"] {
-  cursor: default;
 }
 
 /* Cite Panel

@@ -1,6 +1,6 @@
 "use strict";
 
-var TocPanel = require("substance/ui/writer/toc_panel");
+var TocPanel = require("substance/ui/TocPanel");
 var CitePanel = require("./cite_panel");
 var ManageBibItemsPanel = require("./manage_bib_items_panel");
 
