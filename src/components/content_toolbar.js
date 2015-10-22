@@ -17,8 +17,8 @@ var LinkTool = require('substance/ui/tools/link_tool');
 var InsertFigureTool = require('../tools/insert_figure');
 var ToggleImageFigureCitation = require('../tools/toggle_image_figure_citation');
 
-var DropdownComponent = require('substance/ui/dropdown_component');
-var Icon = require("substance/ui/font_awesome_icon");
+var Dropdown = require('substance/ui/Dropdown');
+var Icon = require("substance/ui/FontAwesomeIcon");
 
 function ContentToolbarComponent() {
   Component.apply(this, arguments);
@@ -43,7 +43,7 @@ ContentToolbarComponent.Prototype = function() {
 
     // Figure Actions
     // ------------------
-    var figureActions = $$(DropdownComponent, {
+    var figureActions = $$(Dropdown, {
       label: $$(Icon, {icon: "fa-image"}),
       title: this.i18n.t('figure')
     }).append(
@@ -54,7 +54,7 @@ ContentToolbarComponent.Prototype = function() {
     // Bibitem Actions
     // ------------------
 
-    var bibitemActions = $$(DropdownComponent, {
+    var bibitemActions = $$(Dropdown, {
       label: $$(Icon, {icon: 'fa-book'}),
       title: this.i18n.t('bib_item')
     }).append(

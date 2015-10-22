@@ -4,7 +4,7 @@ var Substance = require('substance');
 var _ = Substance._;
 var OO = Substance.OO;
 var Component = Substance.Component;
-var Icon = require("substance/ui/font_awesome_icon");
+var Icon = require("substance/ui/FontAwesomeIcon");
 var $$ = Component.$$;
 
 function CitePanel() {

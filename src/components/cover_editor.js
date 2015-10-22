@@ -41,7 +41,7 @@ CoverEditor.Prototype = function() {
         ),
         // Editable abstract
         $$('div').addClass('abstract').append(
-          $$('div').attr({contenteditable: false})/*.html('<strong>Abstract:</strong>')*/,
+          $$('div').attr({contenteditable: false}),
           $$(TextProperty, {
             doc: doc,
             tagName: "div",
