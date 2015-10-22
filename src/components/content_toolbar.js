@@ -5,17 +5,19 @@ var OO = Substance.OO;
 var Component = Substance.Component;
 var $$ = Component.$$;
 
-var UndoTool = require('substance/ui/tools/undo_tool');
-var RedoTool = require('substance/ui/tools/redo_tool');
-var SaveTool = require('substance/ui/tools/save_tool');
-var TextTool = require('substance/ui/tools/text_tool');
-var StrongTool = require('substance/ui/tools/strong_tool');
-var EmphasisTool = require('substance/ui/tools/emphasis_tool');
-var EmbedTool = require('substance/ui/tools/embed_tool');
-var LinkTool = require('substance/ui/tools/link_tool');
+var UndoTool = require('substance/ui/UndoTool');
+var RedoTool = require('substance/ui/RedoTool');
+var SaveTool = require('substance/ui/SaveTool');
 
-var InsertFigureTool = require('../tools/insert_figure');
-var ToggleImageFigureCitation = require('../tools/toggle_image_figure_citation');
+var TextTool = require('substance/packages/text/TextTool');
+
+var StrongTool = require('substance/packages/strong/StrongTool');
+var EmphasisTool = require('substance/packages/emphasis/EmphasisTool');
+var EmbedTool = require('substance/packages/embed/EmbedTool');
+var LinkTool = require('substance/packages/link/LinkTool');
+
+// var InsertFigureTool = require('../tools/insert_figure');
+// var ToggleImageFigureCitation = require('../tools/toggle_image_figure_citation');
 
 var Dropdown = require('substance/ui/Dropdown');
 var Icon = require("substance/ui/FontAwesomeIcon");
@@ -47,8 +49,8 @@ ContentToolbarComponent.Prototype = function() {
       label: $$(Icon, {icon: "fa-image"}),
       title: this.i18n.t('figure')
     }).append(
-        $$(InsertFigureTool).removeClass('tool').addClass('option').append(this.i18n.t('insert')),
-        $$(ToggleImageFigureCitation).addClass('option').append(this.i18n.t('cite'))
+        // $$(InsertFigureTool).removeClass('tool').addClass('option').append(this.i18n.t('insert')),
+        // $$(ToggleImageFigureCitation).addClass('option').append(this.i18n.t('cite'))
     );
 
     // Bibitem Actions
@@ -58,7 +60,7 @@ ContentToolbarComponent.Prototype = function() {
       label: $$(Icon, {icon: 'fa-book'}),
       title: this.i18n.t('bib_item')
     }).append(
-      $$(ToggleImageFigureCitation).addClass('option').append(this.i18n.t('cite'))
+      // $$(ToggleImageFigureCitation).addClass('option').append(this.i18n.t('cite'))
     );
 
     el.append(
