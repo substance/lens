@@ -47,7 +47,7 @@ LensWriter.Prototype = function() {
     // -------------
 
     el.append(
-      $$('div').addClass('le-workspace').append(
+      $$('div').ref('workspace').addClass('le-workspace').append(
         // Main (left column)
         $$('div').ref('main').addClass("le-main").append(
           $$(ContentToolbar).ref('toolbar'),
