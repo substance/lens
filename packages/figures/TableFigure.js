@@ -1,12 +1,12 @@
 var Substance = require('substance');
-var Figure = require('./Figure');
+var Figure = require('substance/packages/figure/Figure');
 
 var TableFigure = Figure.extend({
-  name: "table_figure",
+  name: "table-figure",
 });
 
 TableFigure.static.components = ['title', 'content', 'caption'];
-TableFigure.static.citationType = "table_figure_citation";
+TableFigure.static.citationType = "table-figure-citation";
 TableFigure.static.blockType = true;
 
 // HtmlImporter

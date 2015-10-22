@@ -1,4 +1,4 @@
-var Figure = require('./Figure');
+var Figure = require('substance/packages/figure/Figure');
 
 var ImageFigure = Figure.extend({
   name: "image-figure"

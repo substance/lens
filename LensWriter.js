@@ -29,8 +29,8 @@ var CONFIG = {
       "image": require('substance/packages/image/ImageComponent'),
       "table": require('substance/packages/table/TableComponent'),
 
-      "image-figure": require('substance/packages/paragraph/ParagraphComponent'),
-      "table-figure": require('substance/packages/paragraph/ParagraphComponent'),
+      "image-figure": require('substance/packages/figure/FigureComponent'),
+      "table-figure": require('substance/packages/figure/FigureComponent'),
 
       "bib-item-citation": require('./packages/citations/CitationComponent'),
       "image-figure-citation": require('./packages/citations/CitationComponent'),
@@ -74,7 +74,7 @@ var CONFIG = {
       require('substance/packages/link/LinkCommand'),
 
       // Insert figure
-      require('./packages/figures/InsertFigureCommand'),
+      require('substance/packages/figure/InsertFigureCommand'),
       require('./packages/bibliography/BibItemCitationCommand'),
       require('./packages/figures/ImageFigureCitationCommand'),
     ]
