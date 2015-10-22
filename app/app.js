@@ -7,8 +7,9 @@ var $$ = Component.$$;
 var Backend = require("./backend");
 var $ = Substance.$;
 
-var LensWriter = require('../src/lens_writer');
-var LensReader = require('../src/lens_reader');
+var LensWriter = require('../LensWriter');
+// var LensReader = require('../LensReader');
+
 
 function App() {
   Component.Root.apply(this, arguments);

@@ -1,5 +1,5 @@
 var Substance = require("substance");
-var Article = require('../lib/article');
+var LensArticle = require('../model/LensArticle');
 var $ = Substance.$;
 
 var Backend = function() {
@@ -51,7 +51,7 @@ Backend.Prototype = function() {
   this.getDocument = function(documentId, cb) {
     this._request('GET', 'data/example-doc.xml', null, function(err, rawDoc) {
       if (err) { console.error(err); cb(err); }
-      var doc = Article.fromXml(rawDoc);
+      var doc = LensArticle.fromXml(rawDoc);
       window.doc = doc;
       cb(null, doc);
     });
