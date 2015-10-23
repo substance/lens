@@ -1,7 +1,7 @@
 var React = require('react');
-var LensWriter = require('./src/lens_writer');
-var Article = require('./lib/article');
-var Component = require('substance/ui/component');
+var LensWriter = require('./LensWriter');
+var Article = require('./model/LensArticle');
+var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
 var ReactLensWriter = React.createClass({

@@ -5,15 +5,13 @@ var Substance = require('substance');
 
 var OO = Substance.OO;
 var LensController = require('./lens_controller');
-var components = require('./components');
-var commands = require('./commands');
 
 var ContextToggles = require('substance/ui/ContextToggles');
 var ContentPanel = require("substance/ui/ContentPanel");
 var StatusBar = require("substance/ui/StatusBar");
 
 var ContentToolbar = require('./components/content_toolbar');
-var Component = require('substance/ui/component');
+var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
 function LensReader(parent, params) {

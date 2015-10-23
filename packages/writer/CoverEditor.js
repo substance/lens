@@ -2,8 +2,8 @@
 
 var OO = require('substance/basics/oo');
 var FormEditor = require('substance/ui/surface').FormEditor;
-var $$ = require('substance/ui/component').$$;
-var TextProperty = require("substance/ui/text_property_component");
+var $$ = require('substance/ui/Component').$$;
+var TextProperty = require("substance/ui/TextPropertyComponent");
 var map = require('lodash/collection/map');
 
 var CoverEditor = function() {

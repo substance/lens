@@ -10,7 +10,7 @@ var StatusBar = require("substance/ui/StatusBar");
 
 var ContentToolbar = require('./packages/writer/ContentToolbar');
 var docHelpers = require('substance/document/helpers');
-var Component = require('substance/ui/component');
+var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
 var CONFIG = {

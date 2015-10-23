@@ -6,7 +6,7 @@ var _ = require('substance/basics/helpers');
 var OO = Substance.OO;
 var Controller = require("substance/ui/Controller");
 var CrossrefSearch = require('./packages/bibliography/CrossrefSearch');
-var Component = require('substance/ui/component');
+var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 var $ = require('substance/basics/jquery');
 

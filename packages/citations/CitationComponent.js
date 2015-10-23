@@ -20,7 +20,6 @@ CitationComponent.Prototype = function() {
   };
 
   this.render = function() {
-    console.log('CitationComponent.render');
     return $$('span')
       .addClass(this.getClassNames())
       .attr({
