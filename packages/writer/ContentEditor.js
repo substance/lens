@@ -7,7 +7,7 @@ var $$ = Component.$$;
 
 var BibliographyComponent = require('../bibliography/BibliographyComponent');
 var CoverEditor = require('./CoverEditor');
-var ContainerEditor = require('substance/ui/surface/container_editor');
+var ContainerEditor = require('substance/ui/ContainerEditor');
 
 function ContentEditor() {
   Component.apply(this, arguments);

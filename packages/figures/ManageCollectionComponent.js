@@ -6,7 +6,7 @@
 // var Component = Substance.Component;
 // var $$ = Component.$$;
 // var Icon = require("substance/ui/FontAwesomeIcon");
-// var Surface = require("substance/ui/surface");
+// var Surface = require("substance/ui/Surface");
 
 // var ENABLED_TOOLS = ["strong", "emphasis", "comment"];
 

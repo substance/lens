@@ -1,7 +1,7 @@
 "use strict";
 
 var OO = require('substance/basics/oo');
-var FormEditor = require('substance/ui/surface').FormEditor;
+var FormEditor = require('substance/ui/FormEditor');
 var $$ = require('substance/ui/Component').$$;
 var TextProperty = require("substance/ui/TextPropertyComponent");
 var map = require('lodash/collection/map');
