@@ -46,7 +46,7 @@ var CONFIG = {
       "cite-table-figure": require('./packages/citations/CitePanel'),
 
       "bib-item-entry": require('./packages/bibliography/BibItemEntry'),
-      "image_figure-entry": require('./packages/figures/ImageFigureEntry'),
+      "image-figure-entry": require('./packages/figures/ImageFigureEntry'),
       "table-figure-entry": require('./packages/figures/TableFigureEntry'),
 
       // Manage BibItems

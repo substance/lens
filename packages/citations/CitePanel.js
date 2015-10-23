@@ -18,7 +18,7 @@ CitePanel.Prototype = function() {
     var items;
     if (this.items.length > 0) {
       items = this.items.map(function(item) {
-        var comp = componentRegistry.get("_cite_" + this.props.citationType);
+        var comp = componentRegistry.get(this.props.citationType+'-entry');
         return $$(comp, {
           node: item,
           active: this.isItemActive(item.id),
