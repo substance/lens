@@ -1,7 +1,7 @@
-var Substance = require('substance');
-var $ = require('substance/basics/jquery');
+var $ = require('substance/util/jquery');
+var DocumentNode = require('substance/model/DocumentNode');
 
-var ArticleMeta = Substance.Document.Node.extend({
+var ArticleMeta = DocumentNode.extend({
   name: "article-meta",
   properties: {
     "title": "string",

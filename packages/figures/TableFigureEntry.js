@@ -1,8 +1,7 @@
 'use strict';
 
-var Substance = require('substance');
-var OO = Substance.OO;
-var Component = Substance.Component;
+var oo = require('substance/util/oo');
+var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
 function TableFigureEntry() {
@@ -37,6 +36,6 @@ TableFigureEntry.Prototype = function() {
   };
 };
 
-OO.inherit(TableFigureEntry, Component);
+oo.inherit(TableFigureEntry, Component);
 
 module.exports = TableFigureEntry;

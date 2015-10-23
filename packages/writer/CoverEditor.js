@@ -1,6 +1,6 @@
 "use strict";
 
-var OO = require('substance/basics/oo');
+var OO = require('substance/util/oo');
 var FormEditor = require('substance/ui/FormEditor');
 var $$ = require('substance/ui/Component').$$;
 var TextProperty = require("substance/ui/TextPropertyComponent");

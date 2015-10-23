@@ -1,9 +1,8 @@
 'use strict';
 
-var Substance = require('substance');
-var _ = Substance._;
-var OO = Substance.OO;
-var Component = Substance.Component;
+var _ = require('substance/util/helpers');
+var oo = require('substance/util/oo');
+var Component = require('substance/ui/Component');
 var Icon = require("substance/ui/FontAwesomeIcon");
 var $$ = Component.$$;
 
@@ -97,7 +96,7 @@ CitePanel.Prototype = function() {
   };
 };
 
-OO.inherit(CitePanel, Component);
+oo.inherit(CitePanel, Component);
 
 // Panel configuration
 // ----------------

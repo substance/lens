@@ -1,9 +1,8 @@
 'use strict';
 
-var Substance = require('substance');
-var _ = Substance._;
-var OO = Substance.OO;
-var Component = Substance.Component;
+var _ = require('substance/util/helpers');
+var oo = require('substance/util/oo');
+var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
 // List existing bib items
@@ -60,6 +59,6 @@ ListBibItemsPanel.Prototype = function() {
   };
 };
 
-OO.inherit(ListBibItemsPanel, Component);
+oo.inherit(ListBibItemsPanel, Component);
 
 module.exports = ListBibItemsPanel;

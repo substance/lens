@@ -1,14 +1,13 @@
 'use strict';
 
-var Substance = require('substance');
-var _ = require('substance/basics/helpers');
+var _ = require('substance/util/helpers');
 
-var OO = Substance.OO;
+var oo = require('substance/util/oo');
 var Controller = require("substance/ui/Controller");
 var CrossrefSearch = require('./packages/bibliography/CrossrefSearch');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
-var $ = require('substance/basics/jquery');
+var $ = require('substance/util/jquery');
 
 // Substance is i18n ready, but by now we did not need it
 // Thus, we configure I18n statically as opposed to loading
@@ -154,6 +153,6 @@ LensController.Prototype = function() {
   };
 };
 
-OO.inherit(LensController, Controller);
+oo.inherit(LensController, Controller);
 
 module.exports = LensController;

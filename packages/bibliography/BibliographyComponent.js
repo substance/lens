@@ -1,9 +1,9 @@
 "use strict";
 
-var Substance = require('substance');
-var _ = require('substance/helpers');
-var OO = Substance.OO;
-var Component = Substance.Component;
+
+var _ = require('substance/util/helpers');
+var oo = require('substance/util/oo');
+var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
 function BibliographyComponent() {
@@ -50,6 +50,6 @@ BibliographyComponent.Prototype = function() {
   };
 };
 
-OO.inherit(BibliographyComponent, Component);
+oo.inherit(BibliographyComponent, Component);
 
 module.exports = BibliographyComponent;

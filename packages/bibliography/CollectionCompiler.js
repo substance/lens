@@ -3,8 +3,8 @@
 // 
 // Takes care of generating labels and keeping them up to date
 
-var Substance = require("substance");
-var _ = require("substance/helpers");
+var _ = require("substance/util/helpers");
+var oo = require('substance/util/oo');
 
 function Collection(doc, containerId, itemType, labelPrefix) {
   this.doc = doc;
@@ -121,4 +121,4 @@ Collection.Prototype = function() {
 
 };
 
-Substance.initClass(Collection);
+oo.initClass(Collection);

@@ -1,4 +1,3 @@
-var Substance = require('substance');
 var Figure = require('substance/packages/figure/Figure');
 
 var TableFigure = Figure.extend({

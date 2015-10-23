@@ -1,5 +1,5 @@
-var Substance = require('substance');
-var HtmlImporter = Substance.Document.HtmlImporter;
+var oo = require('substance/util/oo');
+var HtmlImporter = require('substance/model/HtmlImporter');
 var schema = require('./articleSchema');
 
 function ArticleHtmlImporter() {
@@ -37,8 +37,6 @@ ArticleHtmlImporter.Prototype = function() {
 
   this.resources = function($resources) {
     var self = this;
-    var doc = this.state.doc;
-
     $resources.children().each(function() {
       var $child = self.$(this);
       self.convertElement($child);
@@ -51,6 +49,6 @@ ArticleHtmlImporter.Prototype = function() {
 
 };
 
-Substance.inherit(ArticleHtmlImporter, HtmlImporter);
+oo.inherit(ArticleHtmlImporter, HtmlImporter);
 
 module.exports = ArticleHtmlImporter;

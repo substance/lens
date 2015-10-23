@@ -1,8 +1,7 @@
 "use strict";
 
-var Substance = require('substance');
-var OO = Substance.OO;
-var Component = Substance.Component;
+var oo = require('substance/util/oo');
+var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
 function BibItemEntry() {
@@ -48,6 +47,6 @@ BibItemEntry.Prototype = function() {
   };
 };
 
-OO.inherit(BibItemEntry, Component);
+oo.inherit(BibItemEntry, Component);
 
 module.exports = BibItemEntry;

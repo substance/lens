@@ -1,6 +1,6 @@
-var Substance = require("substance");
 var LensArticle = require('../model/LensArticle');
-var $ = Substance.$;
+var oo = require('substance/util/oo');
+var $ = require('substance/util/jquery');
 
 var Backend = function() {
 
@@ -71,6 +71,6 @@ Backend.Prototype = function() {
   };
 };
 
-Substance.initClass(Backend);
+oo.initClass(Backend);
 
 module.exports = Backend;

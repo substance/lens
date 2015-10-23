@@ -1,7 +1,6 @@
 'use strict';
 
-var Substance = require('substance');
-var OO = Substance.OO;
+var oo = require('substance/util/oo');
 var LensController = require('./LensController');
 
 var ContextToggles = require('substance/ui/ContextToggles');
@@ -9,7 +8,7 @@ var ContentPanel = require("substance/ui/ContentPanel");
 var StatusBar = require("substance/ui/StatusBar");
 
 var ContentToolbar = require('./packages/writer/ContentToolbar');
-var docHelpers = require('substance/document/helpers');
+var docHelpers = require('substance/model/documentHelpers');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
@@ -87,7 +86,6 @@ var CONFIG = {
   panelOrder: ['toc', 'manage-bib-items'],
   containerId: 'main'      
 };
-
 
 function LensWriter(parent, params) {
   LensController.call(this, parent, params);
@@ -172,6 +170,6 @@ LensWriter.Prototype = function() {
   };
 };
 
-OO.inherit(LensWriter, LensController);
+oo.inherit(LensWriter, LensController);
 
 module.exports = LensWriter;

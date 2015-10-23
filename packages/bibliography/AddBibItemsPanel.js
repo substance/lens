@@ -1,12 +1,11 @@
 'use strict';
 
-var Substance = require('substance');
-var $ = require('substance/basics/jquery');
-var _ = Substance._;
-var OO = Substance.OO;
-var Component = Substance.Component;
+var $ = require('substance/util/jquery');
+var _ = require('substance/util/helpers');
+var oo = require('substance/util/oo');
+var Component = require('substance/ui/Component');
 var $$ = Component.$$;
-var uuid = Substance.uuid;
+var uuid = require('substance/util/uuid');
 
 
 // Create new bib items using cross ref search
@@ -170,6 +169,6 @@ AddBibItemsPanel.Prototype = function() {
   };
 };
 
-OO.inherit(AddBibItemsPanel, Component);
+oo.inherit(AddBibItemsPanel, Component);
 
 module.exports = AddBibItemsPanel;

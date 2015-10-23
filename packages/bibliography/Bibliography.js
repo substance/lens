@@ -1,11 +1,13 @@
 'use strict';
-var Substance = require('substance');
-var _ = require('substance/helpers');
+
+var _ = require('substance/util/helpers');
+var oo = require('substance/util/oo');
+var EventEmitter = require('substance/util/EventEmitter');
 
 // Nomenclature: 'Bibliography' is a set of 'References' which are cited from in the manuscript.
 
 function Bibliography(doc, containerId) {
-  Substance.EventEmitter.call(this);
+  EventEmitter.call(this);
   this.doc = doc;
   this.containerId = containerId;
 
@@ -132,6 +134,6 @@ Bibliography.Prototype = function() {
 };
 
 
-Substance.inherit(Bibliography, Substance.EventEmitter);
+oo.inherit(Bibliography, EventEmitter);
 
 module.exports = Bibliography;

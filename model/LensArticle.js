@@ -1,7 +1,9 @@
-var Substance = require('substance');
 var schema = require('./articleSchema');
-var _ = Substance._;
-var $ = Substance.$;
+var _ = require('substance/util/helpers');
+var oo = require('substance/util/oo');
+var $ = require('substance/util/jquery');
+var Document = require('substance/model/Document');
+var NodeIndex = require('substance/model/data/NodeIndex');
 
 var ArticleHtmlImporter = require('./ArticleHtmlImporter');
 var ArticleHtmlExporter = require('./ArticleHtmlExporter');
@@ -37,18 +39,18 @@ Article.Prototype = function() {
       "table-figure": new Collection(this, 'main', 'table-figure', 'Table'),
     };
 
-    this.includesIndex = this.addIndex('includes', Substance.Data.Index.create({
+    this.includesIndex = this.addIndex('includes', NodeIndex.create({
       type: "include",
       property: "nodeId"
     }));
 
     // Needed in AddBibItemComponent so we can map guid (aka DOI's) withour internal substance ids
-    this.bibItemByGuidIndex = this.addIndex('bibItemByGuid', Substance.Data.Index.create({
+    this.bibItemByGuidIndex = this.addIndex('bibItemByGuid', NodeIndex.create({
       type: "bib-item",
       property: "guid"
     }));
 
-    this.citationsIndex = this.addIndex('citations', Substance.Data.Index.create({
+    this.citationsIndex = this.addIndex('citations', NodeIndex.create({
       type: "citation",
       property: "targets"
     }));
@@ -159,7 +161,7 @@ Article.Prototype = function() {
   };
 };
 
-Substance.inherit(Article, Substance.Document);
+oo.inherit(Article, Document);
 
 Article.XML_TEMPLATE = [
 '<article xmlns="http://substance.io/science-article/0.1.0" lang="en">',

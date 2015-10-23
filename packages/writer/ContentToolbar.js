@@ -1,8 +1,7 @@
 "use strict";
 
-var Substance = require('substance');
-var OO = Substance.OO;
-var Component = Substance.Component;
+var oo = require('substance/util/oo');
+var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
 var UndoTool = require('substance/ui/UndoTool');
@@ -79,7 +78,7 @@ ContentToolbarComponent.Prototype = function() {
   };
 };
 
-OO.inherit(ContentToolbarComponent, Component);
+oo.inherit(ContentToolbarComponent, Component);
 
 module.exports = ContentToolbarComponent;
 

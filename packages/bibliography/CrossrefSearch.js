@@ -1,4 +1,4 @@
-var $ = require('substance/basics/jquery');
+var $ = require('substance/util/jquery');
 
 function CrossrefSearch() {
   this.lastSearch = "";

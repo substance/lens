@@ -1,9 +1,8 @@
 'use strict';
 
-var Substance = require('substance');
-var _ = Substance._;
-var OO = Substance.OO;
-var Component = Substance.Component;
+var _ = require('substance/util/helpers');
+var oo = require('substance/util/oo');
+var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 var Icon = require("substance/ui/FontAwesomeIcon");
 var ListBibItems = require('./ListBibItemsPanel');
@@ -85,7 +84,7 @@ ManageBibItemsPanel.Prototype = function() {
   };
 };
 
-OO.inherit(ManageBibItemsPanel, Component);
+oo.inherit(ManageBibItemsPanel, Component);
 
 // Panel Configuration
 // -----------------

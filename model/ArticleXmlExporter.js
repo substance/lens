@@ -1,8 +1,7 @@
-var Substance = require('substance');
-var _ = Substance._;
-var $ = require('substance/basics/jquery');
-
-var HtmlExporter = Substance.Document.HtmlExporter;
+var _ = require('substance/util/helpers');
+var oo = require('substance/util/oo');
+var $ = require('substance/util/jquery');
+var HtmlExporter = require('substance/model/HtmlExporter');
 var schema = require('./articleSchema');
 
 function ArticleXmlExporter() {
@@ -71,6 +70,6 @@ ArticleXmlExporter.Prototype = function() {
 
 };
 
-Substance.inherit(ArticleXmlExporter, HtmlExporter);
+oo.inherit(ArticleXmlExporter, HtmlExporter);
 
 module.exports = ArticleXmlExporter;

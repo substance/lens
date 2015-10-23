@@ -1,6 +1,5 @@
-var Substance = require('substance');
-var $ = require('substance/basics/jquery');
-var DocumentNode = Substance.Document.Node;
+var $ = require('substance/util/jquery');
+var DocumentNode = require('substance/model/DocumentNode');
 
 var BibItem = DocumentNode.extend({
   name: 'bib-item',

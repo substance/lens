@@ -1,4 +1,4 @@
-var Substance = require('substance');
+var DocumentSchema = require('substance/model/DocumentSchema');
 
 // Substance Node Types
 // ----------------------
@@ -37,7 +37,7 @@ var BibItemCitation = require('../packages/bibliography/BibItemCitation');
 var Author = require('../packages/metadata/Author');
 var ArticleMeta = require('../packages/metadata/ArticleMeta');
 
-var schema = new Substance.Document.Schema("scientific-article", "0.2.0");
+var schema = new DocumentSchema("scientific-article", "0.2.0");
 
 schema.getDefaultTextType = function() {
   return "paragraph";

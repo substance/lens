@@ -1,4 +1,3 @@
-var Substance = require('substance');
 var Citation = require('../citations/Citation');
 
 var ImageFigureCitation = Citation.extend({

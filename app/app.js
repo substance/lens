@@ -1,11 +1,10 @@
 'use strict';
 
-var Substance = require('substance');
-var OO = Substance.OO;
-var Component = Substance.Component;
+var oo = require('substance/util/oo');
+var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 var Backend = require("./backend");
-var $ = Substance.$;
+var $ = require('substance/util/jquery');
 
 var LensWriter = require('../LensWriter');
 // var LensReader = require('../LensReader');
@@ -80,7 +79,7 @@ App.Prototype = function() {
   };
 };
 
-OO.inherit(App, Component);
+oo.inherit(App, Component);
 
 $(function() {
   Component.mount($$(App), $('#container'));

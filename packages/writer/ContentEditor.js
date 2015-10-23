@@ -1,8 +1,8 @@
 'use strict';
 
-var Substance = require('substance');
-var OO = Substance.OO;
-var Component = Substance.Component;
+
+var oo = require('substance/util/oo');
+var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
 var BibliographyComponent = require('../bibliography/BibliographyComponent');
@@ -38,6 +38,6 @@ ContentEditor.Prototype = function() {
   };
 };
 
-OO.inherit(ContentEditor, Component);
+oo.inherit(ContentEditor, Component);
 
 module.exports = ContentEditor;

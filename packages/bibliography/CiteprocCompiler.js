@@ -1,8 +1,5 @@
-/* global $ */
-
-var Substance = require('substance');
-var _ = Substance._;
-var $ = Substance.$;
+var _ = require('substance/util/helpers');
+var $ = require('substance/util/jquery');
 var CSL = require('./citeproc/citeproc').CSL;
 var CiteprocDefaultConfig = require('./CiteprocDefaultConfig');
 

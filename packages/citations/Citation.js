@@ -1,8 +1,8 @@
-var Substance = require('substance');
-var _ = require('substance/helpers');
-var $ = require('substance/basics/jquery');
+var _ = require('substance/util/helpers');
+var $ = require('substance/util/jquery');
+var Annotation = require('substance/model/Annotation');
 
-var Citation = Substance.Document.Annotation.extend({
+var Citation = Annotation.extend({
   name: "citation",
 
   properties: {
@@ -46,7 +46,7 @@ var Citation = Substance.Document.Annotation.extend({
 
   onTargetChange: function(change, info, doc) {
     this.updateCollection(doc);
-  },
+  }
 
 });
 
@@ -54,6 +54,7 @@ Citation.static.tagName = 'cite';
 Citation.static.external = true;
 
 Citation.static.fromHtml = function($el, converter) {
+  /* jshint unused: false */
   var citation = {
     targets: _.compact($el.attr('data-rid').split(' '))
   };
@@ -61,6 +62,7 @@ Citation.static.fromHtml = function($el, converter) {
 };
 
 Citation.static.toHtml = function(citation, converter) {
+  /* jshint unused: false */
   var id = citation.id;
   var targets = citation.targets.join(' ');
 
