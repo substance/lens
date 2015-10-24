@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var oo = require('substance/util/oo');
 var Component = require('substance/ui/Component');

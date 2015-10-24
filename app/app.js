@@ -7,7 +7,7 @@ var Backend = require("./backend");
 var $ = require('substance/util/jquery');
 
 var LensWriter = require('../LensWriter');
-// var LensReader = require('../LensReader');
+var LensReader = require('../LensReader');
 
 
 function App() {

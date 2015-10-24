@@ -1,81 +1,138 @@
-// 'use strict';
+'use strict';
 
-// var Substance = require('substance');
-// // var _ = require('substance/basics/helpers');
+var oo = require('substance/util/oo');
+var LensController = require('./LensController');
 
-// var OO = Substance.OO;
-// var LensController = require('./lens_controller');
+var ContextToggles = require('substance/ui/ContextToggles');
+var ContentPanel = require("substance/ui/ContentPanel");
+var StatusBar = require("substance/ui/StatusBar");
 
-// var ContextToggles = require('substance/ui/ContextToggles');
-// var ContentPanel = require("substance/ui/ContentPanel");
-// var StatusBar = require("substance/ui/StatusBar");
+var Component = require('substance/ui/Component');
+var $$ = Component.$$;
 
-// var ContentToolbar = require('./components/content_toolbar');
-// var Component = require('substance/ui/Component');
-// var $$ = Component.$$;
+var CONFIG = {
+  controller: {
+    commands: [
+      require('substance/ui/UndoCommand'),
+      require('substance/ui/RedoCommand'),
+      require('substance/ui/SaveCommand'),
+    ],
+    components: {
+      "paragraph": require('substance/packages/paragraph/ParagraphComponent'),
+      "heading": require('substance/packages/heading/HeadingComponent'),
+      "blockquote": require('substance/packages/blockquote/BlockquoteComponent'),
+      "codeblock": require('substance/packages/codeblock/CodeblockComponent'),
+      "embed": require('substance/packages/embed/EmbedComponent'),
+      "image": require('substance/packages/image/ImageComponent'),
+      "table": require('substance/packages/table/TableComponent'),
 
-// function LensReader(parent, params) {
-//   LensController.call(this, parent, params);
-// }
+      "image-figure": require('substance/packages/figure/FigureComponent'),
+      "table-figure": require('substance/packages/figure/FigureComponent'),
 
-// LensReader.Prototype = function() {
+      "bib-item-citation": require('./packages/citations/CitationComponent'),
+      "image-figure-citation": require('./packages/citations/CitationComponent'),
+      "table-figure-citation": require('./packages/citations/CitationComponent'),
 
-//   this.static = {
-//     config: {
-//       controller: {
-//         commands: commands.controller,
-//         components: components,
-//       },
-//       main: {
-//         commands: commands.main,
-//       },
-//       cover: {
-//         commands: commands.cover
-//       },
-//       panelOrder: ['toc'],
-//       containerId: 'main'      
-//     }
-//   };
+      // Panels
+      "toc": require('substance/ui/TocPanel'),
+      "cite": require('./packages/citations/CitePanel'),
+      
+      // We use different states for the same panel, so we can distinguish
+      // the citation type based on state.contextId
+      "cite-bib-item": require('./packages/citations/CitePanel'),
+      "cite-image-figure": require('./packages/citations/CitePanel'),
+      "cite-table-figure": require('./packages/citations/CitePanel'),
 
-//   this.render = function() {
-//     var doc = this.props.doc;
-//     var config = this.getConfig();
-//     var el = $$('div').addClass('lc-reader sc-controller');
+      "bib-item-entry": require('./packages/bibliography/BibItemEntry'),
+      "image-figure-entry": require('./packages/figures/ImageFigureEntry'),
+      "table-figure-entry": require('./packages/figures/TableFigureEntry'),
 
-//     // Basic 2-column layout
-//     // -------------
+      // Manage BibItems
+      "manage-bib-items": require('./packages/bibliography/ManageBibItemsPanel'),
+      "content-container": require('./packages/reader/ContentAnnotator')
+    },
+  },
+  main: {
+    commands: [
+      require('substance/ui/SelectAllCommand'),
 
-//     el.append(
-//       $$('div').ref('workspace').addClass('le-workspace').append(
-//         // Main (left column)
-//         $$('div').ref('main').addClass("le-main").append(
-//           $$(ContentPanel, {
-//             doc: doc,
-//             containerId: config.containerId
-//           }).ref('content')
-//         ),
-//         // Resource (right column)
-//         $$('div').ref('resource')
-//           .addClass("le-resource")
-//           .append(
-//             $$(ContextToggles, {
-//               panelOrder: config.panelOrder,
-//               contextId: this.state.contextId
-//             }).ref("context-toggles"),
-//             this.renderContextPanel()
-//           )
-//       )
-//     );
+      // Special commands
+      require('substance/packages/embed/EmbedCommand'),
+      require('substance/packages/paragraph/MakeParagraphCommand'),
+      require('substance/packages/heading/MakeHeading1Command'),
+      require('substance/packages/heading/MakeHeading2Command'),
+      require('substance/packages/heading/MakeHeading3Command'),
+      require('substance/packages/text/SwitchTextTypeCommand'),
+      require('substance/packages/blockquote/MakeBlockquoteCommand'),
+      require('substance/packages/codeblock/MakeCodeblockCommand'),
+      require('substance/packages/strong/StrongCommand'),
+      require('substance/packages/emphasis/EmphasisCommand'),
+      require('substance/packages/link/LinkCommand'),
 
-//     // Status bar
-//     el.append(
-//       $$(StatusBar, {doc: doc}).ref('statusBar')
-//     );
-//     return el;
-//   };
+      // Insert figure
+      require('substance/packages/figure/InsertFigureCommand'),
+      require('./packages/bibliography/BibItemCitationCommand'),
+      require('./packages/figures/ImageFigureCitationCommand'),
+    ]
+  },
+  cover: {
+    commands: [
+      require('substance/packages/emphasis/EmphasisCommand'),
+    ]
+  },
+  panelOrder: ['toc', 'manage-bib-items'],
+  containerId: 'main'      
+};
 
-// };
+function LensReader(parent, params) {
+  LensController.call(this, parent, params);
+}
 
-// OO.inherit(LensReader, LensController);
+LensReader.Prototype = function() {
 
-// module.exports = LensReader;
+  this.static = {
+    config: CONFIG
+  };
+
+  this.render = function() {
+    var doc = this.props.doc;
+    var config = this.getConfig();
+    var el = $$('div').addClass('lc-writer sc-controller');
+
+    // Basic 2-column layout
+    // -------------
+
+    el.append(
+      $$('div').ref('workspace').addClass('le-workspace').append(
+        // Main (left column)
+        $$('div').ref('main').addClass("le-main").append(
+          $$(ContentPanel, {
+            doc: doc,
+            containerId: config.containerId
+          }).ref('content')
+        ),
+        // Resource (right column)
+        $$('div').ref('resource')
+          .addClass("le-resource")
+          .append(
+            $$(ContextToggles, {
+              panelOrder: config.panelOrder,
+              contextId: this.state.contextId
+            }).ref("context-toggles"),
+            this.renderContextPanel()
+          )
+      )
+    );
+
+    // Status bar
+    el.append(
+      $$(StatusBar, {doc: doc}).ref('statusBar')
+    );
+    return el;
+  };
+
+};
+
+oo.inherit(LensReader, LensController);
+
+module.exports = LensReader;
