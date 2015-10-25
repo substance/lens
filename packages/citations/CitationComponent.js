@@ -46,7 +46,8 @@ CitationComponent.Prototype = function() {
     var surface = this.context.surface;
 
     surface.setSelection(citation.getSelection());
-    // surface.rerenderDomSelection();
+    var controller = this.context.controller;
+    controller.emit('citation:selected', citation);
   };
 
   this.onClick = function(e) {

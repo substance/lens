@@ -69,12 +69,32 @@ var CONFIG = {
 
 function LensReader(parent, params) {
   LensController.call(this, parent, params);
+
+  this.connect(this, {
+    'citation:selected': this.onCitationSelected
+  });
 }
 
 LensReader.Prototype = function() {
 
   this.static = {
     config: CONFIG
+  };
+
+  this.onCitationSelected = function(citation) {
+    console.log('citation selected', citation);
+    var citationType = citation.type.replace('-citation', '').replace('_', '-');
+    
+    this.setState({
+      contextId: "cite-"+citationType,
+      citationType: citationType,
+      citationId: citation.id
+    });
+  };
+
+  this.dispose = function() {
+    LensController.prototype.dispose.call(this);
+    this.disconnect(this);
   };
 
   this.render = function() {

@@ -5,10 +5,8 @@ var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 var Backend = require("./backend");
 var $ = require('substance/util/jquery');
-
 var LensWriter = require('../LensWriter');
 var LensReader = require('../LensReader');
-
 
 function App() {
   Component.Root.apply(this, arguments);
@@ -72,7 +70,7 @@ App.Prototype = function() {
   this.didMount = function() {
     this.backend.getDocument('sample', function(err, doc) {
       this.setState({
-        mode: 'write',
+        mode: 'read',
         doc: doc
       });
     }.bind(this));
