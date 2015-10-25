@@ -76,7 +76,6 @@ function LensReader(parent, params) {
     'citation:selected': this.onCitationSelected
   });
 
-
 }
 
 LensReader.Prototype = function() {
@@ -85,12 +84,12 @@ LensReader.Prototype = function() {
     config: CONFIG
   };
 
-  this.getInitialState = function() {
-    return {
-      contextId: 'bib-items',
-      citationId: 'bib_item_citation_a6da926ec7f4f4df975164f9e9ce413b',
-    };
-  };
+  // this.getInitialState = function() {
+  //   return {
+  //     contextId: 'bib-items',
+  //     citationId: 'bib_item_citation_a6da926ec7f4f4df975164f9e9ce413b',
+  //   };
+  // };
 
   this.onCitationSelected = function(citation) {
     console.log('citation selected', citation);
@@ -117,6 +116,7 @@ LensReader.Prototype = function() {
   };
 
   this.render = function() {
+    console.log('LensReader.render', this.state);
     var doc = this.props.doc;
     var config = this.getConfig();
     var el = $$('div').addClass('lc-writer sc-controller');

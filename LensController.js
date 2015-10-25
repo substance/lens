@@ -125,7 +125,7 @@ LensController.Prototype = function() {
     if (!panelElement) {
       return $$('div').append("No panels are registered");
     } else {
-      return $$('div').ref('contextPanelWrapper').append(panelElement);
+      return $$('div').append(panelElement);
     }
   };
 
