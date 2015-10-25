@@ -1,5 +1,4 @@
-"use strict";
-
+'use strict';
 
 var _ = require('substance/util/helpers');
 var oo = require('substance/util/oo');
@@ -11,6 +10,9 @@ function BibliographyComponent() {
 }
 
 BibliographyComponent.Prototype = function() {
+  this.getDocument = function() {
+    return this.context.controller.getDocument();
+  };
 
   this.render = function() {
     var state = this.state;
@@ -34,7 +36,7 @@ BibliographyComponent.Prototype = function() {
   };
 
   this.didMount = function() {
-    var doc = this.props.doc;
+    var doc = this.getDocument()
     this.bibliography = doc.getCollection('bib-item');
     this.bibliography.connect(this, {
       'bibliography:updated': this.update
@@ -42,7 +44,6 @@ BibliographyComponent.Prototype = function() {
   };
 
   this.update = function() {
-    console.log('bibliography:updated');
     var bibItems = this.bibliography.getItems();
     this.setState({
       bibItems: bibItems

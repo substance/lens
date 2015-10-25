@@ -9,7 +9,6 @@ var RedoTool = require('substance/ui/RedoTool');
 var SaveTool = require('substance/ui/SaveTool');
 
 var TextTool = require('substance/packages/text/TextTool');
-
 var StrongTool = require('substance/packages/strong/StrongTool');
 var EmphasisTool = require('substance/packages/emphasis/EmphasisTool');
 var EmbedTool = require('substance/packages/embed/EmbedTool');
@@ -79,6 +78,4 @@ ContentToolbarComponent.Prototype = function() {
 };
 
 oo.inherit(ContentToolbarComponent, Component);
-
 module.exports = ContentToolbarComponent;
-

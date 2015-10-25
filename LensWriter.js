@@ -7,7 +7,11 @@ var ContextToggles = require('substance/ui/ContextToggles');
 var ContentPanel = require("substance/ui/ContentPanel");
 var StatusBar = require("substance/ui/StatusBar");
 
+var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
+var CoverEditor = require('./packages/writer/CoverEditor');
 var ContentToolbar = require('./packages/writer/ContentToolbar');
+var ContainerEditor = require('substance/ui/ContainerEditor');
+
 var docHelpers = require('substance/model/documentHelpers');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
@@ -50,9 +54,7 @@ var CONFIG = {
       "table-figure-entry": require('./packages/figures/TableFigureEntry'),
 
       // Manage BibItems
-      "manage-bib-items": require('./packages/bibliography/ManageBibItemsPanel'),
-      "content-toolbar": require('./packages/writer/ContentToolbar'),
-      "content-container": require('./packages/writer/ContentEditor')
+      "manage-bib-items": require('./packages/bibliography/ManageBibItemsPanel')
     },
   },
   main: {
@@ -65,9 +67,10 @@ var CONFIG = {
       require('substance/packages/heading/MakeHeading1Command'),
       require('substance/packages/heading/MakeHeading2Command'),
       require('substance/packages/heading/MakeHeading3Command'),
-      require('substance/packages/text/SwitchTextTypeCommand'),
       require('substance/packages/blockquote/MakeBlockquoteCommand'),
       require('substance/packages/codeblock/MakeCodeblockCommand'),
+
+      require('substance/packages/text/SwitchTextTypeCommand'),
       require('substance/packages/strong/StrongCommand'),
       require('substance/packages/emphasis/EmphasisCommand'),
       require('substance/packages/link/LinkCommand'),
@@ -76,6 +79,12 @@ var CONFIG = {
       require('substance/packages/figure/InsertFigureCommand'),
       require('./packages/bibliography/BibItemCitationCommand'),
       require('./packages/figures/ImageFigureCitationCommand'),
+    ],
+    textTypes: [
+      {type: 'heading', level: 1},
+      {type: 'heading', level: 2},
+      {type: 'heading', level: 3},
+      {type: 'codeblock'}
     ]
   },
   cover: {
@@ -102,18 +111,28 @@ LensWriter.Prototype = function() {
     var config = this.getConfig();
     var el = $$('div').addClass('lc-writer sc-controller');
 
-    // Basic 2-column layout
-    // -------------
-
     el.append(
       $$('div').ref('workspace').addClass('le-workspace').append(
         // Main (left column)
         $$('div').ref('main').addClass("le-main").append(
           $$(ContentToolbar).ref('toolbar'),
-          $$(ContentPanel, {
-            doc: doc,
-            containerId: config.containerId
-          }).ref('content')
+          $$(ContentPanel).append(
+            $$(CoverEditor, {
+              name: 'cover',
+              commands: config.cover.commands
+            }).ref('coverEditor'),
+
+            // The full fledged document (ContainerEditor)
+            $$("div").ref('main').addClass('document-content').append(
+              $$(ContainerEditor, {
+                name: 'main',
+                containerId: 'main',
+                editable: false,
+                commands: config.main.commands
+              }).ref('mainEditor')
+            ),
+            $$(BibliographyComponent).ref('bib')
+          ).ref('content')
         ),
         // Resource (right column)
         $$('div').ref('resource')

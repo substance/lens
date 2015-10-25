@@ -7,6 +7,12 @@ var ContextToggles = require('substance/ui/ContextToggles');
 var ContentPanel = require("substance/ui/ContentPanel");
 var StatusBar = require("substance/ui/StatusBar");
 
+var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
+var ContentToolbar = require('./packages/writer/ContentToolbar');
+var ContainerAnnotator = require('substance/ui/ContainerAnnotator');
+var Cover = require('./packages/reader/Cover');
+
+
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
@@ -48,37 +54,14 @@ var CONFIG = {
       "table-figure-entry": require('./packages/figures/TableFigureEntry'),
 
       // Manage BibItems
-      "manage-bib-items": require('./packages/bibliography/ManageBibItemsPanel'),
-      "content-container": require('./packages/reader/ContentAnnotator')
+      "manage-bib-items": require('./packages/bibliography/ManageBibItemsPanel')
     },
   },
   main: {
-    commands: [
-      require('substance/ui/SelectAllCommand'),
-
-      // Special commands
-      require('substance/packages/embed/EmbedCommand'),
-      require('substance/packages/paragraph/MakeParagraphCommand'),
-      require('substance/packages/heading/MakeHeading1Command'),
-      require('substance/packages/heading/MakeHeading2Command'),
-      require('substance/packages/heading/MakeHeading3Command'),
-      require('substance/packages/text/SwitchTextTypeCommand'),
-      require('substance/packages/blockquote/MakeBlockquoteCommand'),
-      require('substance/packages/codeblock/MakeCodeblockCommand'),
-      require('substance/packages/strong/StrongCommand'),
-      require('substance/packages/emphasis/EmphasisCommand'),
-      require('substance/packages/link/LinkCommand'),
-
-      // Insert figure
-      require('substance/packages/figure/InsertFigureCommand'),
-      require('./packages/bibliography/BibItemCitationCommand'),
-      require('./packages/figures/ImageFigureCitationCommand'),
-    ]
+    commands: [],
   },
   cover: {
-    commands: [
-      require('substance/packages/emphasis/EmphasisCommand'),
-    ]
+    commands: []
   },
   panelOrder: ['toc', 'manage-bib-items'],
   containerId: 'main'      
@@ -99,17 +82,29 @@ LensReader.Prototype = function() {
     var config = this.getConfig();
     var el = $$('div').addClass('lc-writer sc-controller');
 
-    // Basic 2-column layout
-    // -------------
-
     el.append(
       $$('div').ref('workspace').addClass('le-workspace').append(
         // Main (left column)
         $$('div').ref('main').addClass("le-main").append(
-          $$(ContentPanel, {
-            doc: doc,
-            containerId: config.containerId
-          }).ref('content')
+          $$(ContentToolbar).ref('toolbar'),
+          $$(ContentPanel).append(
+            // Document Cover display
+            $$(Cover, {
+              name: 'cover',
+              commands: config.cover.commands
+            }).ref('coverView'),
+            
+            // The main container
+            $$("div").ref('main').addClass('document-content').append(
+              $$(ContainerAnnotator, {
+                name: 'main',
+                containerId: 'main',
+                editable: false,
+                commands: config.main.commands
+              }).ref('mainAnnotator')
+            ),
+            $$(BibliographyComponent).ref('bib')
+          ).ref('content')
         ),
         // Resource (right column)
         $$('div').ref('resource')
@@ -130,6 +125,7 @@ LensReader.Prototype = function() {
     );
     return el;
   };
+
 
 };
 

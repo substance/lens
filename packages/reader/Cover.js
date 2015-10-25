@@ -6,22 +6,17 @@ var $$ = require('substance/ui/Component').$$;
 var TextProperty = require("substance/ui/TextPropertyComponent");
 var map = require('lodash/collection/map');
 
-var CoverEditor = function() {
+var Cover = function() {
   FormEditor.apply(this, arguments);
 };
 
-CoverEditor.Prototype = function() {
+Cover.Prototype = function() {
 
   this.render = function() {
     var doc = this.getDocument();
     var metaNode = doc.getDocumentMeta();
     return $$("div").addClass("document-cover")
-      .attr({
-        contentEditable: true,
-        "data-id": "title-editor"
-      })
       .append(
-        // Editable title
         $$(TextProperty, {
           tagName: "div",
           className: "title",
@@ -39,7 +34,6 @@ CoverEditor.Prototype = function() {
         ),
         // Editable abstract
         $$('div').addClass('abstract').append(
-          $$('div').attr({contenteditable: false}),
           $$(TextProperty, {
             tagName: "div",
             className: "abstract",
@@ -50,6 +44,6 @@ CoverEditor.Prototype = function() {
   };
 };
 
-OO.inherit(CoverEditor, FormEditor);
+OO.inherit(Cover, FormEditor);
 
-module.exports = CoverEditor;
+module.exports = Cover;
