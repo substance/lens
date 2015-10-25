@@ -21,25 +21,25 @@ Cover.Prototype = function() {
           tagName: "div",
           className: "title",
           path: [metaNode.id, "title"]
-        }).addClass('title'),
+        }).addClass('title')
 
         // Editable authors
-        $$('div').addClass('authors clearfix').append(
-          map(metaNode.authors, function(authorId) {
-            return $$(TextProperty, {
-              tagName: "div",
-              path: [authorId, "name"]
-            }).addClass('author');
-          })
-        ),
+        // $$('div').addClass('authors clearfix').append(
+        //   map(metaNode.authors, function(authorId) {
+        //     return $$(TextProperty, {
+        //       tagName: "div",
+        //       path: [authorId, "name"]
+        //     }).addClass('author');
+        //   })
+        // ),
         // Editable abstract
-        $$('div').addClass('abstract').append(
-          $$(TextProperty, {
-            tagName: "div",
-            className: "abstract",
-            path: [metaNode.id, "abstract"]
-          }).addClass('abstract')
-        )
+        // $$('div').addClass('abstract').append(
+        //   $$(TextProperty, {
+        //     tagName: "div",
+        //     className: "abstract",
+        //     path: [metaNode.id, "abstract"]
+        //   }).addClass('abstract')
+        // )
       );
   };
 };

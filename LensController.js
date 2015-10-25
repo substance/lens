@@ -27,12 +27,20 @@ function LensController(parent, params) {
   // action handlers
   this.actions({
     "switchState": this.switchState,
-    "switchContext": this.switchContext
+    "switchContext": this.switchContext,
+    "toggleBibItem": this.toggleBibItem
   });
 }
 
 LensController.Prototype = function() {
 
+  this.toggleBibItem = function(bibItem) {
+    // console.log('toggling bib item');
+    this.setState({
+      contextId: 'bib-items',
+      bibItemId: bibItem.id
+    });
+  };
 
   // Some things should go into controller
   this.getChildContext = function() {
@@ -53,7 +61,6 @@ LensController.Prototype = function() {
       }
     });
   };
-
 
   this.getInitialState = function() {
     return {'contextId': 'toc'};
@@ -95,7 +102,7 @@ LensController.Prototype = function() {
   this.getActivePanelElement = function() {
     var ComponentClass = this.componentRegistry.get(this.state.contextId);
     if (ComponentClass) {
-      return $$(ComponentClass).setProps(this._panelPropsFromState(this.state));
+      return $$(ComponentClass, this._panelPropsFromState(this.state)).ref('contextPanel');
     } else {
       console.warn("Could not find component for contextId:", this.state.contextId);
     }
@@ -118,7 +125,7 @@ LensController.Prototype = function() {
     if (!panelElement) {
       return $$('div').append("No panels are registered");
     } else {
-      return $$('div').ref('context-panel').append(panelElement);
+      return $$('div').ref('contextPanelWrapper').append(panelElement);
     }
   };
 
@@ -140,6 +147,12 @@ LensController.Prototype = function() {
         // reference 1,2,3, or 4.
         var targets = doc.get(state.citationId).targets;
         return [ state.citationId ].concat(targets);
+      }
+      if (state.bibItemId) {
+        // Get citations for a given target
+        var citations = Object.keys(doc.citationsIndex.get(state.bibItemId));
+        console.log('citations found', citations);
+        return citations;
       }
       return [];
     }

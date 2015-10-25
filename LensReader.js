@@ -32,6 +32,7 @@ var CONFIG = {
       "image": require('substance/packages/image/ImageComponent'),
       "table": require('substance/packages/table/TableComponent'),
 
+
       "image-figure": require('substance/packages/figure/FigureComponent'),
       "table-figure": require('substance/packages/figure/FigureComponent'),
 
@@ -42,6 +43,7 @@ var CONFIG = {
       // Panels
       "toc": require('substance/ui/TocPanel'),
       "cite": require('./packages/citations/CitePanel'),
+      "bib-items": require('./packages/bibliography/BibItemsPanel'),
       
       // We use different states for the same panel, so we can distinguish
       // the citation type based on state.contextId
@@ -63,7 +65,7 @@ var CONFIG = {
   cover: {
     commands: []
   },
-  panelOrder: ['toc', 'manage-bib-items'],
+  panelOrder: ['toc', 'bib-items'],
   containerId: 'main'      
 };
 
@@ -73,6 +75,8 @@ function LensReader(parent, params) {
   this.connect(this, {
     'citation:selected': this.onCitationSelected
   });
+
+
 }
 
 LensReader.Prototype = function() {
@@ -81,15 +85,30 @@ LensReader.Prototype = function() {
     config: CONFIG
   };
 
+  this.getInitialState = function() {
+    return {
+      contextId: 'bib-items',
+      citationId: 'bib_item_citation_a6da926ec7f4f4df975164f9e9ce413b',
+    };
+  };
+
   this.onCitationSelected = function(citation) {
     console.log('citation selected', citation);
-    var citationType = citation.type.replace('-citation', '').replace('_', '-');
-    
-    this.setState({
-      contextId: "cite-"+citationType,
-      citationType: citationType,
-      citationId: citation.id
-    });
+    var citationType = citation.type;
+    if (citation.type === 'bib-item-citation') {
+
+      if (this.state.citationId === citation.id) {
+        this.setState({
+          contextId: 'toc'
+        });
+      } else {
+        this.setState({
+          contextId: 'bib-items',
+          citationId: citation.id
+        });
+      }
+
+    }
   };
 
   this.dispose = function() {
@@ -145,7 +164,6 @@ LensReader.Prototype = function() {
     );
     return el;
   };
-
 
 };
 

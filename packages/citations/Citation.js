@@ -56,6 +56,7 @@ Citation.static.external = true;
 Citation.static.fromHtml = function($el, converter) {
   /* jshint unused: false */
   var citation = {
+    id: $el.attr('id'),
     targets: _.compact($el.attr('data-rid').split(' '))
   };
   return citation;
