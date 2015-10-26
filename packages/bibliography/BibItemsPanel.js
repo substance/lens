@@ -3,26 +3,71 @@
 var oo = require('substance/util/oo');
 var Panel = require('substance/ui/Panel');
 var Component = require('substance/ui/Component');
-
 var BibItemComponent = require('./BibItemComponent');
 var $$ = Component.$$;
+
+var BibliographySummary = Component.extend({
+  render: function() {
+    var el = $$('div').addClass('se-bibliography-summary');
+
+    el.append(
+      $$('p').append(
+        'Your bibliography has ',
+        $$('strong').append(this.props.bibItems.length.toString(), ' references'),
+        ' in total.'
+        // $$('strong').append('? references'),
+        // 'are not cited.'
+      )
+    );
+
+    var config = this.context.config;
+    if (config.isEditable) {
+      el.append(
+        $$('p').append(
+          $$('a').attr({href: '#'}).append('Add references')
+        )
+      );
+    }
+    return el;
+  }
+});
 
 // List existing bib items
 // -----------------
 
 function BibItemsPanel() {
   Panel.apply(this, arguments);
+
+  var doc = this.props.doc;
+  this.bibliography = doc.getCollection('bib-item');
+  this.bibliography.connect(this, {
+    'bibliography:updated': this.rerender
+  });
 }
 
 BibItemsPanel.Prototype = function() {
 
-  this.getInitialState = function() {
+  this.dispose = function() {
+    this.bibliography.disconnect();
+  };
+
+  this.didMount = function() {
+    var bibItemId = this.getFirstActiveBibItemId();
+    if (bibItemId) {
+      this.scrollToNode(bibItemId);
+    }
+  };
+
+  this.getFirstActiveBibItemId = function() {
     var doc = this.props.doc;
-    var bibliography = doc.getBibliography();
-    bibliography.compile();
-    return {
-      bibItems: bibliography.getCompiledItems()
-    };
+    if (this.props.bibItemId) {
+      return this.props.bibItemId;
+    }
+
+    if (this.props.citationId) {
+      var citation = doc.get(this.props.citationId);
+      return citation.targets[0];
+    }
   };
 
   this.isHighlighted = function(bibItem) {
@@ -41,16 +86,19 @@ BibItemsPanel.Prototype = function() {
   };
 
   this.render = function() {
+    var bibItems = this.bibliography.getItems();
     var el = $$('div').addClass('sc-bib-items-panel panel');
-    var bibItems = $$('div').addClass('panel-content');
+    var bibItemEls = $$('div').addClass('panel-content').ref('panelContent');
 
-    this.state.bibItems.forEach(function(bibItem) {
-      bibItems.append($$(BibItemComponent, {
+    bibItemEls.append($$(BibliographySummary, {bibItems: bibItems}));
+
+    bibItems.forEach(function(bibItem) {
+      bibItemEls.append($$(BibItemComponent, {
         node: bibItem,
         highlighted: this.isHighlighted(bibItem)
       }));
     }.bind(this));
-    el.append(bibItems);
+    el.append(bibItemEls);
     return el;
   };
 

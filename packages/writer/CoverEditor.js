@@ -36,16 +36,16 @@ CoverEditor.Prototype = function() {
               path: [authorId, "name"]
             }).addClass('author');
           })
-        ),
-        // Editable abstract
-        $$('div').addClass('abstract').append(
-          $$('div').attr({contenteditable: false}),
-          $$(TextProperty, {
-            tagName: "div",
-            className: "abstract",
-            path: [metaNode.id, "abstract"]
-          }).addClass('abstract')
         )
+        // Editable abstract
+        // $$('div').addClass('abstract').append(
+        //   $$('div').attr({contenteditable: false}),
+        //   $$(TextProperty, {
+        //     tagName: "div",
+        //     className: "abstract",
+        //     path: [metaNode.id, "abstract"]
+        //   }).addClass('abstract')
+        // )
       );
   };
 };

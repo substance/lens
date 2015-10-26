@@ -5,7 +5,7 @@ var AnnotationTool = require('substance/ui/AnnotationTool');
 var ImageFigureCitationTool = AnnotationTool.extend({
   static: {
     name: 'Figure Citation',
-    command: 'toggleImageFigureCitation'
+    command: 'imageFigureCitation'
   }
 });
 

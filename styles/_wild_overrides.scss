@@ -63,9 +63,10 @@
   background: #aaa;
 }
 
-.scrollbar-component.cite-bib-item .highlight {
-  background-color: #0b9dd9;
+.scrollbar-component.cite-bib-item .highlight, .scrollbar-component.bib-items .highlight {
+  background-color: $highlight-color-2;
 }
+
 
 /* Custom Annotation styles
 -----------------------------------------------------*/
@@ -90,8 +91,8 @@
   background: rgba(145, 187, 4, 0.2);
 }
 
-.annotation.citation.active {
-  background: rgba(145, 187, 4, 0.3);
+.annotation.citation.highlighted {
+  background: $highlight-color-1;
 }
 
 .annotation.bib-item-citation {
@@ -105,9 +106,12 @@
   background: rgba(11, 157, 217, 0.15);
 }
 
-.annotation.bib-item-citation.active {
-  background: rgba(11, 157, 217, 0.15);
+.annotation.bib-item-citation.highlighted {
+  background: $highlight-color-2;
 }
+
+
+
 
 /* Cite Panel
 -----------------------------------------------------*/
@@ -242,13 +246,12 @@
 -----------------------------------------------------*/
 
 .content-panel-component .document-cover {
-  padding-bottom: 60px;
-  border-bottom: 2px solid #ddd;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 
   .title {
     font-size: 30px;
     font-weight: 600;
+    letter-spacing: $heading-letterspacing;
     line-height: 40px;
   }
 

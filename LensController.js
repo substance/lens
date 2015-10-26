@@ -34,12 +34,18 @@ function LensController(parent, params) {
 
 LensController.Prototype = function() {
 
+  // Action used by BibItemComponent when clicked on focus
   this.toggleBibItem = function(bibItem) {
-    // console.log('toggling bib item');
-    this.setState({
-      contextId: 'bib-items',
-      bibItemId: bibItem.id
-    });
+    if (this.state.bibItemId === bibItem.id) {
+      this.setState({
+        contextId: 'bib-items'
+      });
+    } else {
+      this.setState({
+        contextId: 'bib-items',
+        bibItemId: bibItem.id
+      });
+    }
   };
 
   // Some things should go into controller
@@ -151,7 +157,6 @@ LensController.Prototype = function() {
       if (state.bibItemId) {
         // Get citations for a given target
         var citations = Object.keys(doc.citationsIndex.get(state.bibItemId));
-        console.log('citations found', citations);
         return citations;
       }
       return [];

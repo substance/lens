@@ -4,7 +4,6 @@ var $$ = Component.$$;
 var Icon = require('substance/ui/FontAwesomeIcon');
 
 // Used in BibItemsPanel
-
 function BibItemComponent() {
   Component.apply(this, arguments);
 }
@@ -16,7 +15,7 @@ BibItemComponent.Prototype = function() {
   };
 
   this.render = function() {
-    var el = $$('div').addClass('se-bib-item');
+    var el = $$('div').addClass('se-bib-item').attr('data-id', this.props.node.id);
 
     if (this.props.highlighted) {
       el.addClass('se-highlighted');

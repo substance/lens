@@ -9,5 +9,6 @@ module.exports = {
   'bib_item': 'Reference',
   'manage': 'Manage',
   'add_reference': 'Add References',
-  'bib-items': 'References'
+  'bib-items': 'References',
+  'embed-src': 'Embed URL'
 };

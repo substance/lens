@@ -1,11 +1,15 @@
 .sc-bib-items-panel {
+  .se-bibliography-summary {
+    padding: $default-padding;
+  }
 
   .se-bib-item {
     position: relative;
 
     font-size: $small-font-size;
     padding: $default-padding;
-    border-bottom: 1px solid $border-color;
+    border-top: 1px solid $border-color;
+
     border-left: 3px solid transparent;
 
     .se-label {
@@ -31,6 +35,7 @@
     // When highlighted
     &.se-highlighted {
       border-left: 3px solid $highlight-color-2;
+      background: #fff;
       
       .se-focus-toggle {
         color: $highlight-color-2;

@@ -1,11 +1,12 @@
 'use strict';
 
 var oo = require('substance/util/oo');
+var AnnotationComponent = require('substance/ui/AnnotationComponent');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
 function CitationComponent() {
-  Component.apply(this, arguments);
+  AnnotationComponent.apply(this, arguments);
 
   this.props.node.connect(this, {
     "label:changed": this.onLabelChanged
@@ -15,6 +16,7 @@ function CitationComponent() {
 CitationComponent.Prototype = function() {
 
   this.dispose = function() {
+    AnnotationComponent.prototype.dispose.call(this);
     this.props.node.disconnect(this);
   };
 
@@ -35,6 +37,9 @@ CitationComponent.Prototype = function() {
     var classNames = this.props.node.getTypeNames().join(' ');
     if (this.props.classNames) {
       classNames += " " + this.props.classNames.join(' ');
+    }
+    if (this.props.node.highlighted) {
+      classNames += ' highlighted';
     }
     return classNames.replace(/_/g, '-');
   };
@@ -60,6 +65,6 @@ CitationComponent.Prototype = function() {
   };
 };
 
-oo.inherit(CitationComponent, Component);
+oo.inherit(CitationComponent, AnnotationComponent);
 
 module.exports = CitationComponent;

@@ -70,7 +70,7 @@ App.Prototype = function() {
   this.didMount = function() {
     this.backend.getDocument('sample', function(err, doc) {
       this.setState({
-        mode: 'read',
+        mode: 'write',
         doc: doc
       });
     }.bind(this));

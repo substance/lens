@@ -94,7 +94,8 @@ var CONFIG = {
     ]
   },
   panelOrder: ['toc', 'bib-items'],
-  containerId: 'main'      
+  containerId: 'main',
+  isEditable: true
 };
 
 function LensWriter(parent, params) {

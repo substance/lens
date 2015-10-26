@@ -2,13 +2,10 @@
 
 var oo = require('substance/util/oo');
 var LensController = require('./LensController');
-
 var ContextToggles = require('substance/ui/ContextToggles');
 var ContentPanel = require("substance/ui/ContentPanel");
 var StatusBar = require("substance/ui/StatusBar");
-
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
-var ContentToolbar = require('./packages/writer/ContentToolbar');
 var ContainerAnnotator = require('substance/ui/ContainerAnnotator');
 var Cover = require('./packages/reader/Cover');
 
@@ -51,10 +48,7 @@ var CONFIG = {
 
       "bib-item-entry": require('./packages/bibliography/BibItemEntry'),
       "image-figure-entry": require('./packages/figures/ImageFigureEntry'),
-      "table-figure-entry": require('./packages/figures/TableFigureEntry'),
-
-      // Manage BibItems
-      "manage-bib-items": require('./packages/bibliography/ManageBibItemsPanel')
+      "table-figure-entry": require('./packages/figures/TableFigureEntry')
     },
   },
   main: {
@@ -64,7 +58,8 @@ var CONFIG = {
     commands: []
   },
   panelOrder: ['toc', 'bib-items'],
-  containerId: 'main'      
+  containerId: 'main',
+  isEditable: false
 };
 
 function LensReader(parent, params) {
@@ -90,18 +85,18 @@ LensReader.Prototype = function() {
   // };
 
   this.onCitationSelected = function(citation) {
-    var citationType = citation.type;
+    if (this.state.citationId === citation.id) {
+      this.setState({
+        contextId: 'toc'
+      });
+      return;
+    }
+
     if (citation.type === 'bib-item-citation') {
-      if (this.state.citationId === citation.id) {
-        this.setState({
-          contextId: 'toc'
-        });
-      } else {
-        this.setState({
-          contextId: 'bib-items',
-          citationId: citation.id
-        });
-      }
+      this.setState({
+        contextId: 'bib-items',
+        citationId: citation.id
+      });
     } else {
       this.setState({
         contextId: 'toc',
@@ -163,7 +158,6 @@ LensReader.Prototype = function() {
     );
     return el;
   };
-
 };
 
 oo.inherit(LensReader, LensController);

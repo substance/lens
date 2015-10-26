@@ -6,5 +6,6 @@ module.exports = {
   'figure': 'Abbildung',
   'insert': 'Einfügen',
   'cite': 'Zitieren',
-  'bib_item': 'Referenz'
+  'bib_item': 'Referenz',
+  'embed-src': 'Embed URL'
 };

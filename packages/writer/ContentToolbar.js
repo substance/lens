@@ -14,8 +14,8 @@ var EmphasisTool = require('substance/packages/emphasis/EmphasisTool');
 var EmbedTool = require('substance/packages/embed/EmbedTool');
 var LinkTool = require('substance/packages/link/LinkTool');
 
-// var InsertFigureTool = require('../tools/insert_figure');
-// var ToggleImageFigureCitation = require('../tools/toggle_image_figure_citation');
+var InsertFigureTool = require('substance/packages/figure/InsertFigureTool');
+var ImageFigureCitationTool = require('../figures/ImageFigureCitationTool');
 
 var Dropdown = require('substance/ui/Dropdown');
 var Icon = require("substance/ui/FontAwesomeIcon");
@@ -47,8 +47,8 @@ ContentToolbarComponent.Prototype = function() {
       label: $$(Icon, {icon: "fa-image"}),
       title: this.i18n.t('figure')
     }).append(
-        // $$(InsertFigureTool).removeClass('tool').addClass('option').append(this.i18n.t('insert')),
-        // $$(ToggleImageFigureCitation).addClass('option').append(this.i18n.t('cite'))
+        $$(InsertFigureTool).removeClass('tool').addClass('option').append(this.i18n.t('insert')),
+        $$(ImageFigureCitationTool).addClass('option').append(this.i18n.t('cite'))
     );
 
     // Bibitem Actions
