@@ -1,19 +1,21 @@
-# Lens Writer
+# Lens (editable edition)
 
-Lens Writer is an attempt to build a full-featured scientific writer that is easily customizable and can be integrated into publishing workflows. In short: Lens Writer offers you everything you need to produce an article like [this one](http://lens.elifesciences.org/05098/#figures)
+This a rewrite of [Lens](http://github.com/elifesciences/lens) by [Substance](http://substance.io). It comes with a Writer component for web-based authoring and a Reader component for displaying.
+
+*Important note: This version is not yet compatible with NLM, as we defined a new Article Format based on XML, rather then supporting NLM directly.*
 
 # Install
 
 Clone the repository.
 
 ```bash
-$ git clone https://github.com/substance/science-writer.git
+$ git clone https://github.com/substance/lens.git
 ```
 
 Navigate to the source directory.
 
 ```bash
-$ cd science-writer
+$ cd lens
 ```
 
 Install via npm
@@ -32,10 +34,10 @@ And navigate to [http://localhost:5000](http://localhost:5000)
 
 # Usage from React
 
-Lens Writer provides a simple React wrapper, for easier embedding.
+Lens provides simple React wrappers, for easier embedding. To embed the Writer do:
 
 ```js
-var LensWriter = require('lens-writer/react');
+var LensWriter = require('lens/ReactLensWriter');
 
 React.createElement(LensWriter, {
   content: LENS_ARTICLE_XML,
@@ -46,5 +48,15 @@ React.createElement(LensWriter, {
     // Handle file upload
     // Store file somewhere and confirm with cb(null, 'http://url.to/file.png')
   }
+});
+```
+
+And for the Reader:
+
+```js
+var LensReader = require('lens/ReactLensReader');
+
+React.createElement(LensWriter, {
+  content: LENS_ARTICLE_XML
 });
 ```
