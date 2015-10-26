@@ -12,7 +12,6 @@ var ContentToolbar = require('./packages/writer/ContentToolbar');
 var ContainerAnnotator = require('substance/ui/ContainerAnnotator');
 var Cover = require('./packages/reader/Cover');
 
-
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
@@ -31,7 +30,6 @@ var CONFIG = {
       "embed": require('substance/packages/embed/EmbedComponent'),
       "image": require('substance/packages/image/ImageComponent'),
       "table": require('substance/packages/table/TableComponent'),
-
 
       "image-figure": require('substance/packages/figure/FigureComponent'),
       "table-figure": require('substance/packages/figure/FigureComponent'),
@@ -92,10 +90,8 @@ LensReader.Prototype = function() {
   // };
 
   this.onCitationSelected = function(citation) {
-    console.log('citation selected', citation);
     var citationType = citation.type;
     if (citation.type === 'bib-item-citation') {
-
       if (this.state.citationId === citation.id) {
         this.setState({
           contextId: 'toc'
@@ -106,7 +102,11 @@ LensReader.Prototype = function() {
           citationId: citation.id
         });
       }
-
+    } else {
+      this.setState({
+        contextId: 'toc',
+        citationId: citation.id
+      });
     }
   };
 
@@ -116,16 +116,15 @@ LensReader.Prototype = function() {
   };
 
   this.render = function() {
-    console.log('LensReader.render', this.state);
     var doc = this.props.doc;
     var config = this.getConfig();
-    var el = $$('div').addClass('lc-writer sc-controller');
+    var el = $$('div').addClass('lc-reader sc-controller');
 
     el.append(
       $$('div').ref('workspace').addClass('le-workspace').append(
         // Main (left column)
         $$('div').ref('main').addClass("le-main").append(
-          $$(ContentToolbar).ref('toolbar'),
+          // $$(ContentToolbar).ref('toolbar'),
           $$(ContentPanel).append(
             // Document Cover display
             $$(Cover, {

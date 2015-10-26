@@ -42,7 +42,8 @@ var CONFIG = {
       // Panels
       "toc": require('substance/ui/TocPanel'),
       "cite": require('./packages/citations/CitePanel'),
-      
+      "bib-items": require('./packages/bibliography/BibItemsPanel'),
+
       // We use different states for the same panel, so we can distinguish
       // the citation type based on state.contextId
       "cite-bib-item": require('./packages/citations/CitePanel'),
@@ -54,7 +55,7 @@ var CONFIG = {
       "table-figure-entry": require('./packages/figures/TableFigureEntry'),
 
       // Manage BibItems
-      "manage-bib-items": require('./packages/bibliography/ManageBibItemsPanel')
+      // "manage-bib-items": require('./packages/bibliography/ManageBibItemsPanel')
     },
   },
   main: {
@@ -92,7 +93,7 @@ var CONFIG = {
       require('substance/packages/emphasis/EmphasisCommand'),
     ]
   },
-  panelOrder: ['toc', 'manage-bib-items'],
+  panelOrder: ['toc', 'bib-items'],
   containerId: 'main'      
 };
 

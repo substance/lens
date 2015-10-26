@@ -2,4 +2,8 @@
 
 .lc-reader {
   @extend %lens;
+
+  .content-panel-component {
+      top: 0px;
+  }
 }
