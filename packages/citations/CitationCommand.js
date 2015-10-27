@@ -13,7 +13,7 @@ var CitationCommand = SurfaceCommand.extend({
       active: false
     };
 
-    if (sel && !sel.isNull() && sel.isPropertySelection() && sel.isCollapsed()) {
+    if (sel && !sel.isNull() && sel.isPropertySelection()) {
       newState.disabled = false;
     }
     return newState;
@@ -43,19 +43,18 @@ var CitationCommand = SurfaceCommand.extend({
     if (state.disabled) return;
 
     surface.transaction(function(tx, args) {
-      var collapsedSel = surface.getSelection();
 
       // 1. Insert fake character where the citation should stick on
       args = insertText(tx, {
-        selection: collapsedSel,
+        selection: args.selection,
         text: '$'
       });
 
       var citationSel = doc.createSelection({
         type: 'property',
-        path: collapsedSel.path,
-        startOffset: collapsedSel.startOffset-1,
-        endOffset: collapsedSel.endOffset
+        path: args.selection.path,
+        startOffset: args.selection.startOffset-1,
+        endOffset: args.selection.endOffset
       });
 
       // 2. Create citation annotation
