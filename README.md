@@ -4,7 +4,7 @@ This a rewrite of [Lens](http://github.com/elifesciences/lens) by [Substance](ht
 
 *Important note: This project is at an experimental state. It is also not compatible with JATS/NLM at this stage, as it reads a simplified custom XML format. We will add support for JATS import + export at a later time.*
 
-# Install
+# Install dev version
 
 Clone the repository.
 
@@ -18,7 +18,7 @@ Navigate to the source directory.
 $ cd lens
 ```
 
-Install via npm
+Install dependencies via npm
 
 ```bash
 $ npm install
@@ -31,6 +31,44 @@ $ npm run start
 ```
 
 And navigate to [http://localhost:5000](http://localhost:5000)
+
+# Usage
+
+To embed Lens Reader:
+
+```js
+var LensReader = require('lens/LensReader');
+var LensArticle = require('lens/model/LensArticle');
+var doc = LensArticle.fromXml(LENS_XML);
+
+Component.mount($$(LensReader, {
+  doc: doc
+}), document.body);
+```
+
+To embed Lens Writer:
+
+```js
+var LensWriter = require('lens/LensWriter');
+var LensArticle = require('lens/model/LensArticle');
+
+var doc = LensArticle.fromXml(LENS_XML);
+
+Component.mount($$(LensWriter, {
+  doc: doc,
+  onUploadFile: function(file, cb) {
+    console.log('custom file upload handler in action...');
+    var fileUrl = window.URL.createObjectURL(file);
+    cb(null, fileUrl);  
+  },
+  onSave: function(doc, changes, cb) {
+    console.log('custom save handler in action...', doc.toXml());
+    cb(null);
+  }
+}), document.body);
+```
+
+Make sure to also include the stylesheets into your app. We provide entry points at `styles/lens-writer.sass` and `styles/lens-reader.sass`. Lens requires a module bundler, such as Browserify or Webpack.
 
 # Usage from React
 
