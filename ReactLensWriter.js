@@ -49,6 +49,10 @@ var ReactLensWriter = React.createClass({
     }), el);
   },
 
+  componentWillUnmount: function() {
+    this.writer.dispose();
+  },
+
   render: function() {
     return React.DOM.div({
       className: 'lens-writer-wrapper'

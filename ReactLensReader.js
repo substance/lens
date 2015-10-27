@@ -37,6 +37,10 @@ var ReactLensReader = React.createClass({
     }), el);
   },
 
+  componentWillUnmount: function() {
+    this.reader.dispose();
+  },
+
   render: function() {
     return React.DOM.div({
       className: 'lens-reader-wrapper'
