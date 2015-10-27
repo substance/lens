@@ -4,7 +4,7 @@ This a rewrite of [Lens](http://github.com/elifesciences/lens) by [Substance](ht
 
 *Important note: This project is at an experimental state. It is also not compatible with JATS/NLM at this stage, as it reads a simplified custom XML format. We will add support for JATS import + export at a later time.*
 
-# Install dev version
+## Install dev version
 
 Clone the repository.
 
@@ -32,7 +32,13 @@ $ npm run start
 
 And navigate to [http://localhost:5000](http://localhost:5000)
 
-# Usage
+To create a new demo bundle do this:
+
+```bash
+$ npm run bundle
+```
+
+## Usage
 
 To embed Lens Reader:
 
@@ -75,7 +81,7 @@ Component.mount($$(LensWriter, {
 
 Make sure to also include the stylesheets into your app. We provide entry points at `styles/lens-writer.sass` and `styles/lens-reader.sass`. Lens requires a module bundler, such as Browserify or Webpack.
 
-# Usage from React
+## Usage from React
 
 Lens provides simple React wrappers, for easier embedding. To embed the Writer do:
 
