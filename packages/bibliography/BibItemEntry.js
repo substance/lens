@@ -19,7 +19,10 @@ BibItemEntry.Prototype = function() {
   };
 
   this.render = function() {
-    var el = $$('div').addClass('bib-item border-bottom pad item small clearfix');
+    var el = $$('div')
+      .addClass('bib-item border-bottom pad item small clearfix')
+      .attr('data-id', this.props.node.id);
+
     el.on('click', this.onClick);
     el.on('mousedown', this.onMouseDown);
     if (this.props.active) {

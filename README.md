@@ -56,7 +56,7 @@ And for the Reader:
 ```js
 var LensReader = require('lens/ReactLensReader');
 
-React.createElement(LensWriter, {
+React.createElement(LensReader, {
   content: LENS_ARTICLE_XML
 });
 ```

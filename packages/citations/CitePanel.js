@@ -3,11 +3,12 @@
 var _ = require('substance/util/helpers');
 var oo = require('substance/util/oo');
 var Component = require('substance/ui/Component');
+var Panel = require('substance/ui/Panel');
 var Icon = require("substance/ui/FontAwesomeIcon");
 var $$ = Component.$$;
 
 function CitePanel() {
-  Component.apply(this, arguments);
+  Panel.apply(this, arguments);
   this._initialize(this.props);
 }
 
@@ -35,7 +36,7 @@ CitePanel.Prototype = function() {
           .append($$(Icon, {icon: 'fa-chevron-left'})),
         $$('div').addClass('label').append(this.i18n.t("choose_referenced_items"))
       ),
-      $$('div').addClass("panel-content").append(
+      $$('div').addClass("panel-content").ref('panelContent').append(
         $$('div').addClass("bib-items").append(
           items
         )
@@ -44,7 +45,6 @@ CitePanel.Prototype = function() {
   };
 
   this.willReceiveProps = function(nextProps) {
-    console.log('CitePanel.willReceiveProps', nextProps);
     this._initialize(nextProps);
   };
 
@@ -54,6 +54,19 @@ CitePanel.Prototype = function() {
 
   this.dispose = function() {
     this.$el.off('click', '.back', this.handleCancel);
+  };
+
+  this.didMount = function() {
+    var citationTargetId = this.getFirstCitationTarget();
+    if (citationTargetId) {
+      this.scrollToNode(citationTargetId);
+    }
+  };
+
+  this.getFirstCitationTarget = function() {
+    var doc = this.props.doc;
+    var citation = doc.get(this.props.citationId);
+    return citation.targets[0];
   };
 
   // Determines wheter an item is active
@@ -96,7 +109,7 @@ CitePanel.Prototype = function() {
   };
 };
 
-oo.inherit(CitePanel, Component);
+oo.inherit(CitePanel, Panel);
 
 // Panel configuration
 // ----------------

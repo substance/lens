@@ -13,6 +13,7 @@ ImageFigureEntry.Prototype = function() {
   this.render = function() {
     var el = $$('div')
       .addClass('figure border-bottom item pad clearfix small')
+      .attr('data-id', this.props.node.id)
       .on('click', this.onClick)
       .on('mousedown', this.onMouseDown);
     if (this.props.active) {
