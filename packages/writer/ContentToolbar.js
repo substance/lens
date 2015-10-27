@@ -16,6 +16,7 @@ var LinkTool = require('substance/packages/link/LinkTool');
 
 var InsertFigureTool = require('substance/packages/figure/InsertFigureTool');
 var ImageFigureCitationTool = require('../figures/ImageFigureCitationTool');
+var BibItemCitationTool = require('../bibliography/BibItemCitationTool');
 
 var Dropdown = require('substance/ui/Dropdown');
 var Icon = require("substance/ui/FontAwesomeIcon");
@@ -47,8 +48,8 @@ ContentToolbarComponent.Prototype = function() {
       label: $$(Icon, {icon: "fa-image"}),
       title: this.i18n.t('figure')
     }).append(
-        $$(InsertFigureTool).removeClass('tool').addClass('option').append(this.i18n.t('insert')),
-        $$(ImageFigureCitationTool).addClass('option').append(this.i18n.t('cite'))
+      $$(InsertFigureTool).removeClass('tool').addClass('option').append(this.i18n.t('insert')),
+      $$(ImageFigureCitationTool).addClass('option').append(this.i18n.t('cite'))
     );
 
     // Bibitem Actions
@@ -58,7 +59,7 @@ ContentToolbarComponent.Prototype = function() {
       label: $$(Icon, {icon: 'fa-book'}),
       title: this.i18n.t('bib-item')
     }).append(
-      // $$(ToggleImageFigureCitation).addClass('option').append(this.i18n.t('cite'))
+      $$(BibItemCitationTool).addClass('option').append(this.i18n.t('cite'))
     );
 
     el.append(

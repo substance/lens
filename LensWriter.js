@@ -128,7 +128,7 @@ LensWriter.Prototype = function() {
             $$("div").ref('main').addClass('document-content').append(
               $$(ContainerEditor, {
                 name: 'main',
-                containerId: 'main',
+                containerId: config.containerId,
                 editable: false,
                 commands: config.main.commands
               }).ref('mainEditor')
