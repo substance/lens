@@ -1,8 +1,8 @@
 # Lens (editable edition)
 
-This a rewrite of [Lens](http://github.com/elifesciences/lens) by [Substance](http://substance.io). It comes with a Writer component for web-based authoring and a Reader component for displaying.
+This a rewrite of [Lens](http://github.com/elifesciences/lens) by [Substance](http://substance.io). It comes with a Writer component for web-based authoring and a new Reader component for displaying.
 
-*Important note: This version is not yet compatible with NLM, as we defined a new Article Format based on XML, rather then supporting NLM directly.*
+*Important note: This project is at an experimental state. It is also not compatible with JATS/NLM at this stage, as it reads a simplified custom XML format. We will add support for JATS import + export at a later time.*
 
 # Install
 
