@@ -39,6 +39,9 @@ To embed Lens Reader:
 ```js
 var LensReader = require('lens/LensReader');
 var LensArticle = require('lens/model/LensArticle');
+var Component = require('substance/ui/component');
+var $$ = Component.$$;
+
 var doc = LensArticle.fromXml(LENS_XML);
 
 Component.mount($$(LensReader, {
@@ -51,6 +54,8 @@ To embed Lens Writer:
 ```js
 var LensWriter = require('lens/LensWriter');
 var LensArticle = require('lens/model/LensArticle');
+var Component = require('substance/ui/component');
+var $$ = Component.$$;
 
 var doc = LensArticle.fromXml(LENS_XML);
 
