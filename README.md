@@ -1,6 +1,6 @@
 # Lens (editable edition)
 
-This a rewrite of [Lens](http://github.com/elifesciences/lens) by [Substance](http://substance.io). It comes with a Writer component for web-based authoring and a new Reader component for displaying of scientific content. 
+This an evolution of [Lens](http://github.com/elifesciences/lens), developed by [Substance](http://substance.io). It comes with a Writer component for web-based authoring and a new Reader component for displaying of scientific content. 
 
 Read about the backgrounds of this project:
 
