@@ -14,6 +14,9 @@
 @import '../node_modules/substance/styles/components/_text_property';
 @import '../node_modules/substance/styles/components/_annotation_tool';
 
+@import '../node_modules/substance/styles/components/_toolbar';
+@import '../node_modules/substance/packages/text/_switch_text_type_tool';
+
 // Nodes
 @import '../node_modules/substance/packages/paragraph/_paragraph';
 @import '../node_modules/substance/packages/heading/_heading';
@@ -22,16 +25,11 @@
 @import '../node_modules/substance/packages/list/_list';
 @import '../node_modules/substance/packages/link/_link';
 @import '../node_modules/substance/packages/table/_table';
-
 @import '../node_modules/substance/packages/emphasis/_emphasis';
 @import '../node_modules/substance/packages/strong/_strong';
 
-@import '../node_modules/substance/packages/text/_text_tool';
 
 @import './components/_bib_items_panel';
-
-// @import '../node_modules/substance/ui/AnnotationTool/index';
-// @import '../node_modules/substance/ui/TextTool/index';
 
 %lens {
   position: absolute;

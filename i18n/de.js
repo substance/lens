@@ -7,5 +7,11 @@ module.exports = {
   'insert': 'Einfügen',
   'cite': 'Zitieren',
   'bib_item': 'Referenz',
-  'embed-src': 'Embed URL'
+  'embed-src': 'Embed URL',
+  'paragraph': 'Paragraph',
+  'heading1': 'Heading 1',
+  'heading2': 'Heading 2',
+  'heading3': 'Heading 3',
+  'codeblock': 'Codeblock',
+  'blockquote': 'Blockquote'
 };
