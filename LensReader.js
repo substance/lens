@@ -8,7 +8,6 @@ var StatusBar = require("substance/ui/StatusBar");
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
 var ContainerAnnotator = require('substance/ui/ContainerAnnotator');
 var Cover = require('./packages/reader/Cover');
-
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 

@@ -36,7 +36,6 @@ Backend.Prototype = function() {
     var session = localStorage.getItem('session');
     if (session) {
       var token = JSON.parse(session).token;
-
       ajaxOpts.beforeSend = function(xhr) {
         xhr.setRequestHeader("Authorization", "Bearer " + token);
       };
