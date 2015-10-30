@@ -9,10 +9,9 @@ var StatusBar = require("substance/ui/StatusBar");
 
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
 var CoverEditor = require('./packages/writer/CoverEditor');
-// var ContentToolbar = require('./packages/writer/ContentToolbar');
 
 var Toolbar = require('substance/ui/Toolbar');
-var writerTools = require('./packages/writer/writerTools');
+var WriterTools = require('./packages/writer/WriterTools');
 var ContainerEditor = require('substance/ui/ContainerEditor');
 
 var docHelpers = require('substance/model/documentHelpers');
@@ -67,12 +66,6 @@ var CONFIG = {
 
       // Special commands
       require('substance/packages/embed/EmbedCommand'),
-      // require('substance/packages/paragraph/MakeParagraphCommand'),
-      // require('substance/packages/heading/MakeHeading1Command'),
-      // require('substance/packages/heading/MakeHeading2Command'),
-      // require('substance/packages/heading/MakeHeading3Command'),
-      // require('substance/packages/blockquote/MakeBlockquoteCommand'),
-      // require('substance/packages/codeblock/MakeCodeblockCommand'),
 
       require('substance/packages/text/SwitchTextTypeCommand'),
       require('substance/packages/strong/StrongCommand'),
@@ -121,8 +114,7 @@ LensWriter.Prototype = function() {
       $$('div').ref('workspace').addClass('le-workspace').append(
         // Main (left column)
         $$('div').ref('main').addClass("le-main").append(
-          // $$(ContentToolbar).ref('toolbar'),
-          $$(Toolbar).ref('toolbar').append(writerTools),
+          $$(Toolbar).ref('toolbar').append($$(WriterTools)),
 
           $$(ContentPanel).append(
             $$(CoverEditor, {
