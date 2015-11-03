@@ -2,16 +2,14 @@
 
 var oo = require('substance/util/oo');
 var LensController = require('./LensController');
-
 var ContextToggles = require('substance/ui/ContextToggles');
 var ContentPanel = require("substance/ui/ContentPanel");
 var StatusBar = require("substance/ui/StatusBar");
-
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
 var CoverEditor = require('./packages/writer/CoverEditor');
-var ContentToolbar = require('./packages/writer/ContentToolbar');
+var Toolbar = require('substance/ui/Toolbar');
+var WriterTools = require('./packages/writer/WriterTools');
 var ContainerEditor = require('substance/ui/ContainerEditor');
-
 var docHelpers = require('substance/model/documentHelpers');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
@@ -64,12 +62,6 @@ var CONFIG = {
 
       // Special commands
       require('substance/packages/embed/EmbedCommand'),
-      require('substance/packages/paragraph/MakeParagraphCommand'),
-      require('substance/packages/heading/MakeHeading1Command'),
-      require('substance/packages/heading/MakeHeading2Command'),
-      require('substance/packages/heading/MakeHeading3Command'),
-      require('substance/packages/blockquote/MakeBlockquoteCommand'),
-      require('substance/packages/codeblock/MakeCodeblockCommand'),
 
       require('substance/packages/text/SwitchTextTypeCommand'),
       require('substance/packages/strong/StrongCommand'),
@@ -82,10 +74,12 @@ var CONFIG = {
       require('./packages/figures/ImageFigureCitationCommand'),
     ],
     textTypes: [
-      {type: 'heading', level: 1},
-      {type: 'heading', level: 2},
-      {type: 'heading', level: 3},
-      {type: 'codeblock'}
+      {name: 'paragraph', data: {type: 'paragraph'}},
+      {name: 'heading1',  data: {type: 'heading', level: 1}},
+      {name: 'heading2',  data: {type: 'heading', level: 2}},
+      {name: 'heading3',  data: {type: 'heading', level: 3}},
+      {name: 'codeblock', data: {type: 'codeblock'}},
+      {name: 'blockquote', data: {type: 'blockquote'}}
     ]
   },
   cover: {
@@ -117,7 +111,8 @@ LensWriter.Prototype = function() {
       $$('div').ref('workspace').addClass('le-workspace').append(
         // Main (left column)
         $$('div').ref('main').addClass("le-main").append(
-          $$(ContentToolbar).ref('toolbar'),
+          $$(Toolbar).ref('toolbar').append($$(WriterTools)),
+
           $$(ContentPanel).append(
             $$(CoverEditor, {
               name: 'cover',
@@ -130,7 +125,8 @@ LensWriter.Prototype = function() {
                 name: 'main',
                 containerId: config.containerId,
                 editable: false,
-                commands: config.main.commands
+                commands: config.main.commands,
+                textTypes: config.main.textTypes
               }).ref('mainEditor')
             ),
             $$(BibliographyComponent).ref('bib')

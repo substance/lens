@@ -10,5 +10,11 @@ module.exports = {
   'manage': 'Manage',
   'add_reference': 'Add References',
   'bib-items': 'References',
-  'embed-src': 'Embed URL'
+  'embed-src': 'Embed URL',
+  'paragraph': 'Paragraph',
+  'heading1': 'Heading 1',
+  'heading2': 'Heading 2',
+  'heading3': 'Heading 3',
+  'codeblock': 'Codeblock',
+  'blockquote': 'Blockquote'
 };

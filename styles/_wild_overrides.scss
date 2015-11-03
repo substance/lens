@@ -1,21 +1,4 @@
-/* Container Annotations
------------------------------------------------------*/
-
-.container-annotation.active.annotation-fragment {
-  background-color: rgba(145, 187, 4, 0.2);
-}
-
-/* Selection style sheets
------------------------------------------------------*/
-
-// ::selection {
-//   background: rgba(0,0,0,0.1);
-// }
-
-// ::-moz-selection {
-//   background: rgba(0,0,0,0.1);
-// }
-
+/* TODO: The following styles need to be moved into component modules */
 
 /* CSL Styles
 -----------------------------------------------------*/
@@ -33,7 +16,6 @@
 
 .csl-left-margin {
   float: left;
-  // color: #aaa;
   font-weight: 600;
   font-size: 13px;
 }
@@ -44,16 +26,6 @@
 
 /* Content Tools
 -----------------------------------------------------*/
-
-.content-tools-component {
-  height: 40px;
-  border-bottom: 1px solid #ddd;
-  position: absolute;
-  z-index: 40000;
-  left: 0px;
-  right: 0px;
-  top: 0px;
-}
 
 
 /* Custom Scrollbar styles
@@ -109,8 +81,6 @@
 .annotation.bib-item-citation.highlighted {
   background: $highlight-color-2;
 }
-
-
 
 
 /* Cite Panel
