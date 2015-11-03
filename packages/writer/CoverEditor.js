@@ -1,55 +1,43 @@
 "use strict";
 
 var OO = require('substance/util/oo');
-var FormEditor = require('substance/ui/FormEditor');
+var Component = require('substance/ui/Component');
 var $$ = require('substance/ui/Component').$$;
-var TextProperty = require("substance/ui/TextPropertyComponent");
-var map = require('lodash/collection/map');
+var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
 
 var CoverEditor = function() {
-  FormEditor.apply(this, arguments);
+  Component.apply(this, arguments);
 };
 
 CoverEditor.Prototype = function() {
-
   this.render = function() {
-    var doc = this.getDocument();
+    var doc = this.context.controller.getDocument();
+    var config = this.context.config;
+
     var metaNode = doc.getDocumentMeta();
     return $$("div").addClass("document-cover")
-      .attr({
-        contentEditable: true,
-        "data-id": "title-editor"
-      })
       .append(
         // Editable title
-        $$(TextProperty, {
+        $$(TextPropertyEditor, {
+          name: 'title',
           tagName: "div",
-          className: "title",
+          commands: config.title.commands,
           path: [metaNode.id, "title"]
         }).addClass('title'),
 
-        // Editable authors
-        $$('div').addClass('authors clearfix').append(
-          map(metaNode.authors, function(authorId) {
-            return $$(TextProperty, {
-              tagName: "div",
-              path: [authorId, "name"]
-            }).addClass('author');
-          })
-        )
         // Editable abstract
-        // $$('div').addClass('abstract').append(
-        //   $$('div').attr({contenteditable: false}),
-        //   $$(TextProperty, {
-        //     tagName: "div",
-        //     className: "abstract",
-        //     path: [metaNode.id, "abstract"]
-        //   }).addClass('abstract')
-        // )
+        $$('div').addClass('abstract').append(
+          $$(TextPropertyEditor, {
+            name: 'abstract',
+            tagName: 'div',
+            commands: config.abstract.commands,
+            path: [metaNode.id, 'abstract']
+          }).addClass('abstract')
+        )
       );
   };
 };
 
-OO.inherit(CoverEditor, FormEditor);
+OO.inherit(CoverEditor, Component);
 
 module.exports = CoverEditor;

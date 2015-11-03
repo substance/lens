@@ -14,6 +14,7 @@ var docHelpers = require('substance/model/documentHelpers');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
+
 var CONFIG = {
   controller: {
     commands: [
@@ -58,8 +59,6 @@ var CONFIG = {
   },
   main: {
     commands: [
-      require('substance/ui/SelectAllCommand'),
-
       // Special commands
       require('substance/packages/embed/EmbedCommand'),
 
@@ -82,9 +81,16 @@ var CONFIG = {
       {name: 'blockquote', data: {type: 'blockquote'}}
     ]
   },
-  cover: {
+  title: {
     commands: [
       require('substance/packages/emphasis/EmphasisCommand'),
+    ]
+  },
+  abstract: {
+    commands: [
+      require('substance/packages/emphasis/EmphasisCommand'),
+      require('substance/packages/strong/StrongCommand'),
+      require('substance/packages/link/LinkCommand')
     ]
   },
   panelOrder: ['toc', 'bib-items'],
@@ -114,17 +120,13 @@ LensWriter.Prototype = function() {
           $$(Toolbar).ref('toolbar').append($$(WriterTools)),
 
           $$(ContentPanel).append(
-            $$(CoverEditor, {
-              name: 'cover',
-              commands: config.cover.commands
-            }).ref('coverEditor'),
+            $$(CoverEditor).ref('coverEditor'),
 
             // The full fledged document (ContainerEditor)
             $$("div").ref('main').addClass('document-content').append(
               $$(ContainerEditor, {
                 name: 'main',
                 containerId: config.containerId,
-                editable: false,
                 commands: config.main.commands,
                 textTypes: config.main.textTypes
               }).ref('mainEditor')

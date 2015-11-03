@@ -217,6 +217,9 @@
 
 .content-panel-component .document-cover {
   margin-bottom: 30px;
+  padding-bottom: 30px;
+
+  border-bottom: 1px solid #ddd;
 
   .title {
     font-size: 30px;
@@ -227,9 +230,8 @@
 
   .abstract {
     padding-top: 15px;
-    // color: #666;
-    font-size: 18px;
-    line-height: 26px;
+    font-size: 13px;
+    line-height: 18px;
   }
 
   .authors {

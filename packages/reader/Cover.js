@@ -1,19 +1,18 @@
 "use strict";
 
 var OO = require('substance/util/oo');
-var FormEditor = require('substance/ui/FormEditor');
+var TextPropertyAnnotator = require('substance/ui/TextPropertyAnnotator');
 var $$ = require('substance/ui/Component').$$;
 var TextProperty = require("substance/ui/TextPropertyComponent");
-var map = require('lodash/collection/map');
 
 var Cover = function() {
-  FormEditor.apply(this, arguments);
+  TextPropertyAnnotator.apply(this, arguments);
 };
 
 Cover.Prototype = function() {
 
   this.render = function() {
-    var doc = this.getDocument();
+    var doc = this.context.controller.getDocument();
     var metaNode = doc.getDocumentMeta();
     return $$("div").addClass("document-cover")
       .append(
@@ -22,29 +21,19 @@ Cover.Prototype = function() {
           className: "title",
           path: [metaNode.id, "title"]
         }).addClass('title'),
-
-        // Authors
-        $$('div').addClass('authors clearfix').append(
-          map(metaNode.authors, function(authorId) {
-            return $$(TextProperty, {
-              tagName: "div",
-              path: [authorId, "name"]
-            }).addClass('author');
-          })
-        )//,
         
         // Abstract
-        // $$('div').addClass('abstract').append(
-        //   $$(TextProperty, {
-        //     tagName: "div",
-        //     className: "abstract",
-        //     path: [metaNode.id, "abstract"]
-        //   }).addClass('abstract')
-        // )
+        $$('div').addClass('abstract').append(
+          $$(TextProperty, {
+            tagName: "div",
+            className: "abstract",
+            path: [metaNode.id, "abstract"]
+          }).addClass('abstract')
+        )
       );
   };
 };
 
-OO.inherit(Cover, FormEditor);
+OO.inherit(Cover, TextPropertyAnnotator);
 
 module.exports = Cover;

@@ -10,7 +10,7 @@
     "express": "*",
     "lodash": "3.3.1",
     "node-sass": "3.x",
-    "substance": "substance/substance#master"
+    "substance": "substance/substance#text-property-editor"
   },
   "devDependencies": {
     "gulp": "^3.8.11",
