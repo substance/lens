@@ -1,12 +1,13 @@
 "use strict";
 
 var OO = require('substance/util/oo');
+var Component = require('substance/ui/Component');
 var TextPropertyAnnotator = require('substance/ui/TextPropertyAnnotator');
 var $$ = require('substance/ui/Component').$$;
 var TextProperty = require("substance/ui/TextPropertyComponent");
 
 var Cover = function() {
-  TextPropertyAnnotator.apply(this, arguments);
+  Component.apply(this, arguments);
 };
 
 Cover.Prototype = function() {
@@ -16,17 +17,17 @@ Cover.Prototype = function() {
     var metaNode = doc.getDocumentMeta();
     return $$("div").addClass("document-cover")
       .append(
-        $$(TextProperty, {
+        $$(TextPropertyAnnotator, {
+          name: 'title',
           tagName: "div",
-          className: "title",
           path: [metaNode.id, "title"]
         }).addClass('title'),
         
         // Abstract
         $$('div').addClass('abstract').append(
-          $$(TextProperty, {
+          $$(TextPropertyAnnotator, {
+            name: 'abstract',
             tagName: "div",
-            className: "abstract",
             path: [metaNode.id, "abstract"]
           }).addClass('abstract')
         )
@@ -34,6 +35,6 @@ Cover.Prototype = function() {
   };
 };
 
-OO.inherit(Cover, TextPropertyAnnotator);
+OO.inherit(Cover, Component);
 
 module.exports = Cover;
