@@ -7,13 +7,28 @@ var Backend = require("./backend");
 var $ = require('substance/util/jquery');
 var LensWriter = require('../LensWriter');
 var LensReader = require('../LensReader');
+var Router = require('substance/ui/Router');
 
 function App() {
-  Component.Root.apply(this, arguments);
+  Component.apply(this, arguments);
+
   this.backend = new Backend();
 }
 
 App.Prototype = function() {
+
+  this.getInitialContext = function() {
+    return {
+      router: new Router(this)
+    };
+  };
+
+  this.getInitialState = function() {
+    return {
+      mode: 'read'
+    };
+  };
+
   this.openReader = function() {
     this.extendState({
       mode: 'read'
@@ -41,26 +56,26 @@ App.Prototype = function() {
           .append('Read')
       )
     );
-    
-    if (this.state.doc) {
+
+    if (this.doc) {
       var lensEl;
       if (this.state.mode === 'write') {
         lensEl = $$(LensWriter, {
-          doc: this.state.doc,
+          doc: this.doc,
           onUploadFile: function(file, cb) {
             console.log('custom file upload handler in action...');
             var fileUrl = window.URL.createObjectURL(file);
-            cb(null, fileUrl);  
+            cb(null, fileUrl);
           },
           onSave: function(doc, changes, cb) {
             console.log('custom save handler in action...', doc.toXml());
             cb(null);
           }
-        }).ref('writer');
+        }).ref('writer').route();
       } else {
         lensEl = $$(LensReader, {
-          doc: this.state.doc
-        }).ref('reader');
+          doc: this.doc
+        }).ref('reader').route();
       }
       el.append($$('div').addClass('context').append(lensEl));
     }
@@ -69,10 +84,8 @@ App.Prototype = function() {
 
   this.didMount = function() {
     this.backend.getDocument('sample', function(err, doc) {
-      this.setState({
-        mode: 'write',
-        doc: doc
-      });
+      this.doc = doc;
+      this.rerender();
     }.bind(this));
   };
 };
@@ -80,5 +93,5 @@ App.Prototype = function() {
 oo.inherit(App, Component);
 
 $(function() {
-  Component.mount($$(App), $('#container'));
+  window.app = Component.mount($$(App), $('#container'));
 });
