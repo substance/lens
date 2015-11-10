@@ -125,6 +125,9 @@ Bibliography.Prototype = function() {
 
   // TODO: maybe we should this make the default this.getBibItems ?
   this.getCompiledItems =  function() {
+    if (!this.sortedBibItems) {
+      this.compile();
+    }
     return this.sortedBibItems;
   };
 
