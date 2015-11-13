@@ -1,8 +1,9 @@
-var Substance = require("substance");
-var Article = require('../lib/article');
+var LensArticle = require('../model/LensArticle');
+var oo = require('substance/util/oo');
+var $ = require('substance/util/jquery');
 
 var Backend = function() {
-  
+
 };
 
 Backend.Prototype = function() {
@@ -35,7 +36,6 @@ Backend.Prototype = function() {
     var session = localStorage.getItem('session');
     if (session) {
       var token = JSON.parse(session).token;
-
       ajaxOpts.beforeSend = function(xhr) {
         xhr.setRequestHeader("Authorization", "Bearer " + token);
       };
@@ -50,7 +50,7 @@ Backend.Prototype = function() {
   this.getDocument = function(documentId, cb) {
     this._request('GET', 'data/example-doc.xml', null, function(err, rawDoc) {
       if (err) { console.error(err); cb(err); }
-      var doc = Article.fromXml(rawDoc);
+      var doc = LensArticle.fromXml(rawDoc);
       window.doc = doc;
       cb(null, doc);
     });
@@ -65,11 +65,11 @@ Backend.Prototype = function() {
 
   this.uploadFigure = function(file, cb) {
     // This is a fake implementation
-    var objectURL = URL.createObjectURL(file);
+    var objectURL = window.URL.createObjectURL(file);
     cb(null, objectURL);
   };
 };
 
-Substance.initClass(Backend);
+oo.initClass(Backend);
 
 module.exports = Backend;

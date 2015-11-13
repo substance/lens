@@ -1,7 +1,6 @@
 {
   "esnext": true,
   "node": true,
-  "jquery": true,
   "devel": true,
   "latedef": true,
   "undef": true,
@@ -9,7 +8,6 @@
   "sub": true,
   "predef": [
     "localStorage",
-    "React",
     "window",
     "document",
     "i18n"

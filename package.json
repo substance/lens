@@ -1,28 +1,24 @@
 {
-  "name": "lens-writer",
-  "description": "An embeddable scientific writer based on Substance",
-  "version": "0.1.0",
+  "name": "lens",
+  "description": "A UI library for building custom scientific publishing workflows",
+  "version": "0.2.0",
   "dependencies": {
-    "babelify": "^6.1.2",
-    "body-parser": "^1.12.4",
-    "browserify": "^10.2.4",
-    "cheerio": "^0.19.0",
-    "ejs": "*",
-    "es6ify": "^1.6.0",
-    "express": "*",
-    "js-beautify": "^1.5.6",
+    "body-parser": "1.14.1",
+    "browserify": "12.0.1",
+    "cheerio": "0.19.0",
+    "ejs": "2.3.4",
+    "express": "4.13.3",
     "lodash": "3.3.1",
-    "node-polyglot": "^0.4.1",
-    "node-sass": "3.x",
-    "substance": "substance/substance-legacy#193d87259fae45a0f546bdb133a9fc7f34d87b52",
-    "substance-ui": "substance/ui#7a6cb53b1d6a1e55fa022c2b69a1b8f938f5ae4f"
+    "node-sass": "3.4.2",
+    "substance": "substance/substance#text-property-editor"
   },
   "devDependencies": {
-    "gulp": "^3.8.11",
-    "gulp-sass": "^2.0.3",
-    "gulp-uglify": "^1.2.0",
-    "through2": "^2.0.0"
+    "gulp": "3.9.0",
+    "gulp-sass": "2.1.0",
+    "gulp-uglify": "1.5.1",
+    "through2": "2.0.0"
   },
+  "engines" : { "npm" : "4.2.2" },
   "scripts": {
     "bundle": "gulp"
   }
