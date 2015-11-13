@@ -10,6 +10,7 @@ module.exports = {
   'manage': 'Manage',
   'add_reference': 'Add References',
   'bib-items': 'References',
+  'smart-references': 'Smart References',
   'embed-src': 'Embed URL',
   'paragraph': 'Paragraph',
   'heading1': 'Heading 1',

@@ -42,6 +42,7 @@ var CONFIG = {
       "toc": require('substance/ui/TocPanel'),
       "cite": require('./packages/citations/CitePanel'),
       "bib-items": require('./packages/bibliography/BibItemsPanel'),
+      "smart-references": require('./packages/bibliography/SmartReferencesPanel'),
 
       // We use different states for the same panel, so we can distinguish
       // the citation type based on state.contextId
@@ -93,7 +94,7 @@ var CONFIG = {
       require('substance/packages/link/LinkCommand')
     ]
   },
-  panelOrder: ['toc', 'bib-items'],
+  panelOrder: ['toc', 'bib-items', 'smart-references'],
   containerId: 'main',
   isEditable: true
 };
@@ -187,6 +188,50 @@ LensWriter.Prototype = function() {
       }
     }
   };
+
+  this.didMount = function() {
+    var doc = this.props.doc;
+    doc.connect(this, {
+      'document:changed': this.onDocumentChange,
+    });
+  },
+
+  this.dispose = function() {
+    this.props.doc.disconnect(this);
+  },
+
+  this.onDocumentChange = function(change) {
+    var doc = this.props.doc;
+    var op = change.ops[0];
+
+    if(op.isUpdate()) {
+      var plainText = doc.get(op.path);
+      var pos = op.diff.pos;
+      var head = plainText.slice(0, pos+1);
+      var query = head.split(' ').slice(-2);
+      this.queryCrossRef(query).then(function (data) {
+        console.log(data)
+        this.setState({
+          contextId: 'smart-references',
+          data: data
+        })
+      }.bind(this))
+
+    }
+
+    return true;
+  }
+
+  this.queryCrossRef = function (query) {
+    return fetch(
+      'http://api.crossref.org/works?query=' + query +
+      '&filter=type:journal-article,license.url:http://creativecommons.org/licenses/by/3.0/deed.en_US'
+    ).then(function (response) {
+      return response.json().then(function (data) {
+        return data;
+      })
+    })
+  }
 };
 
 oo.inherit(LensWriter, LensController);
