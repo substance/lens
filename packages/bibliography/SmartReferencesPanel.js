@@ -1,129 +1,118 @@
 'use strict';
 
+var _ = require('substance/util/helpers');
 var oo = require('substance/util/oo');
-var Panel = require('substance/ui/Panel');
 var Component = require('substance/ui/Component');
-var SmartReferenceItem = require('./SmartReferenceItem');
+var Panel = require('substance/ui/Panel');
+var Icon = require("substance/ui/FontAwesomeIcon");
+var SmartReferenceItem = require("./SmartReferenceItem")
+
 var $$ = Component.$$;
-
-var BibliographySummary = Component.extend({
-  render: function() {
-    var el = $$('div').addClass('se-bibliography-summary');
-
-    el.append(
-      $$('p').append(
-        'Your bibliography has ',
-        $$('strong').append(this.props.bibItems.length.toString(), ' references'),
-        ' in total.'
-        // $$('strong').append('? references'),
-        // 'are not cited.'
-      )
-    );
-
-    var config = this.context.config;
-    if (config.isEditable) {
-      el.append(
-        $$('p').append(
-          $$('a').attr({href: '#'}).append('Add references')
-        )
-      );
-    }
-    return el;
-  }
-});
-
-// List existing bib items
-// -----------------
 
 function SmartReferencesPanel() {
   Panel.apply(this, arguments);
-
-  var doc = this.props.doc;
-  this.bibliography = doc.getCollection('bib-item');
-  this.bibliography.connect(this, {
-    'bibliography:updated': this.rerender
-  });
+  this._initialize(this.props);
 }
 
 SmartReferencesPanel.Prototype = function() {
 
+  this.render = function() {
+
+    var items = this.props.data.message.items.map(function (result) {
+      return $$(SmartReferenceItem, {
+        node: result,
+        handleSelection: this.handleSelection.bind(this)
+      })
+    }.bind(this))
+
+    return $$('div').addClass("panel dialog cite-panel-component").append(
+      $$('div').addClass("dialog-header").append(
+        $$('a').addClass('back').attr('href', '#')
+          .on('click', this.handleCancel)
+          .append($$(Icon, {icon: 'fa-chevron-left'})),
+        $$('div').addClass('label').append(this.i18n.t("choose_referenced_items"))
+      ),
+      $$('div').addClass("panel-content").ref('panelContent').append(
+        $$('div').addClass("bib-items").append(
+          items
+        )
+      )
+    );
+  };
+
+  this.willReceiveProps = function(nextProps) {
+    // this._initialize(nextProps);
+  };
+
+  this._initialize = function() {
+    // this.items = this.getItems(this.props.citationType);
+  };
+
   this.dispose = function() {
-    this.bibliography.disconnect();
+    this.$el.off('click', '.back', this.handleCancel);
   };
 
   this.didMount = function() {
-    var bibItemId = this.getFirstActiveBibItemId();
-    if (bibItemId) {
-      this.scrollToNode(bibItemId);
-    }
+    // var citationTargetId = this.getFirstCitationTarget();
+    // if (citationTargetId) {
+    //   this.scrollToNode(citationTargetId);
+    // }
   };
 
-  this.getFirstActiveBibItemId = function() {
+  this.getFirstCitationTarget = function() {
+    // var doc = this.props.doc;
+    // var citation = doc.get(this.props.citationId);
+    // return citation.targets[0];
+  };
+
+  // Determines wheter an item is active
+  this.isItemActive = function(itemId) {
+    // if (!this.props.citationId) return false;
+    // var doc = this.props.doc;
+    // var citation = doc.get(this.props.citationId);
+    // return _.includes(citation.targets, itemId);
+  };
+
+  this.handleCancel = function(e) {
+    e.preventDefault();
+    this.send("switchContext", "toc");
+  };
+
+  this.getItems = function(citationType) {
+    // var doc = this.props.doc;
+    // var collection = doc.getCollection(citationType);
+    // return collection.getItems();
+  };
+
+  // Called with entityId when an entity has been clicked
+  this.handleSelection = function(targetId) {
+    var citationId = this.props.citationId;
     var doc = this.props.doc;
-    if (this.props.bibItemId) {
-      return this.props.bibItemId;
+    var citation = doc.get(citationId);
+    var newTargets = citation.targets.slice();
+    if (_.includes(newTargets, targetId)) {
+      newTargets = _.without(newTargets, targetId);
+    } else {
+      newTargets.push(targetId);
     }
 
-    if (this.props.citationId) {
-      var citation = doc.get(this.props.citationId);
-      return citation.targets[0];
-    }
+    var ctrl = this.context.controller;
+    ctrl.transaction(function(tx, args) {
+      tx.set([citation.id, "targets"], newTargets);
+      return args;
+    });
+    this.rerender();
   };
-
-  this.isHighlighted = function(bibItem) {
-    var doc = this.props.doc;
-    if (this.props.bibItemId === bibItem.id) {
-      return true;
-    }
-
-    if (this.props.citationId) {
-      var citation = doc.get(this.props.citationId);
-      if (citation.targets && citation.targets.indexOf(bibItem.id) >= 0) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  this.render = function() {
-    var el = $$('div').addClass('sc-bib-items-panel panel');
-    var bibItemEls = $$('div').addClass('panel-content').ref('panelContent');
-
-    this.props.data.message.items.forEach(function (result) {
-      bibItemEls.append($$(SmartReferenceItem, {
-        node: result,
-      }))
-    })
-    // var bibItems = this.bibliography.getItems();
-
-    // // bibItemEls.append($$(BibliographySummary, {bibItems: bibItems}));
-
-    // bibItems.forEach(function(bibItem) {
-    //   bibItemEls.append($$(BibItemComponent, {
-    //     node: bibItem,
-    //     highlighted: this.isHighlighted(bibItem)
-    //   }));
-    // }.bind(this));
-    el.append(bibItemEls);
-    return el;
-  };
-
-  // this.handleDeleteBibItem = function(e) {
-  //   e.preventDefault();
-  //   var bibItemId = e.currentTarget.dataset.id;
-  //   var doc = this.props.doc;
-
-  //   doc.deleteBibItem(bibItemId);
-  //   var bibliography = doc.getBibliography();
-  //   // Recompile bibliography
-  //   bibliography.compile();
-  //   var bibItems = bibliography.getCompiledItems();
-  //   this.setState({
-  //     bibItems: bibItems
-  //   });
-  // };
 };
 
 oo.inherit(SmartReferencesPanel, Panel);
+
+// Panel configuration
+// ----------------
+
+SmartReferencesPanel.icon = "fa-bullseye";
+
+// No context switch toggle is shown
+SmartReferencesPanel.isDialog = true;
 
 module.exports = SmartReferencesPanel;
