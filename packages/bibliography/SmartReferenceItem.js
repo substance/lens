@@ -9,33 +9,35 @@ function SmartReferenceItem() {
 }
 
 SmartReferenceItem.Prototype = function() {
-
-  this.toggleFocus = function() {
-    this.send('toggleBibItem', this.props.node);
-  };
-
   this.render = function() {
-    var el = $$('div').addClass('se-bib-item') // .attr('data-id', this.props.node.id);
+    var el = $$('div')
+      .addClass('bib-item border-bottom pad item small clearfix')
+      .attr('data-id', this.props.node.DOI);
 
-    if (this.props.highlighted) {
-      el.addClass('se-highlighted');
+    el.on('click', this.onClick);
+    el.on('mousedown', this.onMouseDown);
+    if (this.props.active) {
+      el.addClass('active');
     }
 
-    // Label
-    el.append($$('div').addClass('se-label').append(this.props.node.DOI));
+    el.append($$('div').addClass('label').append(this.props.node.DOI));
 
-    // Focus toggle
-    el.append(
-      $$('button').addClass('se-focus-toggle').append(
-        $$(Icon, {icon: 'fa-eye'}),
-        ' Focus'
-      ).on('click', this.toggleFocus)
-    );
-
-    // Text
-    el.append($$('div').addClass('se-text').append(this.props.node.title[0]));
-
+    el.append($$('div').addClass('text').append(this.props.node.title[0]));
     return el;
+  };
+
+  this.onClick = function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  this.onMouseDown = function(e) {
+    e.preventDefault();
+    this.props.handleSelection(this.props.node);
+  };
+
+  this.onLabelChanged = function() {
+    this.rerender();
   };
 };
 

@@ -213,7 +213,8 @@ LensWriter.Prototype = function() {
         console.log(data)
         this.setState({
           contextId: 'smart-references',
-          data: data
+          data: data,
+          op: op
         })
       }.bind(this))
 

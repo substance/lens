@@ -6,6 +6,7 @@ var Component = require('substance/ui/Component');
 var Panel = require('substance/ui/Panel');
 var Icon = require("substance/ui/FontAwesomeIcon");
 var SmartReferenceItem = require("./SmartReferenceItem")
+var uuid = require('substance/util/uuid');
 
 var $$ = Component.$$;
 
@@ -84,24 +85,67 @@ SmartReferencesPanel.Prototype = function() {
     // return collection.getItems();
   };
 
-  // Called with entityId when an entity has been clicked
-  this.handleSelection = function(targetId) {
-    var citationId = this.props.citationId;
-    var doc = this.props.doc;
-    var citation = doc.get(citationId);
-    var newTargets = citation.targets.slice();
-    if (_.includes(newTargets, targetId)) {
-      newTargets = _.without(newTargets, targetId);
-    } else {
-      newTargets.push(targetId);
-    }
+  // Called with a new bibliography entry
+  this.handleSelection = function(bib) {
+    var bibId = uuid('bib')
+    var doc = this.props.doc
+    var op = this.props.op
 
-    var ctrl = this.context.controller;
-    ctrl.transaction(function(tx, args) {
-      tx.set([citation.id, "targets"], newTargets);
-      return args;
-    });
-    this.rerender();
+    // Get the correct Citeproc format
+    fetch('http://api.crossref.org/works/' + bib.DOI + '/transform/application/vnd.citationstyles.csl+json')
+    .then(function (response) {
+      return response.json()
+    }).then(function (data) {
+      doc.transaction({}, {}, function(tx, args) {
+        var bibItem = {
+          id: bibId,
+          type: "bib-item",
+          source: JSON.stringify(data),
+          format: 'citeproc'
+        };
+        tx.create(bibItem);
+
+        tx.create({
+          id: uuid('bib'),
+          'type': 'bib-item-citation',
+          'targets': [bibItem.id],
+          'path': op.path,
+          'startOffset': op.diff.pos + 1,
+          'endOffset': op.diff.pos + 1,
+        })
+      })
+    })
+
+    // doc.transaction({}, {}, function (tx) {
+    // })
+
+
+    // doc.transaction({}, {}, function(tx) {
+    //   var bibItem = {
+    //     id: uuid('bib'),
+    //     type: "bib-item",
+    //     source: JSON.stringify(bibEntry.data),
+    //     format: 'citeproc'
+    //   };
+    //   tx.create(bibItem);
+    // });
+
+    // var citationId = this.props.citationId;
+    // var doc = this.props.doc;
+    // var citation = doc.get(citationId);
+    // var newTargets = citation.targets.slice();
+    // if (_.includes(newTargets, targetId)) {
+    //   newTargets = _.without(newTargets, targetId);
+    // } else {
+    //   newTargets.push(targetId);
+    // }
+
+    // var ctrl = this.context.controller;
+    // ctrl.transaction(function(tx, args) {
+    //   tx.set([citation.id, "targets"], newTargets);
+    //   return args;
+    // });
+    // this.rerender();
   };
 };
 
