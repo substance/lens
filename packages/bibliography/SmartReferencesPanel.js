@@ -19,7 +19,7 @@ SmartReferencesPanel.Prototype = function() {
 
   this.render = function() {
 
-    var items = this.props.data.message.items.map(function (result) {
+    var items = this.props.results.map(function (result) {
       return $$(SmartReferenceItem, {
         node: result,
         handleSelection: this.handleSelection.bind(this)
@@ -34,6 +34,7 @@ SmartReferencesPanel.Prototype = function() {
         $$('div').addClass('label').append(this.i18n.t("choose_referenced_items"))
       ),
       $$('div').addClass("panel-content").ref('panelContent').append(
+        $$('div').addClass("bib-items border-bottom pad item small clearfix").append('Searched for: ' + this.props.query.join(' ') + '. ' + this.props.results.length + ' papers.'),
         $$('div').addClass("bib-items").append(
           items
         )
@@ -88,7 +89,7 @@ SmartReferencesPanel.Prototype = function() {
   // Called with a new bibliography entry
   this.handleSelection = function(bib) {
     var bibId = uuid('bib')
-    var doc = this.props.doc
+    var surface = this.getController().getSurface()
     var op = this.props.op
 
     // Get the correct Citeproc format
@@ -96,7 +97,8 @@ SmartReferencesPanel.Prototype = function() {
     .then(function (response) {
       return response.json()
     }).then(function (data) {
-      doc.transaction({}, {}, function(tx, args) {
+      surface.transaction(function(tx, args) {
+
         var bibItem = {
           id: bibId,
           type: "bib-item",
@@ -105,47 +107,19 @@ SmartReferencesPanel.Prototype = function() {
         };
         tx.create(bibItem);
 
+        args.text = '$';
+        surface.insertText(tx, args);
+
         tx.create({
           id: uuid('bib'),
           'type': 'bib-item-citation',
           'targets': [bibItem.id],
           'path': op.path,
-          'startOffset': op.diff.pos + 1,
+          'startOffset': op.diff.pos,
           'endOffset': op.diff.pos + 1,
         })
       })
     })
-
-    // doc.transaction({}, {}, function (tx) {
-    // })
-
-
-    // doc.transaction({}, {}, function(tx) {
-    //   var bibItem = {
-    //     id: uuid('bib'),
-    //     type: "bib-item",
-    //     source: JSON.stringify(bibEntry.data),
-    //     format: 'citeproc'
-    //   };
-    //   tx.create(bibItem);
-    // });
-
-    // var citationId = this.props.citationId;
-    // var doc = this.props.doc;
-    // var citation = doc.get(citationId);
-    // var newTargets = citation.targets.slice();
-    // if (_.includes(newTargets, targetId)) {
-    //   newTargets = _.without(newTargets, targetId);
-    // } else {
-    //   newTargets.push(targetId);
-    // }
-
-    // var ctrl = this.context.controller;
-    // ctrl.transaction(function(tx, args) {
-    //   tx.set([citation.id, "targets"], newTargets);
-    //   return args;
-    // });
-    // this.rerender();
   };
 };
 

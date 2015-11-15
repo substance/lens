@@ -23,6 +23,7 @@ SmartReferenceItem.Prototype = function() {
     el.append($$('div').addClass('label').append(this.props.node.DOI));
 
     el.append($$('div').addClass('text').append(this.props.node.title[0]));
+    el.append($$('div').addClass('text').append(this.props.node.match));
     return el;
   };
 

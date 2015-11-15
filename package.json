@@ -9,6 +9,7 @@
     "ejs": "2.3.4",
     "express": "4.13.3",
     "lodash": "3.3.1",
+    "localforage": "1.3.0",
     "node-sass": "3.4.2",
     "substance": "substance/substance#da9bea1ee3d7137cc70a93e491fce55f83a3b8ce"
   },

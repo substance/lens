@@ -12,6 +12,8 @@ var WriterTools = require('./packages/writer/WriterTools');
 var ContainerEditor = require('substance/ui/ContainerEditor');
 var docHelpers = require('substance/model/documentHelpers');
 var Component = require('substance/ui/Component');
+var _ =  require('lodash');
+var localforage = require('localforage');
 var $$ = Component.$$;
 
 
@@ -94,7 +96,7 @@ var CONFIG = {
       require('substance/packages/link/LinkCommand')
     ]
   },
-  panelOrder: ['toc', 'bib-items', 'smart-references'],
+  panelOrder: ['toc', 'bib-items'],
   containerId: 'main',
   isEditable: true
 };
@@ -208,14 +210,40 @@ LensWriter.Prototype = function() {
       var plainText = doc.get(op.path);
       var pos = op.diff.pos;
       var head = plainText.slice(0, pos+1);
-      var query = head.split(' ').slice(-2);
-      this.queryCrossRef(query).then(function (data) {
-        console.log(data)
-        this.setState({
-          contextId: 'smart-references',
-          data: data,
-          op: op
-        })
+      var query = head.split(' ').slice(-3);
+      this.queryCrossRef(query).then(function (results) {
+        // Get full text
+        Promise.all(results.map(function (result) {
+          // Try the cache
+          return localforage.getItem(result.DOI).then(function (value) {
+            if(value) {
+              return Promise.resolve({text: value})
+            } else {
+              return Promise.reject('not found')
+            }
+          }).catch(function (reason) {
+            return fetch('http://dx.doi.org/' + result.DOI).then(function (response) {
+              return response.text().then(function (text) {
+                localforage.setItem(result.DOI, text)
+                return { text: text }
+              })
+            })
+          })
+        })).then(function (texts) {
+          // Combine with fulltext
+          results = _.merge(results, texts)
+          results = _.map(results, function (result) {
+            result.match =  result.text.match(new RegExp('.*' + query[2] + '.*'))
+            return result
+          })
+
+          this.setState({
+            contextId: 'smart-references',
+            results: results,
+            op: op,
+            query: query
+          })
+        }.bind(this))
       }.bind(this))
 
     }
@@ -229,7 +257,7 @@ LensWriter.Prototype = function() {
       '&filter=type:journal-article,license.url:http://creativecommons.org/licenses/by/3.0/deed.en_US'
     ).then(function (response) {
       return response.json().then(function (data) {
-        return data;
+        return data.message.items;
       })
     })
   }
