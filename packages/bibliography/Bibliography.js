@@ -3,6 +3,7 @@
 var _ = require('substance/util/helpers');
 var oo = require('substance/util/oo');
 var EventEmitter = require('substance/util/EventEmitter');
+var isEqual = require('lodash/lang/isEqual');
 
 // Nomenclature: 'Bibliography' is a set of 'References' which are cited from in the manuscript.
 
@@ -56,7 +57,15 @@ Bibliography.Prototype = function() {
     var citations = doc.getIndex('type').get('bib-item-citation');
     // generate information for sorting
     var citationItems = _.map(citations, function(citation) {
-      var address = container.getAddress(citation.path);
+      // HACK: ATM we do not have a concept for citations outside the container
+      // E.g., it seems to be admissible to have a citation in the abstract
+      // working around for now
+      var address;
+      if (isEqual(citation.path, ['article-meta', 'abstract'])) {
+        address = [-1, 0];
+      } else {
+        address = container.getAddress(citation.path);
+      }
       return {
         citation: citation,
         address: address
@@ -64,9 +73,9 @@ Bibliography.Prototype = function() {
     });
     // sort citation by occurrence in the container
     citationItems.sort(function(a, b) {
-      if (a < b) {
+      if (a.address < b.address) {
         return -1;
-      } else if (a > b) {
+      } else if (a.address > b.address) {
         return 1;
       } else {
         return a.citation.startOffset - b.citation.startOffset;

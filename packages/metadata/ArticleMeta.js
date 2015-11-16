@@ -10,6 +10,8 @@ var ArticleMeta = DocumentNode.extend({
   }
 });
 
+ArticleMeta.static.components = ['title', 'abstract'];
+
 /*
 <meta>
   <title>The <em>Substance</em> Article Format</title>
