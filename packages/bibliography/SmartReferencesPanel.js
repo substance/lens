@@ -7,6 +7,7 @@ var Panel = require('substance/ui/Panel');
 var Icon = require("substance/ui/FontAwesomeIcon");
 var SmartReferenceItem = require("./SmartReferenceItem")
 var uuid = require('substance/util/uuid');
+var insertCitation = require('../citations/insertCitation');
 
 var $$ = Component.$$;
 
@@ -89,37 +90,25 @@ SmartReferencesPanel.Prototype = function() {
   // Called with a new bibliography entry
   this.handleSelection = function(bib) {
     var bibId = uuid('bib')
-    var surface = this.getController().getSurface()
-    var op = this.props.op
-
-    // Get the correct Citeproc format
-    fetch('http://api.crossref.org/works/' + bib.DOI + '/transform/application/vnd.citationstyles.csl+json')
-    .then(function (response) {
-      return response.json()
-    }).then(function (data) {
-      surface.transaction(function(tx, args) {
-
-        var bibItem = {
-          id: bibId,
-          type: "bib-item",
-          source: JSON.stringify(data),
-          format: 'citeproc'
-        };
-        tx.create(bibItem);
-
-        // args.text = '$';
-        // surface.insertText(tx, args);
-
-        tx.create({
-          id: uuid('bib'),
-          'type': 'bib-item-citation',
-          'targets': [bibItem.id],
-          'path': op.path,
-          'startOffset': args.selection.startOffset,
-          'endOffset': args.selection.startOffset + 1,
-        })
-      })
-    })
+    var surface = this.getController().getFocusedSurface()
+    // starting transaction on surface as we want to have the selection updated
+    surface.transaction(function(tx, args) {
+      // surface transaction provides the current selection
+      var selection = args.selection;
+      // create a bib-item node
+      var bibItem = {
+        id: bibId,
+        type: "bib-item",
+        // bib.text contains Citeproc JSON if fetched from
+        //   http://dx.doi.org/<DOI>
+        // with header:
+        //   Accept: "application/citeproc+json"
+        source: bib.text,
+        format: 'citeproc'
+      };
+      tx.create(bibItem);
+      return insertCitation(tx, selection, 'bib-item-citation', [bibId]);
+    }.bind(this));
   };
 };
 

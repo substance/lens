@@ -196,11 +196,22 @@ LensWriter.Prototype = function() {
     doc.connect(this, {
       'document:changed': this.onDocumentChange,
     });
-  },
+  };
 
   this.dispose = function() {
     this.props.doc.disconnect(this);
-  },
+  };
+
+  function fetchCSL(DOI) {
+    var headers = new Headers();
+    headers.append("Accept", "application/citeproc+json");
+    return fetch('http://dx.doi.org/' + DOI, {
+      method: 'GET',
+      headers: headers,
+      mode: 'cors',
+      cache: false
+    });
+  }
 
   this.onDocumentChange = function(change) {
     var doc = this.props.doc;
@@ -222,12 +233,13 @@ LensWriter.Prototype = function() {
               return Promise.reject('not found')
             }
           }).catch(function (reason) {
-            return fetch('http://dx.doi.org/' + result.DOI).then(function (response) {
-              return response.text().then(function (text) {
-                localforage.setItem(result.DOI, text)
-                return { text: text }
+            return fetchCSL(result.DOI)
+              .then(function (response) {
+                return response.text().then(function (text) {
+                  localforage.setItem(result.DOI, text)
+                  return { text: text }
+                })
               })
-            })
           })
         })).then(function (texts) {
           // Combine with fulltext
@@ -249,7 +261,7 @@ LensWriter.Prototype = function() {
     }
 
     return true;
-  }
+  };
 
   this.queryCrossRef = function (query) {
     return fetch(
@@ -260,7 +272,7 @@ LensWriter.Prototype = function() {
         return data.message.items;
       })
     })
-  }
+  };
 };
 
 oo.inherit(LensWriter, LensController);
