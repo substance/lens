@@ -107,16 +107,16 @@ SmartReferencesPanel.Prototype = function() {
         };
         tx.create(bibItem);
 
-        args.text = '$';
-        surface.insertText(tx, args);
+        // args.text = '$';
+        // surface.insertText(tx, args);
 
         tx.create({
           id: uuid('bib'),
           'type': 'bib-item-citation',
           'targets': [bibItem.id],
           'path': op.path,
-          'startOffset': op.diff.pos,
-          'endOffset': op.diff.pos + 1,
+          'startOffset': args.selection.startOffset,
+          'endOffset': args.selection.startOffset + 1,
         })
       })
     })
