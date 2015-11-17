@@ -176,32 +176,32 @@ Article.XML_TEMPLATE = [
 '</article>'
 ].join('');
 
-Article.fromHtml = function(html) {
-  var $root;
-  if (typeof window === "undefined") {
-    $root = $(html);
-  } else {
-    var parser = new window.DOMParser();
-    var htmlDoc = parser.parseFromString(html, "text/xml");
-    $root = $(htmlDoc);
-  }
-  var doc = new Article();
-  new ArticleHtmlImporter().convert($root, doc);
-  doc.documentDidLoad();
-  return doc;
-};
+// Article.fromHtml = function(html) {
+//   var $root;
+//   if (typeof window === "undefined") {
+//     $root = $(html);
+//   } else {
+//     var parser = new window.DOMParser();
+//     var htmlDoc = parser.parseFromString(html, "text/xml");
+//     $root = $(htmlDoc);
+//   }
+//   var doc = new Article();
+//   new ArticleHtmlImporter().convert($root, doc);
+//   doc.documentDidLoad();
+//   return doc;
+// };
 
-Article.fromXml = function(xml) {
-  if (_.isString(xml)) {
-    var parser = new window.DOMParser();
-    xml = parser.parseFromString(xml,"text/xml");
-  }
-  var $root = $(xml);
-  var doc = new Article();
-  new ArticleHtmlImporter().convert($root, doc);
-  doc.documentDidLoad();
-  return doc;
-};
+// Article.fromXml = function(xml) {
+//   if (_.isString(xml)) {
+//     var parser = new window.DOMParser();
+//     xml = parser.parseFromString(xml,"text/xml");
+//   }
+//   var $root = $(xml);
+//   var doc = new Article();
+//   new ArticleHtmlImporter().convert($root, doc);
+//   doc.documentDidLoad();
+//   return doc;
+// };
 
 Article.ArticleHtmlImporter = ArticleHtmlImporter;
 

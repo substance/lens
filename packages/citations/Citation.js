@@ -1,8 +1,8 @@
 var _ = require('substance/util/helpers');
 var $ = require('substance/util/jquery');
-var Annotation = require('substance/model/Annotation');
+var PropertyAnnotation = require('substance/model/PropertyAnnotation');
 
-var Citation = Annotation.extend({
+var Citation = PropertyAnnotation.extend({
   name: "citation",
 
   properties: {
@@ -53,25 +53,7 @@ var Citation = Annotation.extend({
 Citation.static.tagName = 'cite';
 Citation.static.external = true;
 
-Citation.static.fromHtml = function($el, converter) {
-  /* jshint unused: false */
-  var citation = {
-    id: $el.attr('id'),
-    targets: _.compact($el.attr('data-rid').split(' '))
-  };
-  return citation;
-};
 
-Citation.static.toHtml = function(citation, converter) {
-  /* jshint unused: false */
-  var id = citation.id;
-  var targets = citation.targets.join(' ');
-
-  var $el = $('<cite>')
-    .attr('id', id)
-    .attr('data-rid', targets);
-  return $el;
-};
 
 
 module.exports = Citation;

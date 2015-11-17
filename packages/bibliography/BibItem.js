@@ -62,34 +62,6 @@ var BibItem = DocumentNode.extend({
 
 BibItem.static.citationType = "bib-item-citation";
 
-// HtmlImporter
 
-BibItem.static.matchElement = function($el) {
-  return $el.is('bib');
-};
-
-BibItem.static.fromHtml = function($el, converter) {
-  var id = converter.defaultId($el, 'bib');
-  var bibItem = {
-    id: id,
-    source: '',
-    format: ''
-  };
-
-  bibItem.format = 'citeproc';
-  bibItem.source = $el.text();
-  return bibItem;
-};
-
-// HtmlExporter
-
-BibItem.static.toHtml = function(bibItem) {
-  var id = bibItem.id;
-  var $el = $('<bib>')
-    .attr('format', 'citeproc')
-    .attr('id', id)
-    .text(JSON.stringify(bibItem.data));
-  return $el;
-};
 
 module.exports = BibItem;

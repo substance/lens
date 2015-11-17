@@ -1,6 +1,7 @@
 var LensArticle = require('../model/LensArticle');
 var oo = require('substance/util/oo');
 var $ = require('substance/util/jquery');
+var LensArticleImporter = require('../model/LensArticleImporter');
 
 var Backend = function() {
 
@@ -18,7 +19,7 @@ Backend.Prototype = function() {
       type: method,
       url: url,
       contentType: "application/json; charset=UTF-8",
-      // dataType: "json",
+      dataType: "text",
       success: function(data) {
         cb(null, data);
       },
@@ -33,13 +34,13 @@ Backend.Prototype = function() {
     }
 
     // Add Authorization header if there's an active session
-    var session = localStorage.getItem('session');
-    if (session) {
-      var token = JSON.parse(session).token;
-      ajaxOpts.beforeSend = function(xhr) {
-        xhr.setRequestHeader("Authorization", "Bearer " + token);
-      };
-    }
+    // var session = localStorage.getItem('session');
+    // if (session) {
+    //   var token = JSON.parse(session).token;
+    //   ajaxOpts.beforeSend = function(xhr) {
+    //     xhr.setRequestHeader("Authorization", "Bearer " + token);
+    //   };
+    // }
 
     $.ajax(ajaxOpts);
   };
@@ -48,9 +49,15 @@ Backend.Prototype = function() {
   // ------------------
 
   this.getDocument = function(documentId, cb) {
-    this._request('GET', 'data/example-doc.xml', null, function(err, rawDoc) {
+    this._request('GET', 'data/example-doc.xml', null, function(err, xml) {
       if (err) { console.error(err); cb(err); }
-      var doc = LensArticle.fromXml(rawDoc);
+      
+      // Start importer
+      var importer = new LensArticleImporter();
+
+      var doc = importer.importDocument(xml);
+      console.log('doc', doc.toJSON());
+
       window.doc = doc;
       cb(null, doc);
     });
