@@ -87,47 +87,6 @@
 }
 
 
-/* Cite Panel
------------------------------------------------------*/
-
-.cite-panel-component .item {
-  cursor: pointer;
-  padding: 20px;
-  border-left: 2px solid transparent;
-
-  &.active { background: white; border-left: 2px solid #444; }
-  &:hover { background: white; }
-}
-
-/* Figure Item */
-
-.cite-panel-component .item.figure {
-
-  &.active { border-left: 2px solid rgba(145, 187, 4, 1); }
-
-  .title {
-    font-weight: 600;
-    padding-bottom: 10px;
-  }
-
-  img {
-    padding-right: 20px;
-    width: 70px;
-    float: left;
-  }
-}
-
-.cite-panel-component .item.bib-item {
-
-  &.active { background: white; border-left: 2px solid rgba(11, 157, 217, 1); }
-
-  .label {
-    padding-right: 5px;
-    float: left;
-    font-weight: 600;
-  }
-}
-
 /* Figures
 -----------------------------------------------------*/
 
@@ -168,9 +127,6 @@
     max-width: 100%;
   }
 }
-
-/* Custom Annotation styles
------------------------------------------------------*/
 
 /* Manage BibItem Component
 -----------------------------------------------------*/
@@ -219,7 +175,7 @@
 /* Document Cover
 -----------------------------------------------------*/
 
-.content-panel-component .document-cover {
+.le-main .sc-content-panel .document-cover {
   margin-bottom: 30px;
   padding-bottom: 30px;
 

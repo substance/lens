@@ -135,13 +135,13 @@ LensWriter.Prototype = function() {
           ).ref('content')
         ),
         // Resource (right column)
-        $$('div').ref('resource')
-          .addClass("le-resource")
+        $$('div').ref('context')
+          .addClass("le-context")
           .append(
             $$(ContextToggles, {
               panelOrder: config.panelOrder,
               contextId: this.state.contextId
-            }).ref("context-toggles"),
+            }).ref('context-toggles'),
             this.renderContextPanel()
           )
       )

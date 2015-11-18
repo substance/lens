@@ -1,0 +1,41 @@
+/* Cite Panel
+-----------------------------------------------------*/
+
+.sc-cite-panel {
+  .item {
+    cursor: pointer;
+    padding: 20px;
+    border-left: 2px solid transparent;
+
+    &.active { background: white; border-left: 2px solid #444; }
+    &:hover { background: white; }
+
+    /* Figure Item */
+    &.figure {
+
+      &.active { border-left: 2px solid rgba(145, 187, 4, 1); }
+
+      .title {
+        font-weight: 600;
+        padding-bottom: 10px;
+      }
+
+      img {
+        padding-right: 20px;
+        width: 70px;
+        float: left;
+      }
+    }
+
+    // BibItem
+    &.item.bib-item {
+      &.active { background: white; border-left: 2px solid rgba(11, 157, 217, 1); }
+
+      .label {
+        padding-right: 5px;
+        float: left;
+        font-weight: 600;
+      }
+    }
+  }
+}

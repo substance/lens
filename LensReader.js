@@ -140,7 +140,7 @@ LensReader.Prototype = function() {
         ),
         // Resource (right column)
         $$('div').ref('resource')
-          .addClass("le-resource")
+          .addClass("le-context")
           .append(
             $$(ContextToggles, {
               panelOrder: config.panelOrder,

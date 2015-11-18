@@ -58,6 +58,7 @@ LensController.Prototype = function() {
       // Used for turning embed urls to HTML content
       embedResolver: function(srcUrl, cb) {
         $.get('http://iframe.ly/api/iframely?url='+encodeURIComponent(srcUrl)+'&api_key=712fe98e864c79e054e2da')
+        // $.get('http://iframely.coko.foundation/iframely?url='+encodeURIComponent(srcUrl)+'')
           .success(function(res) {
             cb(null, res.html);
           })
@@ -129,9 +130,9 @@ LensController.Prototype = function() {
   this.renderContextPanel = function() {
     var panelElement = this.getActivePanelElement();
     if (!panelElement) {
-      return $$('div').append("No panels are registered");
+      return $$('div').addClass('le-active-context').append("No panels are registered");
     } else {
-      return $$('div').append(panelElement);
+      return $$('div').addClass('le-active-context').append(panelElement);
     }
   };
 

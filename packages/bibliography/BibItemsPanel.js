@@ -87,8 +87,8 @@ BibItemsPanel.Prototype = function() {
 
   this.render = function() {
     var bibItems = this.bibliography.getItems();
-    var el = $$('div').addClass('sc-bib-items-panel panel');
-    var bibItemEls = $$('div').addClass('panel-content').ref('panelContent');
+    var el = $$('div').addClass('sc-bib-items-panel sc-panel');
+    var bibItemEls = $$('div').addClass('se-panel-content').ref('panelContent');
 
     bibItemEls.append($$(BibliographySummary, {bibItems: bibItems}));
 

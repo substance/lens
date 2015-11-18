@@ -29,15 +29,15 @@ CitePanel.Prototype = function() {
     } else {
       items = [$$('div').addClass("no-results").append("Nothing to reference.")];
     }
-    return $$('div').addClass("panel dialog cite-panel-component").append(
-      $$('div').addClass("dialog-header").append(
-        $$('a').addClass('back').attr('href', '#')
+    return $$('div').addClass('sc-panel sc-cite-panel sm-dialog').append(
+      $$('div').addClass('se-dialog-header').append(
+        $$('a').addClass('se-back').attr('href', '#')
           .on('click', this.handleCancel)
           .append($$(Icon, {icon: 'fa-chevron-left'})),
-        $$('div').addClass('label').append(this.i18n.t("choose_referenced_items"))
+        $$('div').addClass('se-label').append(this.i18n.t('choose_referenced_items'))
       ),
-      $$('div').addClass("panel-content").ref('panelContent').append(
-        $$('div').addClass("bib-items").append(
+      $$('div').addClass('se-panel-content').ref('panelContent').append(
+        $$('div').addClass("se-bib-items").append(
           items
         )
       )
@@ -117,6 +117,6 @@ oo.inherit(CitePanel, Panel);
 CitePanel.icon = "fa-bullseye";
 
 // No context switch toggle is shown
-CitePanel.isDialog = true;
+// CitePanel.isDialog = true;
 
 module.exports = CitePanel;
