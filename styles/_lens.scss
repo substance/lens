@@ -22,6 +22,7 @@
 @import '../node_modules/substance/packages/list/_list';
 @import '../node_modules/substance/packages/link/_link';
 @import '../node_modules/substance/packages/embed/_embed';
+@import '../node_modules/substance/packages/figure/_figure';
 @import '../node_modules/substance/packages/table/_table';
 @import '../node_modules/substance/packages/emphasis/_emphasis';
 @import '../node_modules/substance/packages/strong/_strong';
@@ -52,7 +53,7 @@
       position: relative;
 
       width: 65%;
-      z-index: 30;
+      // z-index: 0;
 
       // Position content-panel
       .sc-content-panel {
@@ -61,7 +62,10 @@
         bottom: 0px;
         left: 0px;
         right: 0px;
-        padding: 20px;
+
+        .se-panel-content-inner {
+          padding: 40px;
+        }
       }
     }
 
