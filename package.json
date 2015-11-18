@@ -1,6 +1,6 @@
 {
   "name": "lens",
-  "description": "A UI library for building custom scientific publishing workflows",
+  "description": "open science content creation and display",
   "version": "0.2.0",
   "dependencies": {
     "body-parser": "1.14.1",
@@ -10,7 +10,7 @@
     "express": "4.13.3",
     "lodash": "3.3.1",
     "node-sass": "3.4.2",
-    "substance": "substance/substance#ced2d7f1a962f1fab1c63e2d18e78c63358b00cd"
+    "substance": "substance/substance#1735b2445db16a82bbbc6d20c49c3fe3918da914"
   },
   "devDependencies": {
     "gulp": "3.9.0",

@@ -35,8 +35,12 @@
   background: #aaa;
 }
 
-.scrollbar-component.cite-bib-item .highlight, .scrollbar-component.bib-items .highlight {
+.scrollbar-component.cite-image-figure .highlight, .scrollbar-component.bib-items .highlight {
   background-color: $highlight-color-2;
+}
+
+.scrollbar-component.cite-image-figure .highlight {
+  background-color: $highlight-color-1;
 }
 
 

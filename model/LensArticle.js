@@ -1,13 +1,9 @@
 var schema = require('./articleSchema');
 var _ = require('substance/util/helpers');
 var oo = require('substance/util/oo');
-var $ = require('substance/util/jquery');
 var Document = require('substance/model/Document');
 var NodeIndex = require('substance/model/data/NodeIndex');
 
-var ArticleHtmlImporter = require('./ArticleHtmlImporter');
-var ArticleHtmlExporter = require('./ArticleHtmlExporter');
-var ArticleXmlExporter = require('./ArticleXmlExporter');
 
 var CiteprocCompiler = require('../packages/bibliography/CiteprocCompiler');
 var Bibliography = require('../packages/bibliography/Bibliography');
@@ -63,18 +59,6 @@ Article.Prototype = function() {
         c.update();
       });
     }
-  };
-
-  this.toXml = function() {
-    return new ArticleXmlExporter().convert(this);
-  };
-
-  this.toHtml = function() {
-    return new ArticleHtmlExporter().convert(this);
-  };
-
-  this.propertyToHtml = function(path) {
-    return new ArticleHtmlExporter().convertProperty(this, path);
   };
 
   this.getDocumentMeta = function() {
@@ -175,34 +159,5 @@ Article.XML_TEMPLATE = [
   '</body>',
 '</article>'
 ].join('');
-
-// Article.fromHtml = function(html) {
-//   var $root;
-//   if (typeof window === "undefined") {
-//     $root = $(html);
-//   } else {
-//     var parser = new window.DOMParser();
-//     var htmlDoc = parser.parseFromString(html, "text/xml");
-//     $root = $(htmlDoc);
-//   }
-//   var doc = new Article();
-//   new ArticleHtmlImporter().convert($root, doc);
-//   doc.documentDidLoad();
-//   return doc;
-// };
-
-// Article.fromXml = function(xml) {
-//   if (_.isString(xml)) {
-//     var parser = new window.DOMParser();
-//     xml = parser.parseFromString(xml,"text/xml");
-//   }
-//   var $root = $(xml);
-//   var doc = new Article();
-//   new ArticleHtmlImporter().convert($root, doc);
-//   doc.documentDidLoad();
-//   return doc;
-// };
-
-Article.ArticleHtmlImporter = ArticleHtmlImporter;
 
 module.exports = Article;
