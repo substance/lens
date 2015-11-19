@@ -14,13 +14,12 @@ var docHelpers = require('substance/model/documentHelpers');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
-
 var CONFIG = {
   controller: {
     commands: [
       require('substance/ui/UndoCommand'),
       require('substance/ui/RedoCommand'),
-      require('substance/ui/SaveCommand'),
+      require('substance/ui/SaveCommand')
     ],
     components: {
       "paragraph": require('substance/packages/paragraph/ParagraphComponent'),
@@ -66,6 +65,9 @@ var CONFIG = {
       require('substance/packages/strong/StrongCommand'),
       require('substance/packages/emphasis/EmphasisCommand'),
       require('substance/packages/link/LinkCommand'),
+      require('substance/packages/subscript/SubscriptCommand'),
+      require('substance/packages/superscript/SuperscriptCommand'),
+      require('substance/packages/code/CodeCommand'),
 
       // Insert figure
       require('substance/packages/figure/InsertFigureCommand'),
@@ -84,7 +86,9 @@ var CONFIG = {
   title: {
     commands: [
       require('substance/packages/emphasis/EmphasisCommand'),
-      require('substance/packages/text/SwitchTextTypeCommand')
+      require('substance/packages/text/SwitchTextTypeCommand'),
+      require('substance/packages/subscript/SubscriptCommand'),
+      require('substance/packages/superscript/SuperscriptCommand')
     ]
   },
   abstract: {
@@ -92,6 +96,8 @@ var CONFIG = {
       require('substance/packages/text/SwitchTextTypeCommand'),
       require('substance/packages/emphasis/EmphasisCommand'),
       require('substance/packages/strong/StrongCommand'),
+      require('substance/packages/subscript/SubscriptCommand'),
+      require('substance/packages/superscript/SuperscriptCommand'),
       require('substance/packages/link/LinkCommand')
     ]
   },

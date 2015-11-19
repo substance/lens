@@ -17,6 +17,9 @@ var TableRow = require('substance/packages/table/TableRow');
 var TableCell = require('substance/packages/table/TableCell');
 var Emphasis = require('substance/packages/emphasis/Emphasis');
 var Strong = require('substance/packages/strong/Strong');
+var Subscript = require('substance/packages/subscript/Subscript');
+var Superscript = require('substance/packages/superscript/Superscript');
+var Code = require('substance/packages/code/Code');
 var Link = require('substance/packages/link/Link');
 
 // Lens-specific Node Types
@@ -36,7 +39,6 @@ var BibItemCitation = require('../packages/bibliography/BibItemCitation');
 // Metadata
 var Author = require('../packages/metadata/Author');
 var ArticleMeta = require('../packages/metadata/ArticleMeta');
-
 var schema = new DocumentSchema("scientific-article", "0.2.0");
 
 schema.getDefaultTextType = function() {
@@ -49,7 +51,7 @@ schema.addNodes([
   Codeblock,
   Blockquote,
   Embed,
-  Emphasis, Strong,
+  Code, Emphasis, Strong, Subscript, Superscript,
   Link,
   Image,
   Author,

@@ -6,6 +6,9 @@ var UndoTool = require('substance/ui/UndoTool');
 var RedoTool = require('substance/ui/RedoTool');
 var SaveTool = require('substance/ui/SaveTool');
 var StrongTool = require('substance/packages/strong/StrongTool');
+var SubscriptTool = require('substance/packages/subscript/SubscriptTool');
+var SuperscriptTool = require('substance/packages/superscript/SuperscriptTool');
+var CodeTool = require('substance/packages/code/CodeTool');
 var EmphasisTool = require('substance/packages/emphasis/EmphasisTool');
 var Icon = require('substance/ui/FontAwesomeIcon');
 var EmbedTool = require('substance/packages/embed/EmbedTool');
@@ -33,12 +36,15 @@ var WriterTools = Component.extend({
         $$(BibItemCitationTool).append(this.i18n.t('cite'))
       ),
       $$(Toolbar.Group).append(
-        $$(EmbedTool).append($$(Icon, {icon: 'fa-code'}))
+        $$(EmbedTool).append($$(Icon, {icon: 'fa-file-code-o'}))
       ),
       $$(Toolbar.Group).addClass('float-right').append(
         $$(StrongTool).append($$(Icon, {icon: 'fa-bold'})),
         $$(EmphasisTool).append($$(Icon, {icon: 'fa-italic'})),
-        $$(LinkTool).append($$(Icon, {icon: 'fa-link'}))
+        $$(LinkTool).append($$(Icon, {icon: 'fa-link'})),
+        $$(SubscriptTool).append($$(Icon, {icon: 'fa-subscript'})),
+        $$(SuperscriptTool).append($$(Icon, {icon: 'fa-superscript'})),
+        $$(CodeTool).append($$(Icon, {icon: 'fa-code'}))
       )
     );
   }

@@ -20,5 +20,6 @@ module.exports = {
   'article-meta.title': 'Title',
   'article-meta.abstract': 'Abstract',
   'image-figure.title': 'Figure Title',
-  'image-figure.caption': 'Figure Caption'
+  'image-figure.caption': 'Figure Caption',
+  'container-selection': 'Multiple Elements'
 };
