@@ -84,10 +84,12 @@ var CONFIG = {
   title: {
     commands: [
       require('substance/packages/emphasis/EmphasisCommand'),
+      require('substance/packages/text/SwitchTextTypeCommand')
     ]
   },
   abstract: {
     commands: [
+      require('substance/packages/text/SwitchTextTypeCommand'),
       require('substance/packages/emphasis/EmphasisCommand'),
       require('substance/packages/strong/StrongCommand'),
       require('substance/packages/link/LinkCommand')
