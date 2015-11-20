@@ -109,7 +109,7 @@ LensController.Prototype = function() {
   this.getActivePanelElement = function() {
     var ComponentClass = this.componentRegistry.get(this.state.contextId);
     if (ComponentClass) {
-      return $$(ComponentClass, this._panelPropsFromState(this.state)).ref('contextPanel');
+      return $$(ComponentClass, this._panelPropsFromState(this.state)).ref(this.state.contextId);
     } else {
       console.warn("Could not find component for contextId:", this.state.contextId);
     }
@@ -129,11 +129,13 @@ LensController.Prototype = function() {
 
   this.renderContextPanel = function() {
     var panelElement = this.getActivePanelElement();
+    var activeContextEl = $$('div').ref('activeContext').addClass('le-active-context');
     if (!panelElement) {
-      return $$('div').addClass('le-active-context').append("No panels are registered");
+      activeContextEl.append("No panels are registered");
     } else {
-      return $$('div').addClass('le-active-context').append(panelElement);
+      activeContextEl.append(panelElement);
     }
+    return activeContextEl;
   };
 
 
