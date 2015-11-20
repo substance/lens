@@ -19,27 +19,30 @@ InlineNode.extend(Citation, {
     }
   },
 
-  didAttach: function(doc) {
-    if (!doc.isTransaction() && !doc.isClipboard()) {
-      doc.getEventProxy('path').connect(this, [this.id, 'targets'], this.onTargetChange);
-      // doc.getEventProxy('path').connect(this, [this.id, 'path'], this.onChange);
-      this.updateCollection(doc);
-    }
-  },
+  // NOTE: New node API Does not call these hooks anymore
+  // so we disable them
+  // 
+  // didAttach: function(doc) {
+  //   if (!doc.isTransaction() && !doc.isClipboard()) {
+  //     doc.getEventProxy('path').connect(this, [this.id, 'targets'], this.onTargetChange);
+  //     // doc.getEventProxy('path').connect(this, [this.id, 'path'], this.onChange);
+  //     this.updateCollection(doc);
+  //   }
+  // },
 
-  didDetach: function(doc) {
-    // TODO: still not good...
-    doc.getEventProxy('path').disconnect(this, [this.id, 'targets']);
-    // doc.getEventProxy('path').disconnect(this, [this.id, 'path']);
-    this.updateCollection(doc);
-  },
+  // didDetach: function(doc) {
+  //   // TODO: still not good...
+  //   doc.getEventProxy('path').disconnect(this, [this.id, 'targets']);
+  //   // doc.getEventProxy('path').disconnect(this, [this.id, 'path']);
+  //   this.updateCollection(doc);
+  // },
 
-  updateCollection: function(doc) {
-    var collection = doc.getCollection(this.getItemType());
-    if (collection) {
-      collection.update();
-    }
-  },
+  // updateCollection: function(doc) {
+  //   var collection = doc.getCollection(this.getItemType());
+  //   if (collection) {
+  //     collection.update();
+  //   }
+  // },
 
   onTargetChange: function(change, info, doc) {
     this.updateCollection(doc);
@@ -56,7 +59,5 @@ Citation.static.defineSchema({
 });
 
 Citation.static.tagName = 'cite';
-
-Citation.static.external = true;
 
 module.exports = Citation;

@@ -57,6 +57,8 @@ LensArticleImporter.Prototype = function() {
     this.convertContainer(bodyNodes, 'main');
   };
 
+  
+
 };
 
 // Expose converters so we can reuse them in NoteHtmlExporter

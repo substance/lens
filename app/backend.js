@@ -33,15 +33,6 @@ Backend.Prototype = function() {
       ajaxOpts.data = JSON.stringify(data);
     }
 
-    // Add Authorization header if there's an active session
-    // var session = localStorage.getItem('session');
-    // if (session) {
-    //   var token = JSON.parse(session).token;
-    //   ajaxOpts.beforeSend = function(xhr) {
-    //     xhr.setRequestHeader("Authorization", "Bearer " + token);
-    //   };
-    // }
-
     $.ajax(ajaxOpts);
   };
 
@@ -54,9 +45,10 @@ Backend.Prototype = function() {
       
       // Start importer
       var importer = new LensArticleImporter();
-
       var doc = importer.importDocument(xml);
-      console.log('doc', doc.toJSON());
+
+      // Initial update of collections
+      doc.updateCollections();
 
       window.doc = doc;
       cb(null, doc);

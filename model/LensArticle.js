@@ -52,13 +52,10 @@ Article.Prototype = function() {
     }));
   };
 
-  this.documentDidLoad = function() {
-    Article.super.prototype.documentDidLoad.call(this);
-    if (!this.isClipboard()) {
-      _.each(this.collections, function(c) {
-        c.update();
-      });
-    }
+  this.updateCollections = function() {
+    _.each(this.collections, function(c) {
+      c.update();
+    });
   };
 
   this.getDocumentMeta = function() {
