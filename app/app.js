@@ -4,7 +4,7 @@ var oo = require('substance/util/oo');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 var Backend = require("./backend");
-var $ = require('substance/util/jquery');
+var $ = window.$ = require('substance/util/jquery');
 var LensWriter = require('../LensWriter');
 var LensReader = require('../LensReader');
 var Router = require('substance/ui/Router');

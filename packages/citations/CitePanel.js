@@ -37,7 +37,7 @@ CitePanel.Prototype = function() {
         $$('div').addClass('se-label').append(this.i18n.t('choose_referenced_items'))
       ),
       $$('div').addClass('se-panel-content').ref('panelContent').append(
-        $$('div').addClass("se-bib-items").append(
+        $$('div').addClass("se-bib-items se-panel-content-inner").append(
           items
         )
       )
@@ -65,7 +65,6 @@ CitePanel.Prototype = function() {
   };
 
   this._scrollToTarget = function() {
-    console.log('scrolling to target');
     var citationTargetId = this.getFirstCitationTarget();
     if (citationTargetId) {
       this.scrollToNode(citationTargetId);
