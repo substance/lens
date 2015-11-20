@@ -1,12 +1,12 @@
 var _ = require('substance/util/helpers');
 var $ = require('substance/util/jquery');
-var PropertyAnnotation = require('substance/model/PropertyAnnotation');
+var InlineNode = require('substance/model/InlineNode');
 
 function Citation() {
   Citation.super.apply(this, arguments);
 }
 
-PropertyAnnotation.extend(Citation, {
+InlineNode.extend(Citation, {
 
   getDefaultProperties: function() {
     return {targets: []};

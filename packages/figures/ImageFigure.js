@@ -4,6 +4,6 @@ var ImageFigure = Figure.extend();
 
 ImageFigure.static.name = "image-figure";
 ImageFigure.static.citationType = 'image-figure-citation';
-ImageFigure.static.blockType = true;
+ImageFigure.static.isBlock = true;
 
 module.exports = ImageFigure;

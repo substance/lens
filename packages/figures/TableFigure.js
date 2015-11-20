@@ -6,7 +6,7 @@ TableFigure.static.name = "table-figure";
 
 TableFigure.static.components = ['title', 'content', 'caption'];
 TableFigure.static.citationType = "table-figure-citation";
-TableFigure.static.blockType = true;
+TableFigure.static.isBlock = true;
 
 // HtmlImporter
 
