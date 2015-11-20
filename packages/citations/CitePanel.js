@@ -57,6 +57,15 @@ CitePanel.Prototype = function() {
   };
 
   this.didMount = function() {
+    this._scrollToTarget();
+  };
+
+  this.didReceiveProps = function() {
+    this._scrollToTarget();
+  };
+
+  this._scrollToTarget = function() {
+    console.log('scrolling to target');
     var citationTargetId = this.getFirstCitationTarget();
     if (citationTargetId) {
       this.scrollToNode(citationTargetId);
