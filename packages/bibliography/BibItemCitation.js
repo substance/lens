@@ -1,12 +1,15 @@
 var Citation = require('../citations/Citation');
 
-var BibItemCitation = Citation.extend({
-  name: "bib-item-citation",
+function BibItemCitation() {
+  BibItemCitation.super.apply(this, arguments);
+}
 
+Citation.extend(BibItemCitation, {
   getItemType: function() {
     return 'bib-item';
   }
 });
 
+BibItemCitation.static.name = "bib-item-citation";
 
 module.exports = BibItemCitation;

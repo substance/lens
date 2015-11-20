@@ -2,14 +2,11 @@ var _ = require('substance/util/helpers');
 var $ = require('substance/util/jquery');
 var PropertyAnnotation = require('substance/model/PropertyAnnotation');
 
-var Citation = PropertyAnnotation.extend({
-  name: "citation",
+function Citation() {
+  Citation.super.apply(this, arguments);
+}
 
-  properties: {
-    targets: ["array", "id"],
-    // volatile properties
-    // label: computed dynamically
-  },
+PropertyAnnotation.extend(Citation, {
 
   getDefaultProperties: function() {
     return {targets: []};
@@ -50,10 +47,16 @@ var Citation = PropertyAnnotation.extend({
 
 });
 
+Citation.static.name = "citation";
+
+Citation.static.defineSchema({
+  targets: ["array", "id"],
+  // volatile properties
+  // label: computed dynamically
+});
+
 Citation.static.tagName = 'cite';
+
 Citation.static.external = true;
-
-
-
 
 module.exports = Citation;

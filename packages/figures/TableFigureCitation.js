@@ -1,12 +1,12 @@
 var Citation = require('../citations/Citation');
 
 var TableFigureCitation = Citation.extend({
-  name: "table-figure-citation",
-
   getItemType: function() {
     return "table-figure";
   },
 });
+
+TableFigureCitation.static.name = "table-figure-citation";
 
 TableFigureCitation.static.matchElement = function($el) {
   return $el.is(TableFigureCitation.static.tagName) && $el.attr('data-rtype') === 'table-figure';

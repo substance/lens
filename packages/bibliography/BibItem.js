@@ -1,16 +1,11 @@
 var $ = require('substance/util/jquery');
 var DocumentNode = require('substance/model/DocumentNode');
 
-var BibItem = DocumentNode.extend({
-  name: 'bib-item',
+function BibItem() {
+  BibItem.super.apply(this, arguments);
+}
 
-  properties : {
-    source: 'string',
-    format: 'string'
-    // Additionally we have following volative data fields
-    // data: parsed JSON or source
-    // guid: globally unique id (such as DOI or ISSN)
-  },
+DocumentNode.extend(BibItem, {
 
   setLabel: function(label) {
     this.label = label;
@@ -60,8 +55,15 @@ var BibItem = DocumentNode.extend({
   }
 });
 
+BibItem.static.name = 'bib-item';
+
+BibItem.static.defineSchema({
+    source: 'string',
+    format: 'string'
+    // data: parsed JSON or source
+    // guid: globally unique id (such as DOI or ISSN)
+});
+
 BibItem.static.citationType = "bib-item-citation";
-
-
 
 module.exports = BibItem;

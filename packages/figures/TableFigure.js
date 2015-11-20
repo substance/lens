@@ -1,8 +1,8 @@
 var Figure = require('substance/packages/figure/Figure');
 
-var TableFigure = Figure.extend({
-  name: "table-figure",
-});
+var TableFigure = Figure.extend();
+
+TableFigure.static.name = "table-figure";
 
 TableFigure.static.components = ['title', 'content', 'caption'];
 TableFigure.static.citationType = "table-figure-citation";

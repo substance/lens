@@ -22,7 +22,7 @@ Cover.Prototype = function() {
           tagName: "div",
           path: [metaNode.id, "title"]
         }).addClass('title'),
-        
+
         // Abstract
         $$('div').addClass('abstract').append(
           $$(TextPropertyAnnotator, {
