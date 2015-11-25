@@ -6,6 +6,7 @@ module.exports = {
   'figure': 'Figure',
   'insert': 'Insert',
   'cite': 'Cite',
+  'focus': 'Focus',
   'bib_item': 'Reference',
   'manage': 'Manage',
   'add_reference': 'Add References',

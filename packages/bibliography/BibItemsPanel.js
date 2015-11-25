@@ -6,8 +6,17 @@ var Component = require('substance/ui/Component');
 var BibItemComponent = require('./BibItemComponent');
 var $$ = Component.$$;
 
-var BibliographySummary = Component.extend({
-  render: function() {
+function BibliographySummary() {
+  BibliographySummary.super.apply(this, arguments);
+}
+
+Component.extend(BibliographySummary, function BibliographySummaryProto() {
+  this.handleAddBibItems = function(e) {
+    e.preventDefault();
+    this.send('switchContext', 'add-bib-items');
+  };
+
+  this.render = function() {
     var el = $$('div').addClass('se-bibliography-summary');
 
     el.append(
@@ -24,13 +33,16 @@ var BibliographySummary = Component.extend({
     if (config.isEditable) {
       el.append(
         $$('p').append(
-          $$('a').attr({href: '#'}).append('Add references')
+          $$('a').attr({href: '#'})
+            .on('click', this.handleAddBibItems)
+            .append('Add references')
         )
       );
     }
     return el;
-  }
+  };
 });
+
 
 // List existing bib items
 // -----------------
@@ -95,6 +107,7 @@ BibItemsPanel.Prototype = function() {
     bibItems.forEach(function(bibItem) {
       bibItemEls.append($$(BibItemComponent, {
         node: bibItem,
+        toggleName: this.i18n.t('focus'),
         highlighted: this.isHighlighted(bibItem)
       }));
     }.bind(this));

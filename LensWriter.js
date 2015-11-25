@@ -41,6 +41,7 @@ var CONFIG = {
       "toc": require('substance/ui/TocPanel'),
       "cite": require('./packages/citations/CitePanel'),
       "bib-items": require('./packages/bibliography/BibItemsPanel'),
+      "add-bib-items": require('./packages/bibliography/AddBibItemsPanel'),
 
       // We use different states for the same panel, so we can distinguish
       // the citation type based on state.contextId
@@ -51,6 +52,7 @@ var CONFIG = {
       "bib-item-entry": require('./packages/bibliography/BibItemEntry'),
       "image-figure-entry": require('./packages/figures/ImageFigureEntry'),
       "table-figure-entry": require('./packages/figures/TableFigureEntry'),
+
 
       // Manage BibItems
       // "manage-bib-items": require('./packages/bibliography/ManageBibItemsPanel')

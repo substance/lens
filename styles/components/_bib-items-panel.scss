@@ -2,44 +2,4 @@
   .se-bibliography-summary {
     padding: $default-padding;
   }
-
-  .se-bib-item {
-    position: relative;
-
-    font-size: $small-font-size;
-    padding: $default-padding;
-    border-top: 1px solid $border-color;
-
-    border-left: 3px solid transparent;
-
-    .se-label {
-      padding-bottom: 10px;
-      color: #888;
-    }
-
-    .se-focus-toggle {
-      font-size: 12px;
-      font-weight: bold;
-      position: absolute;
-      color: #888;
-      padding: 10px;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-
-      &:hover {
-        color: $highlight-color-2;
-      }
-    }
-
-    // When highlighted
-    &.se-highlighted {
-      border-left: 3px solid $highlight-color-2;
-      background: #fff;
-      
-      .se-focus-toggle {
-        color: $highlight-color-2;
-      }
-    }
-  }
 }
