@@ -17,7 +17,7 @@ var Article = function() {
 };
 
 Article.Prototype = function() {
-
+  
   this.initialize = function() {
     this.super.initialize.apply(this, arguments);
 
@@ -38,12 +38,6 @@ Article.Prototype = function() {
     this.includesIndex = this.addIndex('includes', NodeIndex.create({
       type: "include",
       property: "nodeId"
-    }));
-
-    // Needed in AddBibItemComponent so we can map guid (aka DOI's) withour internal substance ids
-    this.bibItemByGuidIndex = this.addIndex('bibItemByGuid', NodeIndex.create({
-      type: "bib-item",
-      property: "guid"
     }));
 
     this.citationsIndex = this.addIndex('citations', NodeIndex.create({

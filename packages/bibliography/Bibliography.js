@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('substance/util/helpers');
-var oo = require('substance/util/oo');
 var EventEmitter = require('substance/util/EventEmitter');
 
 // Nomenclature: 'Bibliography' is a set of 'References' which are cited from in the manuscript.
@@ -13,9 +12,50 @@ function Bibliography(doc, containerId) {
 
   this.bibitemsByGuid = {};
   this._compileDebounced = _.debounce(this.compile.bind(this), 50);
+
+  this.doc.connect(this, {
+    'document:changed': this.onDocumentChanged
+  });
 }
 
+
 Bibliography.Prototype = function() {
+
+  this.onDocumentChanged = function(change) {
+    var doc = this.doc;
+    var needsUpdate = false;
+
+    _.each(change.ops, function(op) {
+      // Citation affected
+      if (op.isCreate() || op.isSet() || op.isUpdate()) {
+        var nodeId = op.path[0];
+        var node = doc.get(nodeId);
+
+        if (!node) return;
+
+        if (node.type === 'bib-item') {
+          needsUpdate = true;
+          console.log('bib-item-(citation) created/updated', op);
+        } else if (node.type === 'bib-item-citation') {
+          if (op.path[1] === 'targets') {
+            console.log('bib-item-(citation) created/updated', op);
+            needsUpdate = true;
+          }
+        }
+      } else if (op.isDelete()) {
+        var deletedNode = op.val;
+        if (deletedNode.type === 'bib-item-citation' || deletedNode.type === 'bib-item') {
+          console.log('bib-item-(citation) deleted');
+          needsUpdate = true;
+        }
+      }
+    });
+    
+    if (needsUpdate) {
+
+      this.update();
+    }
+  };
 
   this.dispose = function() {
     this.doc.disconnect(this);
@@ -45,8 +85,7 @@ Bibliography.Prototype = function() {
       if (bibItem.format !== 'citeproc') {
         throw new Error("Only 'citeproc' bibliographic items are supported right now.");
       }
-      var source = bibItem.source;
-      var data = JSON.parse(source);
+      var data = bibItem.data;
       data.id = bibItem.id;
       compiler.addRecord(data);
       this.bibitemsByGuid[bibItem.guid] = bibItem;
@@ -137,6 +176,6 @@ Bibliography.Prototype = function() {
 };
 
 
-oo.inherit(Bibliography, EventEmitter);
+EventEmitter.extend(Bibliography);
 
 module.exports = Bibliography;

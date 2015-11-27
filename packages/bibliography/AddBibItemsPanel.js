@@ -76,16 +76,17 @@ AddBibItemsPanel.Prototype = function() {
   };
 
   this.isAdded = function(entry) {
-    var added = this.getBibItemIdByGuid(entry.data.DOI);
-    return added;
+    return !!this.props.doc.get(entry.data.DOI);
   };
 
   // Get label for bib item if already added
   this.getLabel = function(doi) {
-    var bibItemId = this.getBibItemIdByGuid(doi);
-    if (!bibItemId) return undefined;
-    var bibItem = this.props.doc.get(bibItemId);
-    return bibItem.label;
+    var label = '';
+    if (doi) {
+      var bibItem = this.props.doc.get(doi);
+      if (bibItem && bibItem.label) label = bibItem.label;
+    }
+    return label;
   };
 
   this.renderSearchResult = function() {
@@ -94,9 +95,8 @@ AddBibItemsPanel.Prototype = function() {
     _.each(this.state.searchResult.items, function(entry) {
       // TODO: usually we don't have a label
       // but when the bib-entry is referenced already
-      var label = this.getLabel(entry.data.DOI) || '-';
+      var label = this.getLabel(entry.data.DOI);
       // Check if item is already in bibliography
-      // var added = this.getBibItemIdByGuid(entry.data.DOI);
       var text = entry.text;
       var isAdded = this.isAdded(entry);
 
@@ -119,13 +119,10 @@ AddBibItemsPanel.Prototype = function() {
     }
   };
 
-  this.getBibItemIdByGuid = function(guid) {
-    var doc = this.props.doc;
-    return Object.keys(doc.bibItemByGuidIndex.get(guid))[0];
-  };
-
   this.toggleItem = function(itemGuid) {
-    if (this.getBibItemIdByGuid(itemGuid)) {
+    var doc = this.props.doc;
+
+    if (doc.get(itemGuid)) {
       this.removeItem(itemGuid);
     } else {
       this.addItem(itemGuid);
@@ -143,9 +140,9 @@ AddBibItemsPanel.Prototype = function() {
     var doc = this.props.doc;
     doc.transaction({}, {}, function(tx) {
       var bibItem = {
-        id: uuid('bib'),
+        id: bibEntry.data.DOI,
         type: "bib-item",
-        source: JSON.stringify(bibEntry.data),
+        data: bibEntry.data,
         format: 'citeproc'
       };
       tx.create(bibItem);
@@ -153,8 +150,7 @@ AddBibItemsPanel.Prototype = function() {
     this.rerender();
   };
 
-  this.removeItem = function(itemGuid) {
-    var nodeId = this.getBibItemIdByGuid(itemGuid);
+  this.removeItem = function(nodeId) {
     this.props.doc.transaction({}, {}, function(tx) {
       tx.delete(nodeId);
     });
@@ -163,7 +159,6 @@ AddBibItemsPanel.Prototype = function() {
 
   this.startSearch = function() {
     var searchStr = this.refs.searchStr.val();
-
     var self = this;
     var doc = this.props.doc;
 

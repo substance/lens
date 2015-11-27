@@ -9,10 +9,9 @@ module.exports = {
   tagName: 'bib',
 
   import: function(el, node) {
-    node.id = el.attr('id') || node.id; // legacy ids
+    node.data = JSON.parse(el.text());
+    node.id = node.data.DOI;
     node.format = 'citeproc';
-    node.data = {};
-    node.source = el.text();
   },
 
   export: function(node, el) {

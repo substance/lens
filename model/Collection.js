@@ -12,7 +12,7 @@ function Collection(doc, containerId, itemType, labelPrefix) {
   this.itemType = itemType;
   this.labelPrefix = labelPrefix;
   this.doc.connect(this, {
-    'operation:applied': this.onOperationApplied
+    'document:changed': this.onDocumentChanged
   });
 }
 
@@ -170,37 +170,50 @@ Collection.Prototype = function() {
     return this.items;
   };
 
-  this.onOperationApplied = function(op) {
-    // This collection needs an update whenever a node of type 'this.itemType'
-    // is shown or hidden in this container
-    if (op.path[0] !== this.containerId) {
-      return;
-    }
-    if (op.type === "set") {
-      return this.update();
-    }
-    // Note: updates on the container nodes are always ArrayOperations
-    // which have the inserted or removed value as `val`.
-    if (op.type === "update") {
-      var id = op.diff.val;
-      var node = this.doc.get(id);
-      // ATTENTION: as these are intermediate ops
-      // it may happen that the node itself has been
-      // deleted by a later op in this change
-      // So this guard can be considered ok
-      if (!node) return;
-      // look for item type or an include pointing to an item type
-      if (node.type === this.itemType) {
-        return this.update();
-      } else if (node.type === "include") {
-        node = node.getIncludedNode();
-        if (!node) return;
-        if (node.type === this.itemType) {
-          return this.update();
+  this.onDocumentChanged = function(change) {
+    var doc = this.doc;
+    var needsUpdate = false;
+
+    _.each(change.ops, function(op) {
+
+      // When item of this.itemType has been deleted
+      if (op.type === "delete") {
+        var deletedNode = op.val;
+
+        if (deletedNode.type === this.itemType) {
+          console.log(deletedNode.id, 'deleted');
+          needsUpdate = true;
         }
       }
+
+      if (!needsUpdate && op.path[0] === this.containerId) {
+        if (op.type === "set") {
+          needsUpdate = true;
+        }
+        // Note: updates on the container nodes are always ArrayOperations
+        // which have the inserted or removed value as `val`.
+        if (op.type === "update") {
+          var id = op.diff.val;
+          var node = doc.get(id);
+          // ATTENTION: as these are intermediate ops
+          // it may happen that the node itself has been
+          // deleted by a later op in this change
+          // So this guard can be considered ok
+          if (!node) return;
+          // look for item type or an include pointing to an item type
+          if (node.type === this.itemType) {
+            needsUpdate = true;
+          }
+        }
+      }
+    }.bind(this));
+    
+    if (needsUpdate) {
+      console.log('Collection', this.itemType, 'is being updated');
+      this.update();
     }
   };
+
 };
 
 oo.initClass(Collection);

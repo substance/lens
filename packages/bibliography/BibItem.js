@@ -18,35 +18,6 @@ DocumentNode.extend(BibItem, {
     this.text = compiledText;
   },
 
-  didInitialize: function() {
-    // Only if citeproc
-    if (this.format === "citeproc") {
-      this.data = JSON.parse(this.source);
-      this.guid = this.data.DOI || this.data.ISSN || this.id;
-    } else {
-      this.data = this.source;
-      this.guid = this.id;
-    }
-  },
-
-  // Note: we are updating the collection whenever
-  // a BibItem is created so that we have its text compiled.
-  // This is a different to Table or Figure collections
-  // a compilation is done when the figure is shown or hidden
-  // in the container.
-
-  didAttach: function(doc) {
-    if (!doc.isTransaction() && !doc.isClipboard()) {
-      this.updateCollection(doc);
-    }
-  },
-
-  didDetach: function(doc) {
-    if (!doc.isTransaction() && !doc.isClipboard()) {
-      this.updateCollection(doc);
-    }
-  },
-
   updateCollection: function(doc) {
     var collection = doc.getCollection(this.type);
     if (collection) {
@@ -58,11 +29,8 @@ DocumentNode.extend(BibItem, {
 BibItem.static.name = 'bib-item';
 
 BibItem.static.defineSchema({
-    source: 'string',
     format: 'string',
-    data: 'object',
-    // data: parsed JSON or source
-    // guid: globally unique id (such as DOI or ISSN)
+    data: 'object'
 });
 
 BibItem.static.citationType = "bib-item-citation";
