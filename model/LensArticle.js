@@ -1,7 +1,7 @@
 var schema = require('./articleSchema');
 var _ = require('substance/util/helpers');
 var Document = require('substance/model/Document');
-var NodeIndex = require('substance/model/data/NodeIndex');
+var DocumentIndex = require('substance/model/DocumentIndex');
 
 var CiteprocCompiler = require('../packages/bibliography/CiteprocCompiler');
 var Bibliography = require('../packages/bibliography/Bibliography');
@@ -57,12 +57,12 @@ LensArticle.Prototype = function() {
       "table-figure": new Collection(this, 'main', 'table-figure', 'Table'),
     };
 
-    this.includesIndex = this.addIndex('includes', NodeIndex.create({
+    this.includesIndex = this.addIndex('includes', DocumentIndex.create({
       type: "include",
       property: "nodeId"
     }));
 
-    this.citationsIndex = this.addIndex('citations', NodeIndex.create({
+    this.citationsIndex = this.addIndex('citations', DocumentIndex.create({
       type: "citation",
       property: "targets"
     }));
