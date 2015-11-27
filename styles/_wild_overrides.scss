@@ -35,13 +35,13 @@
   background: #aaa;
 }
 
-
-.sc-scrollbar.cite-image-figure .se-highlight {
+.sc-scrollbar.cite-image-figure .se-highlight,
+.sc-scrollbar.toc .se-highlight {
   background-color: $highlight-color-1;
 }
 
 .sc-scrollbar.cite-bib-item .se-highlight,
-.sc-scrollbar.bib-items .highlight,
+.sc-scrollbar.bib-items .se-highlight,
  {
   background-color: $highlight-color-2;
 }
