@@ -1,23 +1,45 @@
 var schema = require('./articleSchema');
 var _ = require('substance/util/helpers');
-var oo = require('substance/util/oo');
 var Document = require('substance/model/Document');
 var NodeIndex = require('substance/model/data/NodeIndex');
-
 
 var CiteprocCompiler = require('../packages/bibliography/CiteprocCompiler');
 var Bibliography = require('../packages/bibliography/Bibliography');
 var Collection = require('./Collection');
 
-var Article = function() {
+var without = require('lodash/array/without');
+
+var LensArticle = function() {
   // HACK: at the moment we need to seed this way
   // as containers get registered on construction
   // it would be better if we created the containers dynamically
-  Article.super.call(this, schema);
+  LensArticle.super.call(this, schema);
+
+  this.connect(this, {
+    'document:changed': this.onDocumentChanged
+  });
 };
 
-Article.Prototype = function() {
-  
+LensArticle.Prototype = function() {
+  // HACK: We ensure referential integrity by just patching the targets property
+  // of citation nodes until we have a better solution:
+  // See: https://github.com/substance/substance/issues/295
+  this.onDocumentChanged = function(change) {
+    _.each(change.ops, function(op) {
+      if (op.isDelete()) {
+        var deletedNode = op.val;
+
+        // Check if deleted node is a citeable node
+        if (deletedNode.type === 'image-figure' || deletedNode.type === 'table-figure' || deletedNode.type === 'bib-item') {
+          var citations = this.getIndex('citations').get(deletedNode.id);
+          _.each(citations, function(citation) {
+            citation.targets = without(citation.targets, deletedNode.id);
+          });
+        }
+      }
+    }.bind(this));
+  };
+
   this.initialize = function() {
     this.super.initialize.apply(this, arguments);
 
@@ -136,14 +158,14 @@ Article.Prototype = function() {
   };
 };
 
-oo.inherit(Article, Document);
+Document.extend(LensArticle);
 
-Article.XML_TEMPLATE = [
+LensArticle.XML_TEMPLATE = [
 '<article xmlns="http://substance.io/science-article/0.1.0" lang="en">',
-  '<meta>',
+  '<metadata>',
     '<title>Enter title</title>',
     '<abstract>Enter abstract</abstract>',
-  '</meta>',
+  '</metadata>',
   '<resources></resources>',
   '<body>',
     '<p id="p1">Enter your article here.</p>',
@@ -151,4 +173,4 @@ Article.XML_TEMPLATE = [
 '</article>'
 ].join('');
 
-module.exports = Article;
+module.exports = LensArticle;

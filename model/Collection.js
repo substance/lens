@@ -169,23 +169,50 @@ Collection.Prototype = function() {
   this.getItems = function() {
     return this.items;
   };
-
+  
+  // HACK: Lots of hard coded things here, we need to improve this along with
+  // removing the redudancy with Bibliography.js
   this.onDocumentChanged = function(change) {
     var doc = this.doc;
     var needsUpdate = false;
 
     _.each(change.ops, function(op) {
 
-      // When item of this.itemType has been deleted
-      if (op.type === "delete") {
-        var deletedNode = op.val;
+      // Figure citation has been created/changed/delete
+      // -----------------
+      // 
 
-        if (deletedNode.type === this.itemType) {
-          console.log(deletedNode.id, 'deleted');
+      if (op.isCreate() || op.isSet() || op.isUpdate()) {
+        var nodeId = op.path[0];
+        var node = doc.get(nodeId);
+        if (!node) return;
+
+        if (op.isCreate()) {
+          // Create
+          if (node.type === 'image-figure-citation' || node.type === 'table-figure-citation') {
+            needsUpdate = true;
+          }
+        } else {
+          // Update/Set
+          if (node.type === 'image-figure-citation' || node.type === 'table-figure-citation') {
+            if (op.path[1] === 'targets') {
+              needsUpdate = true;
+            }
+          }
+        }
+      } else if (op.isDelete()) {
+        // Delete
+        var deletedNode = op.val;
+        if (deletedNode.type === 'image-figure-citation' || deletedNode.type === 'table-figure-citation') {
           needsUpdate = true;
         }
       }
 
+
+      // New Figure has been inserted/moved or deleted
+      // ----------------
+      // 
+      // Figure insert or move case (when container is updated)
       if (!needsUpdate && op.path[0] === this.containerId) {
         if (op.type === "set") {
           needsUpdate = true;
@@ -204,6 +231,14 @@ Collection.Prototype = function() {
           if (node.type === this.itemType) {
             needsUpdate = true;
           }
+        }
+      }
+
+      // When node of this.itemType has been deleted
+      if (op.isDelete()) {
+        var deletedNode = op.val;
+        if (deletedNode.type === this.itemType) {
+          needsUpdate = true;
         }
       }
     }.bind(this));

@@ -26,23 +26,28 @@ Bibliography.Prototype = function() {
     var needsUpdate = false;
 
     _.each(change.ops, function(op) {
-      // Citation affected
       if (op.isCreate() || op.isSet() || op.isUpdate()) {
         var nodeId = op.path[0];
         var node = doc.get(nodeId);
-
         if (!node) return;
 
-        if (node.type === 'bib-item') {
-          needsUpdate = true;
-          console.log('bib-item-(citation) created/updated', op);
-        } else if (node.type === 'bib-item-citation') {
-          if (op.path[1] === 'targets') {
-            console.log('bib-item-(citation) created/updated', op);
+        if (op.isCreate()) {
+          // Create
+          if (node.type === 'bib-item' || node.type === 'bib-item-citation') {
             needsUpdate = true;
+          }
+        } else {
+          // Update/Set
+          if (node.type === 'bib-item') {
+            needsUpdate = true;
+          } else if (node.type === 'bib-item-citation') {
+            if (op.path[1] === 'targets') {
+              needsUpdate = true;
+            }
           }
         }
       } else if (op.isDelete()) {
+        // Delete
         var deletedNode = op.val;
         if (deletedNode.type === 'bib-item-citation' || deletedNode.type === 'bib-item') {
           console.log('bib-item-(citation) deleted');
@@ -52,7 +57,7 @@ Bibliography.Prototype = function() {
     });
     
     if (needsUpdate) {
-
+      console.log('updating bibliography');
       this.update();
     }
   };

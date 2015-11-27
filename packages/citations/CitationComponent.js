@@ -1,6 +1,5 @@
 'use strict';
 
-var oo = require('substance/util/oo');
 var AnnotationComponent = require('substance/ui/AnnotationComponent');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
@@ -65,6 +64,6 @@ CitationComponent.Prototype = function() {
   };
 };
 
-oo.inherit(CitationComponent, AnnotationComponent);
+AnnotationComponent.extend(CitationComponent);
 
 module.exports = CitationComponent;
