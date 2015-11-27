@@ -8,9 +8,9 @@
     "cheerio": "0.19.0",
     "ejs": "2.3.4",
     "express": "4.13.3",
-    "lodash": "3.3.1",
+    "lodash": "3.10.1",
     "node-sass": "3.4.2",
-    "substance": "substance/substance#a612f2a2f30089efc8ccee62ea5d667481c2e42d"
+    "substance": "substance/substance#cfc71ae66962d2dd950527e6d0da4ba4d03af2c7"
   },
   "devDependencies": {
     "gulp": "3.9.0",
