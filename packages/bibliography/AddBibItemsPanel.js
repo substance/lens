@@ -3,7 +3,6 @@
 var _ = require('substance/util/helpers');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
-var uuid = require('substance/util/uuid');
 var Icon = require('substance/ui/FontAwesomeIcon');
 var BibItemComponent = require('./BibItemComponent');
 
@@ -39,11 +38,10 @@ AddBibItemsPanel.Prototype = function() {
   this.getInitialState = function() {
     return {
       searchResult: {
-        query: '',
+        searchStr: '',
         items: []
       },
-      runningQueries: [],
-      addedItems: {} // still needed?
+      runningQueries: []
     };
   };
 
@@ -53,7 +51,7 @@ AddBibItemsPanel.Prototype = function() {
         $$('a').addClass('se-back').attr('href', '#')
           .on('click', this.handleCancel)
           .append($$(Icon, {icon: 'fa-chevron-left'})),
-        $$('div').addClass('se-label').append(this.i18n.t('search-and-add-bib-entries'))
+        $$('div').addClass('se-label').append(this.i18n.t('add-bib-entries'))
       ),
       $$('div').addClass('se-panel-content').ref('panelContent').append(
         $$('div').addClass("se-bib-items se-panel-content-inner").append(
@@ -62,6 +60,7 @@ AddBibItemsPanel.Prototype = function() {
               .attr({
                 type: "text",
                 placeholder: this.i18n.t('enter_search_term'),
+                value: this.state.searchResult.searchStr
               })
               .ref('searchStr')
               .on('keypress', this.onKeyPress),
@@ -91,8 +90,9 @@ AddBibItemsPanel.Prototype = function() {
 
   this.renderSearchResult = function() {
     var searchResultEl = $$('div').addClass('se-search-results');
+    var items = this.state.searchResult.items;
 
-    _.each(this.state.searchResult.items, function(entry) {
+    _.each(items, function(entry) {
       // TODO: usually we don't have a label
       // but when the bib-entry is referenced already
       var label = this.getLabel(entry.data.DOI);
@@ -110,6 +110,7 @@ AddBibItemsPanel.Prototype = function() {
         highlighted: isAdded
       }));
     }, this);
+
     return searchResultEl;
   };
 

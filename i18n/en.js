@@ -22,5 +22,6 @@ module.exports = {
   'article-meta.abstract': 'Abstract',
   'image-figure.title': 'Figure Title',
   'image-figure.caption': 'Figure Caption',
-  'container-selection': 'Multiple Elements'
+  'container-selection': 'Multiple Elements',
+  'add-bib-entries': 'Add new references'
 };
