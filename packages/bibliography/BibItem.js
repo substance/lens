@@ -59,7 +59,8 @@ BibItem.static.name = 'bib-item';
 
 BibItem.static.defineSchema({
     source: 'string',
-    format: 'string'
+    format: 'string',
+    data: 'object',
     // data: parsed JSON or source
     // guid: globally unique id (such as DOI or ISSN)
 });

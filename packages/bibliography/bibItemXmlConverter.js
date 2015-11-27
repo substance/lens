@@ -11,6 +11,7 @@ module.exports = {
   import: function(el, node) {
     node.id = el.attr('id') || node.id; // legacy ids
     node.format = 'citeproc';
+    node.data = {};
     node.source = el.text();
   },
 

@@ -10,10 +10,10 @@ var converters = [
   require('substance/packages/blockquote/BlockquoteHTMLConverter'),
   require('substance/packages/codeblock/CodeblockHTMLConverter'),
   require('substance/packages/heading/HeadingHTMLConverter'),
-  require('substance/packages/image/ImageHTMLConverter'),
+  require('substance/packages/image/ImageXMLConverter'),
   require('substance/packages/strong/StrongHTMLConverter'),
   require('substance/packages/emphasis/EmphasisHTMLConverter'),
-  require('substance/packages/link/LinkHtmlConverter'),
+  require('substance/packages/link/LinkHTMLConverter'),
 
   // Lens-specific converters
   require('../packages/metadata/MetadataXMLConverter'),
@@ -43,7 +43,7 @@ LensArticleImporter.Prototype = function() {
   // </article>
   this.convertDocument = function(articleElement) {
     // Import meta node
-    var metaElement = articleElement.find('meta');
+    var metaElement = articleElement.find('metadata');
     this.convertElement(metaElement);
 
     // Import resources
@@ -56,9 +56,6 @@ LensArticleImporter.Prototype = function() {
     var bodyNodes = articleElement.find('body').children;
     this.convertContainer(bodyNodes, 'main');
   };
-
-  
-
 };
 
 // Expose converters so we can reuse them in NoteHtmlExporter

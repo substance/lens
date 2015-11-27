@@ -22,7 +22,6 @@ function AddBibItemsPanel() {
 AddBibItemsPanel.Prototype = function() {
 
   this.toggleBibItem = function(bibItem) {
-    console.log('bibitem toggled', bibItem);
     this.toggleItem(bibItem.id);
   };
 

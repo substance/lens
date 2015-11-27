@@ -22,6 +22,7 @@ var Superscript = require('substance/packages/superscript/Superscript');
 var Code = require('substance/packages/code/Code');
 var Link = require('substance/packages/link/Link');
 
+
 // Lens-specific Node Types
 // ----------------------
 
@@ -39,10 +40,10 @@ var BibItemCitation = require('../packages/bibliography/BibItemCitation');
 // Metadata
 var Author = require('../packages/metadata/Author');
 var ArticleMeta = require('../packages/metadata/ArticleMeta');
-var schema = new DocumentSchema("scientific-article", "0.2.0");
+var schema = new DocumentSchema("lens-article", "3.0.0");
 
 schema.getDefaultTextType = function() {
-  return "paragraph";
+  return 'paragraph';
 };
 
 schema.addNodes([

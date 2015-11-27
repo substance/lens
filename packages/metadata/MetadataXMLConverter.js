@@ -15,7 +15,7 @@
 module.exports = {
 
   type: 'article-meta',
-  tagName: 'meta',
+  tagName: 'metadata',
 
   import: function(el, node, converter) {
     node.id = 'article-meta';
@@ -44,24 +44,16 @@ module.exports = {
   },
 
   export: function(node, el, converter) {
-    // var id = articleMeta.id;
-    // var $el = $('<meta>');
-    // var doc = converter.getDocument();
+    var $$ = converter.$$;
 
-    // var $title = $('<title>')
-    //   .append(converter.annotatedText([id, 'title']));
-
-    // var $abstract = $('<abstract>')
-    //   .append(converter.annotatedText([id, 'abstract']));
-
-    // // Authors
-    // var $authors = $('<authors>');
-    // articleMeta.authors.forEach(function(authorId) {
-    //   var author = doc.get(authorId);
-    //   $authors.append(converter.convertNode(author));
-    // });
-
-    // return $el.append($title, $authors, $abstract);
+    return el.append(
+      $$('title').append(
+        converter.annotatedText([node.id, 'title'])
+      ),
+      $$('abstract').append(
+        converter.annotatedText([node.id, 'abstract'])
+      )
+    );
   }
 
 };
