@@ -4,6 +4,9 @@ var Article = require('./model/LensArticle');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
+var LensArticleExporter = require('./model/LensArticleExporter');
+var exporter = new LensArticleExporter();
+
 // LensWriter wrapped in a React component
 // ------------------
 
@@ -15,7 +18,7 @@ var ReactLensWriter = React.createClass({
 
   // Delegators
   _onSave: function(doc, changes, cb) {
-    var xml = doc.toXml();
+    var xml = exporter.exportDocument(doc);
     this.props.onSave(xml, cb);
   },
 
