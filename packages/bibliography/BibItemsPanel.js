@@ -60,7 +60,7 @@ function BibItemsPanel() {
 BibItemsPanel.Prototype = function() {
 
   this.dispose = function() {
-    this.bibliography.disconnect();
+    this.bibliography.disconnect(this);
   };
 
   this.didMount = function() {
