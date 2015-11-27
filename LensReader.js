@@ -118,7 +118,6 @@ LensReader.Prototype = function() {
       $$('div').ref('workspace').addClass('le-workspace').append(
         // Main (left column)
         $$('div').ref('main').addClass("le-main").append(
-          // $$(ContentToolbar).ref('toolbar'),
           $$(ContentPanel).append(
             // Document Cover display
             $$(Cover, {
@@ -140,12 +139,12 @@ LensReader.Prototype = function() {
         ),
         // Resource (right column)
         $$('div').ref('resource')
-          .addClass("le-context")
+          .addClass('le-context')
           .append(
             $$(ContextToggles, {
               panelOrder: config.panelOrder,
               contextId: this.state.contextId
-            }).ref("context-toggles"),
+            }).ref('context-toggles'),
             this.renderContextPanel()
           )
       )

@@ -7,44 +7,6 @@ var LensArticleImporter = require('../model/LensArticleImporter');
 var LensArticleExporter = require('../model/LensArticleExporter');
 var exporter = new LensArticleExporter();
 
-function updateBibItemIds(doc) {
-  // 1. Create new bib items using the DOI instead of 
-  var bibItems = doc.getIndex('type').get('bib-item');
-  var bibItemIds = Object.keys(bibItems);
-
-  each(bibItems, function(bibItem) {
-    var data = JSON.parse(bibItem.source);
-
-    doc.create({
-      id: data.DOI,
-      type: 'bib-item',
-      format: 'citeproc',
-      source: bibItem.source,
-      data: data
-    });
-  });
-
-  // 2. Update target of bibItemcitations
-  var bibItemCitations = doc.getIndex('type').get('bib-item-citation');
-
-  each(bibItemCitations, function(citation) {
-    var target = citation.targets[0];
-    var data = JSON.parse(doc.get(target).source);
-
-    // Only first target is transported, which is good enough for now
-    doc.set([citation.id, 'targets'], [data.DOI]);
-  });
-
-  // 3. delete old bib-items
-  bibItemIds.forEach(function(bibiItemId) {
-    doc.delete(bibiItemId);
-  });
-
-  // Return the adjusted doc
-  return doc;
-}
-
-
 var Backend = function() {
 
 };
