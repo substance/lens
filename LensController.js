@@ -154,8 +154,12 @@ LensController.Prototype = function() {
         // However if we click on a bib ref [1-4]
         // it would maybe be useful to show all citations that
         // reference 1,2,3, or 4.
-        var targets = doc.get(state.citationId).targets;
-        return [ state.citationId ].concat(targets);
+        var citation = doc.get(state.citationId);
+        if (citation) {
+          return [ state.citationId ].concat(citation.targets);
+        } else {
+          return [];
+        }
       }
       if (state.bibItemId) {
         // Get citations for a given target
@@ -169,7 +173,7 @@ LensController.Prototype = function() {
     // HACK: updates the highlights when state
     // transition has finished
     setTimeout(function() {
-      doc.setHighlights(activeAnnos);  
+      doc.setHighlights(activeAnnos);
     }, 0);
   };
 };

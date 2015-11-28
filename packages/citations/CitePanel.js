@@ -74,7 +74,11 @@ CitePanel.Prototype = function() {
   this.getFirstCitationTarget = function() {
     var doc = this.props.doc;
     var citation = doc.get(this.props.citationId);
-    return citation.targets[0];
+    if (citation) {
+      return citation.targets[0];
+    } else {
+      return null;
+    }
   };
 
   // Determines wheter an item is active
@@ -82,7 +86,11 @@ CitePanel.Prototype = function() {
     if (!this.props.citationId) return false;
     var doc = this.props.doc;
     var citation = doc.get(this.props.citationId);
-    return _.includes(citation.targets, itemId);
+    if (citation) {
+      return _.includes(citation.targets, itemId);
+    } else {
+      return false;
+    }
   };
 
   this.handleCancel = function(e) {
