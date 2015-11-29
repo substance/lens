@@ -1,6 +1,5 @@
 'use strict';
 
-var oo = require('substance/util/oo');
 var Panel = require('substance/ui/Panel');
 var Component = require('substance/ui/Component');
 var Panel = require('substance/ui/Panel');
@@ -67,7 +66,7 @@ BibItemsPanel.Prototype = function() {
   this.didMount = function() {
     var bibItemId = this.getFirstActiveBibItemId();
     if (bibItemId) {
-      this.scrollToNode(bibItemId);
+      this.refs.panelEl.scrollToNode(bibItemId);
     }
   };
 
@@ -99,6 +98,7 @@ BibItemsPanel.Prototype = function() {
   };
 
   this.render = function() {
+    console.log('BibItemsPanel.render');
     var bibItems = this.bibliography.getItems();
 
     var bibItemEls = $$('div').addClass('se-bib-items').ref('bibItems');
@@ -113,9 +113,9 @@ BibItemsPanel.Prototype = function() {
     }.bind(this));
 
     var el = $$('div').addClass('sc-bib-items-panel').append(
-      $$(Panel).append(
+      $$(Panel, {doc: this.props.doc}).append(
         bibItemEls
-      )
+      ).ref('panelEl')
     );
 
     return el;
@@ -137,6 +137,6 @@ BibItemsPanel.Prototype = function() {
   // };
 };
 
-oo.inherit(BibItemsPanel, Panel);
+Panel.extend(BibItemsPanel);
 
 module.exports = BibItemsPanel;

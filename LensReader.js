@@ -2,7 +2,7 @@
 
 var oo = require('substance/util/oo');
 var LensController = require('./LensController');
-var ContextToggles = require('substance/ui/ContextToggles');
+var ContextSection = require('substance/ui/ContextSection');
 var ContentPanel = require("substance/ui/ContentPanel");
 var StatusBar = require("substance/ui/StatusBar");
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
@@ -56,6 +56,14 @@ var CONFIG = {
   cover: {
     commands: []
   },
+  panels: {
+    'toc': {
+      hideContextToggles: false
+    },
+    'bib-items': {
+      hideContextToggles: false
+    }
+  },
   panelOrder: ['toc', 'bib-items'],
   containerId: 'main',
   isEditable: false
@@ -67,7 +75,6 @@ function LensReader(parent, params) {
   this.connect(this, {
     'citation:selected': this.onCitationSelected
   });
-
 }
 
 LensReader.Prototype = function() {
@@ -110,6 +117,7 @@ LensReader.Prototype = function() {
   };
 
   this.render = function() {
+    console.log('LensReader.render');
     var doc = this.props.doc;
     var config = this.getConfig();
     var el = $$('div').addClass('lc-reader sc-controller');
@@ -138,15 +146,10 @@ LensReader.Prototype = function() {
           ).ref('content')
         ),
         // Resource (right column)
-        $$('div').ref('resource')
-          .addClass('le-context')
-          .append(
-            $$(ContextToggles, {
-              panelOrder: config.panelOrder,
-              contextId: this.state.contextId
-            }).ref('context-toggles'),
-            this.renderContextPanel()
-          )
+        $$(ContextSection, {
+          panelConfig: config.panels[this.state.contextId],
+          contextId: this.state.contextId
+        }).ref(this.state.contextId)
       )
     );
 
