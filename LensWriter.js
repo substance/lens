@@ -157,7 +157,8 @@ LensWriter.Prototype = function() {
             $$(BibliographyComponent).ref('bib')
           ).ref('content')
         ),
-        $$(ContextSection).ref(this.state.contextId)
+        $$(ContextSection).ref(this.state.contextId) // works because comp get wiped
+        // $$(ContextSection).ref('contextSection')  // preserves el but does no rerender
       )
     );
 
