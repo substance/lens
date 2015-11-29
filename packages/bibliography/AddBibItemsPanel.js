@@ -3,8 +3,9 @@
 var _ = require('substance/util/helpers');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
-var Icon = require('substance/ui/FontAwesomeIcon');
 var BibItemComponent = require('./BibItemComponent');
+var DialogHeader = require('substance/ui/DialogHeader');
+var Panel = require('substance/ui/Panel');
 
 // Create new bib items using cross ref search
 // -----------------
@@ -46,30 +47,26 @@ AddBibItemsPanel.Prototype = function() {
   };
 
   this.render = function() {
-    return $$('div').addClass('sc-panel sc-add-bib-items-panel sm-dialog').append(
-      $$('div').addClass('se-dialog-header').append(
-        $$('a').addClass('se-back').attr('href', '#')
-          .on('click', this.handleCancel)
-          .append($$(Icon, {icon: 'fa-chevron-left'})),
-        $$('div').addClass('se-label').append(this.i18n.t('add-bib-entries'))
-      ),
-      $$('div').addClass('se-panel-content').ref('panelContent').append(
-        $$('div').addClass("se-bib-items se-panel-content-inner").append(
-          $$('div').addClass('se-search-form').append(
-            $$('input')
-              .attr({
-                type: "text",
-                placeholder: this.i18n.t('enter_search_term'),
-                value: this.state.searchResult.searchStr
-              })
-              .ref('searchStr')
-              .on('keypress', this.onKeyPress),
-            $$('button').addClass('button float-right')
-              .append("Search")
-              .on('click', this.startSearch)
-          ),
-          this.renderSearchResult()
-        )
+    return $$('div').addClass('sc-add-bib-items-panel').append(
+      $$(DialogHeader, {
+        label: this.i18n.t('add-bib-entries'),
+        exitContext: 'bib-items'
+      }),
+      $$(Panel).ref('panelEl').append(
+        $$('div').addClass('se-search-form').append(
+          $$('input')
+            .attr({
+              type: "text",
+              placeholder: this.i18n.t('enter_search_term'),
+              value: this.state.searchResult.searchStr
+            })
+            .ref('searchStr')
+            .on('keypress', this.onKeyPress.bind(this)),
+          $$('button').addClass('button float-right')
+            .append("Search")
+            .on('click', this.startSearch.bind(this))
+        ),
+        this.renderSearchResult()
       )
     );
   };
@@ -159,7 +156,15 @@ AddBibItemsPanel.Prototype = function() {
   };
 
   this.startSearch = function() {
-    var searchStr = this.refs.searchStr.val();
+    var searchStr;
+
+    // Make this robust for now until we have a fix for owner-based refs
+    if (this.refs.searchStr) {
+      searchStr = this.refs.panelEl.val();
+    } else {
+      searchStr = this.refs.panelEl.refs.searchStr.val();
+    }
+    
     var self = this;
     var doc = this.props.doc;
 

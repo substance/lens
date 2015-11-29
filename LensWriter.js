@@ -2,7 +2,6 @@
 
 var oo = require('substance/util/oo');
 var LensController = require('./LensController');
-var ContextToggles = require('substance/ui/ContextToggles');
 var ContentPanel = require("substance/ui/ContentPanel");
 var StatusBar = require("substance/ui/StatusBar");
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
@@ -12,6 +11,7 @@ var WriterTools = require('./packages/writer/WriterTools');
 var ContainerEditor = require('substance/ui/ContainerEditor');
 var docHelpers = require('substance/model/documentHelpers');
 var Component = require('substance/ui/Component');
+var ContextSection = require('substance/ui/ContextSection');
 var $$ = Component.$$;
 
 var CONFIG = {
@@ -51,11 +51,7 @@ var CONFIG = {
 
       "bib-item-entry": require('./packages/bibliography/BibItemEntry'),
       "image-figure-entry": require('./packages/figures/ImageFigureEntry'),
-      "table-figure-entry": require('./packages/figures/TableFigureEntry'),
-
-
-      // Manage BibItems
-      // "manage-bib-items": require('./packages/bibliography/ManageBibItemsPanel')
+      "table-figure-entry": require('./packages/figures/TableFigureEntry')
     },
   },
   main: {
@@ -103,6 +99,23 @@ var CONFIG = {
       require('substance/packages/link/LinkCommand')
     ]
   },
+  panels: {
+    'toc': {
+      hideContextToggles: false
+    },
+    'bib-items': {
+      hideContextToggles: false
+    },
+    'cite-bib-item': {
+      hideContextToggles: true
+    },
+    'cite-image-figure': {
+      hideContextToggles: true
+    },
+    'add-bib-items': {
+      hideContextToggles: true
+    }
+  },
   panelOrder: ['toc', 'bib-items'],
   containerId: 'main',
   isEditable: true
@@ -144,16 +157,7 @@ LensWriter.Prototype = function() {
             $$(BibliographyComponent).ref('bib')
           ).ref('content')
         ),
-        // Resource (right column)
-        $$('div').ref('context')
-          .addClass("le-context")
-          .append(
-            $$(ContextToggles, {
-              panelOrder: config.panelOrder,
-              contextId: this.state.contextId
-            }).ref('context-toggles'),
-            this.renderContextPanel()
-          )
+        $$(ContextSection).ref(this.state.contextId)
       )
     );
 
