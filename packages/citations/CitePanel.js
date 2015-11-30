@@ -1,14 +1,13 @@
 'use strict';
 
 var _ = require('substance/util/helpers');
-var oo = require('substance/util/oo');
 var Component = require('substance/ui/Component');
 var Panel = require('substance/ui/Panel');
-var Icon = require("substance/ui/FontAwesomeIcon");
+var DialogHeader = require('substance/ui/DialogHeader');
 var $$ = Component.$$;
 
 function CitePanel() {
-  Panel.apply(this, arguments);
+  Component.apply(this, arguments);
   this._initialize(this.props);
 }
 
@@ -29,18 +28,12 @@ CitePanel.Prototype = function() {
     } else {
       items = [$$('div').addClass("no-results").append("Nothing to reference.")];
     }
-    return $$('div').addClass('sc-panel sc-cite-panel sm-dialog').append(
-      $$('div').addClass('se-dialog-header').append(
-        $$('a').addClass('se-back').attr('href', '#')
-          .on('click', this.handleCancel)
-          .append($$(Icon, {icon: 'fa-chevron-left'})),
-        $$('div').addClass('se-label').append(this.i18n.t('choose_referenced_items'))
-      ),
-      $$('div').addClass('se-panel-content').ref('panelContent').append(
-        $$('div').addClass("se-bib-items se-panel-content-inner").append(
-          items
-        )
-      )
+
+    return $$('div').addClass('sc-cite-panel').append(
+      $$(DialogHeader, {label: this.i18n.t('choose_referenced_items')}),
+      $$(Panel).append(
+        items
+      ).ref('panelEl')
     );
   };
 
@@ -67,7 +60,7 @@ CitePanel.Prototype = function() {
   this._scrollToTarget = function() {
     var citationTargetId = this.getFirstCitationTarget();
     if (citationTargetId) {
-      this.scrollToNode(citationTargetId);
+      this.refs.panelEl.scrollToNode(citationTargetId);
     }
   };
 
@@ -125,14 +118,6 @@ CitePanel.Prototype = function() {
   };
 };
 
-oo.inherit(CitePanel, Panel);
-
-// Panel configuration
-// ----------------
-
-CitePanel.icon = "fa-bullseye";
-
-// No context switch toggle is shown
-// CitePanel.isDialog = true;
+Component.extend(CitePanel);
 
 module.exports = CitePanel;

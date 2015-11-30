@@ -1,8 +1,8 @@
 'use strict';
 
-var oo = require('substance/util/oo');
 var Panel = require('substance/ui/Panel');
 var Component = require('substance/ui/Component');
+var Panel = require('substance/ui/Panel');
 var BibItemComponent = require('./BibItemComponent');
 var $$ = Component.$$;
 
@@ -66,7 +66,7 @@ BibItemsPanel.Prototype = function() {
   this.didMount = function() {
     var bibItemId = this.getFirstActiveBibItemId();
     if (bibItemId) {
-      this.scrollToNode(bibItemId);
+      this.refs.panelEl.scrollToNode(bibItemId);
     }
   };
 
@@ -98,10 +98,10 @@ BibItemsPanel.Prototype = function() {
   };
 
   this.render = function() {
+    console.log('BibItemsPanel.render');
     var bibItems = this.bibliography.getItems();
-    var el = $$('div').addClass('sc-bib-items-panel sc-panel');
-    var bibItemEls = $$('div').addClass('se-panel-content').ref('panelContent');
 
+    var bibItemEls = $$('div').addClass('se-bib-items').ref('bibItems');
     bibItemEls.append($$(BibliographySummary, {bibItems: bibItems}));
 
     bibItems.forEach(function(bibItem) {
@@ -111,7 +111,13 @@ BibItemsPanel.Prototype = function() {
         highlighted: this.isHighlighted(bibItem)
       }));
     }.bind(this));
-    el.append(bibItemEls);
+
+    var el = $$('div').addClass('sc-bib-items-panel').append(
+      $$(Panel, {doc: this.props.doc}).append(
+        bibItemEls
+      ).ref('panelEl')
+    );
+
     return el;
   };
 
@@ -131,6 +137,6 @@ BibItemsPanel.Prototype = function() {
   // };
 };
 
-oo.inherit(BibItemsPanel, Panel);
+Panel.extend(BibItemsPanel);
 
 module.exports = BibItemsPanel;

@@ -5,8 +5,6 @@ var _ = require('substance/util/helpers');
 var oo = require('substance/util/oo');
 var Controller = require("substance/ui/Controller");
 var CrossrefSearch = require('./packages/bibliography/CrossrefSearch');
-var Component = require('substance/ui/Component');
-var $$ = Component.$$;
 var $ = require('substance/util/jquery');
 
 // Substance is i18n ready, but by now we did not need it
@@ -99,21 +97,6 @@ LensController.Prototype = function() {
     surface.rerenderDomSelection();
   };
 
-  // Pass writer start
-  this._panelPropsFromState = function (state) {
-    var props = _.omit(state, 'contextId');
-    props.doc = this.props.doc;
-    return props;
-  };
-
-  this.getActivePanelElement = function() {
-    var ComponentClass = this.componentRegistry.get(this.state.contextId);
-    if (ComponentClass) {
-      return $$(ComponentClass, this._panelPropsFromState(this.state)).ref(this.state.contextId);
-    } else {
-      console.warn("Could not find component for contextId:", this.state.contextId);
-    }
-  };
 
   this.uploadFile = function(file, cb) {
     // This is a testing implementation
@@ -125,17 +108,6 @@ LensController.Prototype = function() {
       var fileUrl = window.URL.createObjectURL(file);
       cb(null, fileUrl);
     }
-  };
-
-  this.renderContextPanel = function() {
-    var panelElement = this.getActivePanelElement();
-    var activeContextEl = $$('div').ref('activeContext').addClass('le-active-context');
-    if (!panelElement) {
-      activeContextEl.append("No panels are registered");
-    } else {
-      activeContextEl.append(panelElement);
-    }
-    return activeContextEl;
   };
 
 
