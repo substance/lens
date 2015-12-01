@@ -93,5 +93,5 @@ App.Prototype = function() {
 oo.inherit(App, Component);
 
 $(function() {
-  window.app = Component.mount($$(App), $('#container'));
+  window.app = Component.mount(App, $('#container'));
 });
