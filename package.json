@@ -10,7 +10,7 @@
     "express": "4.13.3",
     "lodash": "3.10.1",
     "node-sass": "3.4.2",
-    "substance": "substance/substance#5957a4e94914052569bfaf72b56db73cc4dba654"
+    "substance": "substance/substance#35ab724245d546d4994e6e008d80d210d3eea6ff"
   },
   "devDependencies": {
     "gulp": "3.9.0",
