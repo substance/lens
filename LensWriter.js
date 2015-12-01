@@ -1,6 +1,6 @@
 'use strict';
 
-var oo = require('substance/util/oo');
+var extend = require('lodash/object/extend');
 var LensController = require('./LensController');
 var ContentPanel = require("substance/ui/ContentPanel");
 var StatusBar = require("substance/ui/StatusBar");
@@ -127,42 +127,42 @@ function LensWriter(parent, params) {
 
 LensWriter.Prototype = function() {
 
-  this.static = {
-    config: CONFIG
-  };
-
   this.render = function() {
     var doc = this.props.doc;
     var config = this.getConfig();
     var el = $$('div').addClass('lc-writer sc-controller');
 
-    el.append(
-      $$('div').ref('workspace').addClass('le-workspace').append(
-        // Main (left column)
-        $$('div').ref('main').addClass("le-main").append(
-          $$(Toolbar).ref('toolbar').append($$(WriterTools)),
+    var workspace = $$('div').ref('workspace').addClass('le-workspace');
 
-          $$(ContentPanel).append(
-            $$(CoverEditor).ref('coverEditor'),
+    workspace.append(
+      // Main (left column)
+      $$('div').ref('main').addClass("le-main").append(
+        $$(Toolbar).ref('toolbar').append($$(WriterTools)),
 
-            // The full fledged document (ContainerEditor)
-            $$("div").ref('main').addClass('document-content').append(
-              $$(ContainerEditor, {
-                name: 'main',
-                containerId: config.containerId,
-                commands: config.main.commands,
-                textTypes: config.main.textTypes
-              }).ref('mainEditor')
-            ),
-            $$(BibliographyComponent).ref('bib')
-          ).ref('content')
-        ),
-        $$(ContextSection, {
-          panelConfig: config.panels[this.state.contextId],
-          contextId: this.state.contextId
-        }).ref(this.state.contextId)
+        $$(ContentPanel).append(
+          $$(CoverEditor).ref('coverEditor'),
+
+          // The full fledged document (ContainerEditor)
+          $$("div").ref('main').addClass('document-content').append(
+            $$(ContainerEditor, {
+              name: 'main',
+              containerId: config.containerId,
+              commands: config.main.commands,
+              textTypes: config.main.textTypes
+            }).ref('mainEditor')
+          ),
+          $$(BibliographyComponent).ref('bib')
+        ).ref('content')
       )
     );
+
+    workspace.append(
+      $$(ContextSection, extend({}, this.state, {
+        panelConfig: config.panels[this.state.contextId],
+      })).ref(this.state.contextId)
+    );
+
+    el.append(workspace);
 
     // Status bar
     el.append(
@@ -206,6 +206,8 @@ LensWriter.Prototype = function() {
   };
 };
 
-oo.inherit(LensWriter, LensController);
+LensController.extend(LensWriter);
+
+LensWriter.static.config = CONFIG;
 
 module.exports = LensWriter;

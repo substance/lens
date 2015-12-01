@@ -1,6 +1,6 @@
 'use strict';
 
-var oo = require('substance/util/oo');
+var extend = require('lodash/object/extend');
 var LensController = require('./LensController');
 var ContextSection = require('substance/ui/ContextSection');
 var ContentPanel = require("substance/ui/ContentPanel");
@@ -38,7 +38,7 @@ var CONFIG = {
       "toc": require('substance/ui/TocPanel'),
       "cite": require('./packages/citations/CitePanel'),
       "bib-items": require('./packages/bibliography/BibItemsPanel'),
-      
+
       // We use different states for the same panel, so we can distinguish
       // the citation type based on state.contextId
       "cite-bib-item": require('./packages/citations/CitePanel'),
@@ -79,10 +79,6 @@ function LensReader(parent, params) {
 
 LensReader.Prototype = function() {
 
-  this.static = {
-    config: CONFIG
-  };
-
   // this.getInitialState = function() {
   //   return {
   //     contextId: 'bib-items',
@@ -117,41 +113,45 @@ LensReader.Prototype = function() {
   };
 
   this.render = function() {
-    console.log('LensReader.render');
     var doc = this.props.doc;
     var config = this.getConfig();
     var el = $$('div').addClass('lc-reader sc-controller');
 
-    el.append(
-      $$('div').ref('workspace').addClass('le-workspace').append(
-        // Main (left column)
-        $$('div').ref('main').addClass("le-main").append(
-          $$(ContentPanel).append(
-            // Document Cover display
-            $$(Cover, {
-              name: 'cover',
-              commands: config.cover.commands
-            }).ref('coverView'),
-            
-            // The main container
-            $$("div").ref('main').addClass('document-content').append(
-              $$(ContainerAnnotator, {
-                name: 'main',
-                containerId: 'main',
-                editable: false,
-                commands: config.main.commands
-              }).ref('mainAnnotator')
-            ),
-            $$(BibliographyComponent).ref('bib')
-          ).ref('content')
-        ),
-        // Resource (right column)
-        $$(ContextSection, {
-          panelConfig: config.panels[this.state.contextId],
-          contextId: this.state.contextId
-        }).ref(this.state.contextId)
+    var workspace = $$('div').ref('workspace').addClass('le-workspace');
+
+    workspace.append(
+      // Main (left column)
+      $$('div').ref('main').addClass("le-main").append(
+        $$(ContentPanel).append(
+          // Document Cover display
+          $$(Cover, {
+            name: 'cover',
+            commands: config.cover.commands
+          }).ref('coverView'),
+
+          // The main container
+          $$("div").ref('main').addClass('document-content').append(
+            $$(ContainerAnnotator, {
+              name: 'main',
+              containerId: 'main',
+              editable: false,
+              commands: config.main.commands
+            }).ref('mainAnnotator')
+          ),
+          $$(BibliographyComponent).ref('bib')
+        ).ref('content')
       )
     );
+
+      // Resource (right column)
+      // provide anything which is in the state + panelConfig
+    workspace.append(
+      $$(ContextSection, extend({}, this.state, {
+        panelConfig: config.panels[this.state.contextId],
+      })).ref(this.state.contextId)
+    );
+
+    el.append(workspace);
 
     // Status bar
     el.append(
@@ -161,6 +161,8 @@ LensReader.Prototype = function() {
   };
 };
 
-oo.inherit(LensReader, LensController);
+LensController.extend(LensReader);
+
+LensReader.static.config = CONFIG;
 
 module.exports = LensReader;
