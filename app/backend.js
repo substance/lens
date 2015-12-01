@@ -1,11 +1,8 @@
 // var LensArticle = require('../model/LensArticle');
 var oo = require('substance/util/oo');
 var $ = require('substance/util/jquery');
-var each = require('lodash/collection/each');
 var LensArticleImporter = require('../model/LensArticleImporter');
-
-var LensArticleExporter = require('../model/LensArticleExporter');
-var exporter = new LensArticleExporter();
+var importer = new LensArticleImporter();
 
 var Backend = function() {
 
@@ -47,16 +44,8 @@ Backend.Prototype = function() {
     this._request('GET', 'data/example-doc.xml', null, function(err, xml) {
       if (err) { console.error(err); cb(err); }
       
-      // Start importer
-      var importer = new LensArticleImporter();
       var doc = importer.importDocument(xml);
       window.doc = doc;
-
-      // updateBibItemIds(doc);
-
-      // // Export doc
-      // var newXML = exporter.exportDocument(doc);
-      // console.log('LE XML', newXML);
 
       // Initial update of collections
       doc.updateCollections();

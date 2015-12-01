@@ -1,8 +1,9 @@
 var React = require('react');
 var LensReader = require('./LensReader');
-var Article = require('./model/LensArticle');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
+var LensArticleImporter = require('./model/LensArticleImporter');
+var importer = new LensArticleImporter();
 
 // LensReader wrapped in a React component
 // ------------------
@@ -25,8 +26,9 @@ var ReactLensReader = React.createClass({
     });
   },
 
-  createDoc: function(content) {
-    return Article.fromXml(content || Article.XML_TEMPLATE);
+  createDoc: function(xmlContent) {
+    var doc = importer.importDocument(xmlContent);
+    return doc;
   },
 
   componentDidMount: function() {

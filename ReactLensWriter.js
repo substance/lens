@@ -1,11 +1,12 @@
 var React = require('react');
 var LensWriter = require('./LensWriter');
-var Article = require('./model/LensArticle');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
-
 var LensArticleExporter = require('./model/LensArticleExporter');
+var LensArticleImporter = require('./model/LensArticleImporter');
+
 var exporter = new LensArticleExporter();
+var importer = new LensArticleImporter();
 
 // LensWriter wrapped in a React component
 // ------------------
@@ -27,7 +28,9 @@ var ReactLensWriter = React.createClass({
   },
 
   getContent: function() {
-    return this.writer.getDocument().toXml();
+    var doc = this.writer.getDocument();
+    var xml = exporter.exportDocument(doc);
+    return xml;
   },
 
   // New props arrived, update the editor
@@ -38,8 +41,9 @@ var ReactLensWriter = React.createClass({
     });
   },
 
-  createDoc: function(content) {
-    return Article.fromXml(content || Article.XML_TEMPLATE);
+  createDoc: function(xmlContent) {
+    var doc = importer.importDocument(xmlContent);
+    return doc;
   },
 
   componentDidMount: function() {
