@@ -3,6 +3,7 @@
 var _ = require('substance/util/helpers');
 
 var oo = require('substance/util/oo');
+var omit = require('lodash/object/omit');
 var Controller = require("substance/ui/Controller");
 var CrossrefSearch = require('./packages/bibliography/CrossrefSearch');
 var $ = require('substance/util/jquery');
@@ -31,6 +32,12 @@ function LensController(parent, params) {
 }
 
 LensController.Prototype = function() {
+  // Extract props needed for panel parametrization
+  this._panelPropsFromState = function() {
+    var props = omit(this.state, 'contextId');
+    props.doc = this.getDocument();
+    return props;
+  };
 
   // Action used by BibItemComponent when clicked on focus
   this.toggleBibItem = function(bibItem) {

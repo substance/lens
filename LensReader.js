@@ -1,6 +1,5 @@
 'use strict';
 
-var extend = require('lodash/object/extend');
 var LensController = require('./LensController');
 var ContextSection = require('substance/ui/ContextSection');
 var ContentPanel = require("substance/ui/ContentPanel");
@@ -143,12 +142,13 @@ LensReader.Prototype = function() {
       )
     );
 
-      // Resource (right column)
-      // provide anything which is in the state + panelConfig
+    // Context section (right column)
     workspace.append(
-      $$(ContextSection, extend({}, this.state, {
+      $$(ContextSection, {
+        contextId: this.state.contextId,
+        panelProps: this._panelPropsFromState(),
         panelConfig: config.panels[this.state.contextId],
-      })).ref(this.state.contextId)
+      }).ref(this.state.contextId)
     );
 
     el.append(workspace);

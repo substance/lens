@@ -156,10 +156,13 @@ LensWriter.Prototype = function() {
       )
     );
 
+    // Context section (right column)
     workspace.append(
-      $$(ContextSection, extend({}, this.state, {
+      $$(ContextSection, {
+        panelProps: this._panelPropsFromState(),
+        contextId: this.state.contextId,
         panelConfig: config.panels[this.state.contextId],
-      })).ref(this.state.contextId)
+      }).ref(this.state.contextId)
     );
 
     el.append(workspace);
