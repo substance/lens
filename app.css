@@ -10,7 +10,8 @@ a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
-dl, dt, dd, fieldset, form, label, legend,
+dl, dt, dd,
+fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
@@ -101,7 +102,7 @@ input,
 textarea {
   color: rgba(0, 0, 0, 0.75);
   font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
-  font-weight: 16px;
+  font-size: 16px;
   min-height: 30px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased; }
@@ -132,7 +133,7 @@ h4, h5, h6 {
   padding-bottom: 10px; }
 
 p {
-  margin-bottom: 20px; }
+  /* margin-bottom:20px;*/ }
 
 p:last-child {
   margin-bottom: 0; }
@@ -300,73 +301,6 @@ a.quiet.active, a.quiet:hover {
   .menubar.dark .pill.active, .menubar.dark .pill:hover {
     background: rgba(255, 255, 255, 0.1); }
 
-/* Toolbar
--------------------------------------------------- */
-.toolbar {
-  height: 40px;
-  /* Toolbar Tool
-  ---------------------------- */
-  /* Toolbar Dropdown
-  ---------------------------- */
-  /* Toolbar Select
-  ---------------------------- */ }
-  .toolbar .tool-group {
-    float: left;
-    margin-right: 10px; }
-  .toolbar .tool {
-    line-height: normal;
-    margin: 5px;
-    float: left;
-    position: relative; }
-  .toolbar .tool.active {
-    background: rgba(0, 0, 0, 0.1); }
-  .toolbar .tool:hover {
-    background: rgba(0, 0, 0, 0.1); }
-  .toolbar .tool.disabled:hover {
-    background: none; }
-  .toolbar input {
-    margin: 5px;
-    margin-left: 20px;
-    min-width: 600px;
-    border: none; }
-  .toolbar .button {
-    height: 30px;
-    min-width: 30px;
-    text-align: center;
-    color: inherit; }
-  .toolbar .dropdown, .toolbar .select {
-    overflow: visible;
-    position: relative;
-    float: left; }
-    .toolbar .dropdown .toggle, .toolbar .select .toggle {
-      height: 30px;
-      padding: 0px 10px;
-      line-height: 30px;
-      margin: 5px;
-      display: block; }
-    .toolbar .dropdown:not(.disabled) .toggle:after, .toolbar .select:not(.disabled) .toggle:after {
-      content: " \f0d7";
-      padding-left: 10px;
-      float: right;
-      font-family: FontAwesome; }
-    .toolbar .dropdown .options, .toolbar .select .options {
-      display: none;
-      position: absolute;
-      top: 40px;
-      z-index: 5000;
-      min-width: 150px; }
-      .toolbar .dropdown .options .option, .toolbar .select .options .option {
-        display: block;
-        padding: 5px 10px;
-        width: 100%; }
-      .toolbar .dropdown .options .option:hover, .toolbar .select .options .option:hover {
-        background: rgba(0, 0, 0, 0.05); }
-    .toolbar .dropdown.open .options, .toolbar .open.select .options {
-      display: block; }
-  .toolbar .select .toggle {
-    background: white;
-    border: 1px solid #ddd; }
-
 /* Modal
 -------------------------------------------------- */
 .modal {
@@ -410,11 +344,6 @@ a.quiet.active, a.quiet:hover {
 
 /* Controller styles
 -----------------------------------------------------*/
-.sc-controller .se-clipboard {
-  position: fixed;
-  opacity: 0.0;
-  bottom: -1000px; }
-
 /* This actually happens inside a Surface
 ----------------------------------------------------*/
 .sc-surface {
@@ -424,14 +353,7 @@ a.quiet.active, a.quiet:hover {
 
 /* Panels (Context panel)
 -----------------------------------------------------*/
-.panel {
-  position: absolute;
-  top: 40px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px; }
-
-.panel .panel-content {
+.sc-panel .se-panel-content {
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -440,78 +362,29 @@ a.quiet.active, a.quiet:hover {
   overflow: auto;
   line-height: 24px; }
 
-/* Dialog Panels (aka modal panels)
------------------------------------------------------*/
-.panel.dialog {
-  top: 0px;
-  background: #F8F8F8; }
-
-.panel.dialog .dialog-header {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  overflow: hidden;
-  height: 40px;
-  border-bottom: 1px solid #ddd; }
-
-.panel.dialog .dialog-header .back {
-  padding-left: 20px;
-  display: block;
-  float: left;
-  line-height: 40px;
-  font-size: 16px; }
-
-.panel.dialog .dialog-header .label {
-  padding: 0px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 39px;
-  /*color: white;*/
-  float: left; }
-
-.panel.dialog .dialog-header .actions {
-  overflow: hidden;
-  float: right; }
-
-.panel.dialog .dialog-header .actions a {
-  display: block;
-  float: left;
-  font-weight: 600;
-  padding: 0px 4px;
-  font-size: 12px;
-  line-height: 40px;
-  margin-right: 20px; }
-
-.panel.dialog .panel-content {
-  top: 40px; }
+.sc-panel .se-panel-content-inner {
+  position: relative; }
 
 /* Content Panel
 -----------------------------------------------------*/
-.content-panel-component {
-  position: absolute;
-  top: 40px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  padding: 20px; }
-
-.content-panel-component .panel-content-inner {
-  position: relative;
-  padding: 40px;
-  padding-right: 80px; }
-
-/* Overrides .panel .panel-content */
-.content-panel-component .panel-content {
-  left: 20px; }
-
-/* Hide native scroll bar */
-.content-panel-component .panel-content::-webkit-scrollbar {
-  width: 0px;
-  height: 0px; }
-
-.content-panel-component .panel-content::-webkit-scrollbar-thumb {
-  background-color: transparent; }
+.sc-content-panel {
+  /* For debugging purposes */
+  /* Hide native scroll bar in content panel */ }
+  .sc-content-panel .se-panel-content {
+    left: 20px; }
+  .sc-content-panel .se-scanline {
+    position: absolute;
+    display: none;
+    top: 50px;
+    left: 40px;
+    width: 10px;
+    height: 2px;
+    background: #ccc; }
+  .sc-content-panel .se-panel-content::-webkit-scrollbar {
+    width: 0px;
+    height: 0px; }
+  .sc-content-panel .se-panel-content::-webkit-scrollbar-thumb {
+    background-color: transparent; }
 
 .sc-context-toggles {
   height: 40px;
@@ -532,39 +405,7 @@ a.quiet.active, a.quiet:hover {
       background: #eee;
       border-bottom: 1px solid #444; }
 
-/* TOC Panel
------------------------------------------------------*/
-.toc-panel-component .toc-entries {
-  padding: 20px 0px; }
-
-.toc-panel-component .toc-entry {
-  color: #777;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-  display: block;
-  padding: 5px 0px; }
-
-.toc-panel-component .toc-entry.active {
-  color: #222; }
-
-.toc-panel-component .toc-entry:hover {
-  color: #444; }
-
-.toc-panel-component .toc-entry.level-1 {
-  font-size: 20px;
-  padding-left: 20px; }
-
-.toc-panel-component .toc-entry.level-2 {
-  font-size: 18px;
-  padding-left: 40px; }
-
-.toc-panel-component .toc-entry.level-3 {
-  font-size: 16px;
-  padding-left: 60px; }
-
-/* Scrollbar component
------------------------------------------------------*/
-.scrollbar-component {
+.sc-scrollbar {
   position: absolute;
   left: 0px;
   width: 20px;
@@ -572,60 +413,92 @@ a.quiet.active, a.quiet:hover {
   bottom: 0px;
   background: #FAFAFA;
   box-shadow: inset -4px 0 4px 0 rgba(25, 25, 25, 0.04); }
+  .sc-scrollbar .se-thumb {
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    right: 0px;
+    height: 0px;
+    background-color: rgba(0, 0, 0, 0.2); }
+  .sc-scrollbar .se-highlight {
+    position: absolute;
+    width: 100%;
+    background-color: #2B303B; }
 
-.scrollbar-component .thumb {
+/* TOC
+-----------------------------------------------------*/
+.sc-toc-panel .se-toc-entries {
+  padding: 20px 0px; }
+  .sc-toc-panel .se-toc-entries .se-toc-entry {
+    color: #777;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    display: block;
+    padding: 2px 0px;
+    position: relative; }
+    .sc-toc-panel .se-toc-entries .se-toc-entry i.fa {
+      font-size: 12px;
+      visibility: hidden;
+      display: inline-block;
+      padding-right: 5px; }
+    .sc-toc-panel .se-toc-entries .se-toc-entry.sm-active {
+      color: #222; }
+      .sc-toc-panel .se-toc-entries .se-toc-entry.sm-active i.fa {
+        visibility: visible; }
+    .sc-toc-panel .se-toc-entries .se-toc-entry:hover {
+      color: #222; }
+    .sc-toc-panel .se-toc-entries .se-toc-entry.sm-level-1 {
+      font-size: 16px;
+      margin-left: 20px; }
+    .sc-toc-panel .se-toc-entries .se-toc-entry.sm-level-2 {
+      font-size: 14px;
+      margin-left: 40px; }
+    .sc-toc-panel .se-toc-entries .se-toc-entry.sm-level-3 {
+      font-size: 12px;
+      margin-left: 60px; }
+
+.sc-context-section .se-context-panel {
   position: absolute;
-  top: 40px;
+  top: 0px;
   left: 0px;
   right: 0px;
-  height: 0px;
-  z-index: 4000;
-  background-color: rgba(0, 0, 0, 0.2); }
+  bottom: 0px; }
 
-.scrollbar-component .highlight {
+.sc-context-section.sm-context-toggles-shown .se-context-panel {
+  top: 40px; }
+
+.sc-dialog-header {
+  background: #F8F8F8;
   position: absolute;
-  width: 100%;
-  background-color: #91bb04; }
-
-/* For debugging purposes */
-.scanline {
-  position: absolute;
-  display: none;
-  top: 50px;
-  left: 40px;
-  width: 10px;
-  height: 2px;
-  background: #ccc; }
-
-/* TOC Panel
------------------------------------------------------*/
-.toc-panel-component .toc-entries {
-  padding: 20px 0px; }
-
-.toc-panel-component .toc-entry {
-  color: #777;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-  display: block;
-  padding: 5px 0px; }
-
-.toc-panel-component .toc-entry.active {
-  color: #222; }
-
-.toc-panel-component .toc-entry:hover {
-  color: #444; }
-
-.toc-panel-component .toc-entry.level-1 {
-  font-size: 20px;
-  padding-left: 20px; }
-
-.toc-panel-component .toc-entry.level-2 {
-  font-size: 18px;
-  padding-left: 40px; }
-
-.toc-panel-component .toc-entry.level-3 {
-  font-size: 16px;
-  padding-left: 60px; }
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  overflow: hidden;
+  height: 40px;
+  border-bottom: 1px solid #ddd; }
+  .sc-dialog-header .se-back {
+    padding-left: 20px;
+    display: block;
+    float: left;
+    line-height: 40px;
+    font-size: 16px; }
+  .sc-dialog-header .se-label {
+    padding: 0px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 39px;
+    float: left; }
+  .sc-dialog-header .se-actions {
+    overflow: hidden;
+    float: right; }
+    .sc-dialog-header .se-actions a {
+      display: block;
+      float: left;
+      font-weight: 600;
+      padding: 0px 4px;
+      font-size: 12px;
+      line-height: 40px;
+      margin-right: 20px; }
 
 /* StatusBar Component
 -----------------------------------------------------*/
@@ -668,23 +541,142 @@ a.quiet.active, a.quiet:hover {
 .sc-text-property .se-container-annotation.se-anchor {
   position: relative; }
 
-.toolbar .tool.expand::before, .toolbar .tool.truncate::before {
-  content: " \f07e";
-  font-family: FontAwesome;
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  font-size: 7px; }
+/* Toolbar
+-------------------------------------------------- */
+.sc-toolbar {
+  height: 40px;
+  overflow: visible;
+  border-bottom: 1px solid #ddd;
+  font-size: 13px;
+  /* Toolbar group
+  ---------------------------- */
+  /* ???
+  ---------------------------- */
+  /* Toolbar Dropdown
+  ---------------------------- */ }
+  .sc-toolbar .se-toolbar-group {
+    float: left; }
+    .sc-toolbar .se-toolbar-group .se-tool {
+      line-height: normal;
+      float: left;
+      position: relative; }
+      .sc-toolbar .se-toolbar-group .se-tool button {
+        position: relative;
+        margin: 5px;
+        color: inherit;
+        height: 30px;
+        min-width: 30px;
+        text-align: center; }
+      .sc-toolbar .se-toolbar-group .se-tool.expand button::before, .sc-toolbar .se-toolbar-group .se-tool.truncate button::before {
+        content: " \f07e";
+        font-family: FontAwesome;
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        font-size: 7px; }
+      .sc-toolbar .se-toolbar-group .se-tool.edit button::before {
+        content: " \f013";
+        font-family: FontAwesome;
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        font-size: 7px; }
+      .sc-toolbar .se-toolbar-group .se-tool.sm-active button {
+        background: rgba(0, 0, 0, 0.1); }
+      .sc-toolbar .se-toolbar-group .se-tool button:hover {
+        background: rgba(0, 0, 0, 0.1); }
+      .sc-toolbar .se-toolbar-group .se-tool.sm-disabled {
+        opacity: 0.2;
+        cursor: default; }
+        .sc-toolbar .se-toolbar-group .se-tool.sm-disabled button:hover {
+          background: none; }
+  .sc-toolbar input {
+    margin: 5px;
+    margin-left: 20px;
+    min-width: 600px;
+    border: none; }
+  .sc-toolbar .se-toolbar-dropdown {
+    overflow: visible;
+    position: relative;
+    float: left; }
+    .sc-toolbar .se-toolbar-dropdown .se-toggle {
+      height: 30px;
+      padding: 0px 10px;
+      line-height: 30px;
+      margin: 5px;
+      display: block; }
+    .sc-toolbar .se-toolbar-dropdown:not(.sm-disabled) .se-toggle:after {
+      content: " \f0d7";
+      padding-left: 10px;
+      float: right;
+      font-family: FontAwesome; }
+    .sc-toolbar .se-toolbar-dropdown .se-options {
+      display: none;
+      position: absolute;
+      background: white;
+      top: 40px;
+      z-index: 5000;
+      min-width: 150px;
+      box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.15);
+      border: 1px solid #ddd; }
+      .sc-toolbar .se-toolbar-dropdown .se-options .se-tool {
+        display: block;
+        padding: 5px 10px;
+        width: 100%; }
+        .sc-toolbar .se-toolbar-dropdown .se-options .se-tool:hover {
+          background: rgba(0, 0, 0, 0.05); }
+        .sc-toolbar .se-toolbar-dropdown .se-options .se-tool.sm-disabled {
+          opacity: 0.2;
+          cursor: default; }
+          .sc-toolbar .se-toolbar-dropdown .se-options .se-tool.sm-disabled button:hover {
+            background: none; }
+    .sc-toolbar .se-toolbar-dropdown.sm-open .se-options {
+      display: block; }
 
-.toolbar .tool.edit::before {
-  content: " \f013";
-  font-family: FontAwesome;
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  font-size: 7px; }
+/* Switch Text Type Component
+---------------------------- */
+.sc-switch-text-type {
+  overflow: visible;
+  position: relative;
+  float: left;
+  width: 140px; }
+  .sc-switch-text-type .se-toggle {
+    background: white;
+    height: 30px;
+    padding: 0px 10px;
+    line-height: 30px;
+    margin: 5px;
+    display: block;
+    overflow: hidden; }
+  .sc-switch-text-type:not(.sm-disabled) .se-toggle:after {
+    content: " \f0d7";
+    padding-left: 10px;
+    float: right;
+    font-family: FontAwesome; }
+  .sc-switch-text-type.sm-disabled {
+    opacity: 0.4;
+    cursor: default; }
+    .sc-switch-text-type.sm-disabled:hover {
+      background: none; }
+  .sc-switch-text-type .se-options {
+    display: none;
+    position: absolute;
+    background: white;
+    top: 40px;
+    z-index: 5000;
+    min-width: 150px;
+    box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.15);
+    border: 1px solid #ddd; }
+    .sc-switch-text-type .se-options .se-option {
+      display: block;
+      padding: 5px 10px;
+      width: 100%; }
+      .sc-switch-text-type .se-options .se-option:hover {
+        background: rgba(0, 0, 0, 0.05); }
+  .sc-switch-text-type.sm-open .se-options {
+    display: block; }
 
-.content-node.paragraph {
+.sc-paragraph {
   padding-bottom: 20px; }
 
 .sc-heading {
@@ -702,109 +694,127 @@ a.quiet.active, a.quiet:hover {
 .sc-heading.sm-level-3 {
   font-size: 16px; }
 
+/* SwitchTextTypeTool */
+.sc-switch-text-type .se-option.sm-heading1 {
+  font-size: 24px;
+  font-weight: 600; }
+
+.sc-switch-text-type .se-option.sm-heading2 {
+  font-size: 20px;
+  font-weight: 600; }
+
+.sc-switch-text-type .se-option.sm-heading3 {
+  font-size: 16px;
+  font-weight: 600; }
+
 .sc-blockquote {
   border-left: 2px solid #ccc;
-  font-family: Georgia;
   padding-left: 30px;
-  font-size: 20px;
-  font-style: italic;
   margin-bottom: 20px; }
 
+.sc-switch-text-type .se-option.sm-blockquote {
+  border-left: 2px solid #ccc;
+  padding-left: 30px; }
+
 .sc-codeblock {
-  font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-  font-size: 16px;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 15px;
   padding-bottom: 20px; }
+
+.sc-switch-text-type .se-option.sm-codeblock {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 15px; }
 
 /**
  * Substance List styles
  * -------
- * 
+ *
  * Used for ordered lists
  *
  * Supports nesting only up to level-4
  */
-.li.level-2 {
-  margin-left: 20px; }
-
-.li.level-3 {
-  margin-left: 40px; }
-
-.li.level-4 {
-  margin-left: 60px; }
-
-/* Spacing */
-.li.list-start {
-  padding-top: 20px; }
-
-.li.list-end {
-  padding-bottom: 20px; }
+.sc-li {
+  /* Spacing */ }
+  .sc-li.level-2 {
+    margin-left: 20px; }
+  .sc-li.level-3 {
+    margin-left: 40px; }
+  .sc-li.level-4 {
+    margin-left: 60px; }
+  .sc-li.se-list-start {
+    padding-top: 20px; }
+  .sc-li.se-list-end {
+    padding-bottom: 20px; }
 
 /**
  * Unordered lists
  * -------
  */
-.ul.li::before {
+ul.sc-list > .sc-li::before {
   content: "▪ "; }
 
 /**
  * Ordered lists
  * -------
- * 
+ *
  * Use CSS counters and support nesting up to level 4
  */
 /* When a new list occurs counters are reset */
-.list-start {
+.se-list-start {
   counter-reset: level1 level2 level3 level4 !important; }
 
 /* Resets for individual levels */
-.ol.li.level-1 {
+ol.sc-list > .sc-li.level-1 {
   counter-reset: level2 level3 level4; }
 
-.ol.li.level-2 {
+ol.sc-list > .sc-li.level-2 {
   counter-reset: level3 level4; }
 
-.ol.li.level-3 {
+ol.sc-list > .sc-li.level-3 {
   counter-reset: level4; }
 
 /* Counter displays for levels 1-3 */
-.ol.li.level-1::before {
+ol.sc-list > .sc-li.level-1::before {
   counter-increment: level1;
   content: counter(level1) ". "; }
 
-.ol.li.level-2::before {
+ol.sc-list > .sc-li.level-2::before {
   counter-increment: level2;
   content: counter(level1) "." counter(level2) ". "; }
 
-.ol.li.level-3::before {
+ol.sc-list > .sc-li.level-3::before {
   counter-increment: level3;
   content: counter(level1) "." counter(level2) "." counter(level3) ". "; }
 
-.ol.li.level-4::before {
+ol.sc-list > .sc-li.level-4::before {
   counter-increment: level4;
   content: counter(level1) "." counter(level2) "." counter(level3) "." counter(level4) ". "; }
 
-.annotation.link {
+.sc-link {
   color: #2079DC;
   border-bottom: 1px solid #CEDFF3; }
 
-.toolbar .tool.prompt .prompt {
+.sc-link-tool .se-prompt {
   padding: 15px;
   padding-bottom: 0px;
+  background: white;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.15);
+  border: 1px solid #ddd;
   position: absolute;
   left: -150px;
   top: 40px;
   z-index: 50000;
   width: 300px; }
-  .toolbar .tool.prompt .prompt .prompt-title {
+  .sc-link-tool .se-prompt .se-prompt-title {
     font-size: 16px;
     font-weight: bold; }
-  .toolbar .tool.prompt .prompt a.delete-link {
+  .sc-link-tool .se-prompt a.se-delete-link {
     position: absolute;
     top: 15px;
     right: 15px;
     font-size: 13px;
     color: red; }
-  .toolbar .tool.prompt .prompt input {
+  .sc-link-tool .se-prompt input {
     margin: 15px 0;
     width: 100%;
     font-size: 14px;
@@ -812,6 +822,48 @@ a.quiet.active, a.quiet:hover {
     border: 1px solid #ddd;
     min-width: auto;
     padding: 0 10px; }
+
+.sc-embed-tool .se-prompt {
+  padding: 15px;
+  padding-bottom: 0px;
+  background: white;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.15);
+  border: 1px solid #ddd;
+  position: absolute;
+  left: -150px;
+  top: 40px;
+  z-index: 50000;
+  width: 300px; }
+  .sc-embed-tool .se-prompt .se-prompt-title {
+    font-size: 16px;
+    font-weight: bold; }
+  .sc-embed-tool .se-prompt input {
+    margin: 15px 0;
+    width: 100%;
+    font-size: 14px;
+    display: block;
+    border: 1px solid #ddd;
+    min-width: auto;
+    padding: 0 10px; }
+
+.sc-figure {
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd; }
+  .sc-figure .se-label {
+    color: #777;
+    padding-bottom: 10px; }
+  .sc-figure .se-title {
+    font-size: 20px;
+    padding-bottom: 20px; }
+  .sc-figure .se-description {
+    padding-top: 20px;
+    line-height: 20px;
+    font-size: 14px; }
+  .sc-figure .se-image {
+    padding-bottom: 20px; }
+  .sc-figure img {
+    max-width: 100%; }
 
 /* Table nodes
 -----------------------------------------------------*/
@@ -842,37 +894,42 @@ a.quiet.active, a.quiet:hover {
   font-style: italic; }
 
 .sc-strong {
-  font-style: bold; }
+  font-weight: bold; }
 
-.text-tool-component.select .toggle {
-  width: 140px; }
+.sc-subscript {
+  vertical-align: sub;
+  font-size: smaller; }
 
-/* Special styles */
-.text-tool-component .option.heading1 {
-  font-size: 24px;
-  font-weight: 600; }
+.sc-superscript {
+  vertical-align: super;
+  font-size: smaller; }
 
-.text-tool-component .option.heading2 {
-  font-size: 20px;
-  font-weight: 600; }
-
-.text-tool-component .option.heading3 {
-  font-size: 16px;
-  font-weight: 600; }
+.sc-code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 14px;
+  background: #eee;
+  padding: 2px 0px; }
 
 .sc-bib-items-panel .se-bibliography-summary {
   padding: 20px; }
 
-.sc-bib-items-panel .se-bib-item {
+.sc-add-bib-items-panel .sc-panel .se-panel-content {
+  top: 40px; }
+
+.sc-add-bib-items-panel .se-search-form {
+  padding: 20px; }
+
+.sc-bib-item {
   position: relative;
   font-size: 14px;
   padding: 20px;
   border-top: 1px solid #ddd;
   border-left: 3px solid transparent; }
-  .sc-bib-items-panel .se-bib-item .se-label {
+  .sc-bib-item .se-label {
     padding-bottom: 10px;
-    color: #888; }
-  .sc-bib-items-panel .se-bib-item .se-focus-toggle {
+    color: #888;
+    min-height: 30px; }
+  .sc-bib-item .se-focus-toggle {
     font-size: 12px;
     font-weight: bold;
     position: absolute;
@@ -881,13 +938,45 @@ a.quiet.active, a.quiet:hover {
     top: 10px;
     right: 10px;
     cursor: pointer; }
-    .sc-bib-items-panel .se-bib-item .se-focus-toggle:hover {
+    .sc-bib-item .se-focus-toggle:hover {
       color: #0b9dd9; }
-  .sc-bib-items-panel .se-bib-item.se-highlighted {
+  .sc-bib-item.se-highlighted {
     border-left: 3px solid #0b9dd9;
     background: #fff; }
-    .sc-bib-items-panel .se-bib-item.se-highlighted .se-focus-toggle {
+    .sc-bib-item.se-highlighted .se-focus-toggle {
       color: #0b9dd9; }
+
+/* Cite Panel
+-----------------------------------------------------*/
+.sc-cite-panel .sc-panel .se-panel-content {
+  top: 40px; }
+
+.sc-cite-panel .item {
+  cursor: pointer;
+  padding: 20px;
+  border-left: 2px solid transparent;
+  /* Figure Item */ }
+  .sc-cite-panel .item.active {
+    background: white;
+    border-left: 2px solid #444; }
+  .sc-cite-panel .item:hover {
+    background: white; }
+  .sc-cite-panel .item.figure.active {
+    border-left: 2px solid #91bb04; }
+  .sc-cite-panel .item.figure .title {
+    font-weight: 600;
+    padding-bottom: 10px; }
+  .sc-cite-panel .item.figure img {
+    padding-right: 20px;
+    width: 70px;
+    float: left; }
+  .sc-cite-panel .item.item.bib-item.active {
+    background: white;
+    border-left: 2px solid #0b9dd9; }
+  .sc-cite-panel .item.item.bib-item .label {
+    padding-right: 5px;
+    float: left;
+    font-weight: 600; }
 
 .lc-writer, .lc-reader {
   position: absolute;
@@ -907,9 +996,16 @@ a.quiet.active, a.quiet:hover {
       height: 100%;
       background: #fff;
       position: relative;
-      width: 65%;
-      z-index: 30; }
-    .lc-writer .le-workspace .le-resource, .lc-reader .le-workspace .le-resource {
+      width: 65%; }
+      .lc-writer .le-workspace .le-main .sc-content-panel, .lc-reader .le-workspace .le-main .sc-content-panel {
+        position: absolute;
+        top: 40px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px; }
+        .lc-writer .le-workspace .le-main .sc-content-panel .se-panel-content-inner, .lc-reader .le-workspace .le-main .sc-content-panel .se-panel-content-inner {
+          padding: 40px; }
+    .lc-writer .le-workspace .sc-context-section, .lc-reader .le-workspace .sc-context-section {
       position: relative;
       float: right;
       border-left: 1px solid #ddd;
@@ -918,13 +1014,7 @@ a.quiet.active, a.quiet:hover {
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
       width: 35%; }
 
-/* Container Annotations
------------------------------------------------------*/
-.container-annotation.active.annotation-fragment {
-  background-color: rgba(145, 187, 4, 0.2); }
-
-/* Selection style sheets
------------------------------------------------------*/
+/* TODO: The following styles need to be moved into component modules */
 /* CSL Styles
 -----------------------------------------------------*/
 .csl-entry {
@@ -946,21 +1036,17 @@ a.quiet.active, a.quiet:hover {
 
 /* Content Tools
 -----------------------------------------------------*/
-.content-tools-component {
-  height: 40px;
-  border-bottom: 1px solid #ddd;
-  position: absolute;
-  z-index: 40000;
-  left: 0px;
-  right: 0px;
-  top: 0px; }
-
 /* Custom Scrollbar styles
 -----------------------------------------------------*/
-.scrollbar-component.comments .highlight {
+.sc-scrollbar.comments .highlight {
   background: #aaa; }
 
-.scrollbar-component.cite-bib-item .highlight, .scrollbar-component.bib-items .highlight {
+.sc-scrollbar.cite-image-figure .se-highlight,
+.sc-scrollbar.toc .se-highlight {
+  background-color: #91bb04; }
+
+.sc-scrollbar.cite-bib-item .se-highlight,
+.sc-scrollbar.bib-items .se-highlight {
   background-color: #0b9dd9; }
 
 /* Custom Annotation styles
@@ -996,67 +1082,6 @@ a.quiet.active, a.quiet:hover {
 .annotation.bib-item-citation.highlighted {
   background: #0b9dd9; }
 
-/* Cite Panel
------------------------------------------------------*/
-.cite-panel-component .item {
-  cursor: pointer;
-  padding: 20px;
-  border-left: 2px solid transparent; }
-  .cite-panel-component .item.active {
-    background: white;
-    border-left: 2px solid #444; }
-  .cite-panel-component .item:hover {
-    background: white; }
-
-/* Figure Item */
-.cite-panel-component .item.figure.active {
-  border-left: 2px solid #91bb04; }
-
-.cite-panel-component .item.figure .title {
-  font-weight: 600;
-  padding-bottom: 10px; }
-
-.cite-panel-component .item.figure img {
-  padding-right: 20px;
-  width: 70px;
-  float: left; }
-
-.cite-panel-component .item.bib-item.active {
-  background: white;
-  border-left: 2px solid #0b9dd9; }
-
-.cite-panel-component .item.bib-item .label {
-  padding-right: 5px;
-  float: left;
-  font-weight: 600; }
-
-/* Figures
------------------------------------------------------*/
-.figure img {
-  max-width: 100%; }
-
-/* Figure Node
------------------------------------------------------*/
-.content-node.figure {
-  padding: 20px;
-  margin-bottom: 20px;
-  border: 1px solid #ddd; }
-  .content-node.figure .label {
-    color: #777;
-    padding-bottom: 10px; }
-  .content-node.figure .title {
-    font-size: 20px;
-    padding-bottom: 20px; }
-  .content-node.figure .description {
-    padding-top: 20px;
-    line-height: 20px; }
-  .content-node.figure .image {
-    padding-bottom: 20px; }
-  .content-node.figure img {
-    max-width: 100%; }
-
-/* Custom Annotation styles
------------------------------------------------------*/
 /* Manage BibItem Component
 -----------------------------------------------------*/
 .manage-bib-items-panel .panel-content {
@@ -1089,21 +1114,23 @@ a.quiet.active, a.quiet:hover {
 
 /* Document Cover
 -----------------------------------------------------*/
-.content-panel-component .document-cover {
-  margin-bottom: 30px; }
-  .content-panel-component .document-cover .title {
+.le-main .sc-content-panel .document-cover {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #ddd; }
+  .le-main .sc-content-panel .document-cover .title {
     font-size: 30px;
     font-weight: 600;
     letter-spacing: -0.5px;
     line-height: 40px; }
-  .content-panel-component .document-cover .abstract {
+  .le-main .sc-content-panel .document-cover .abstract {
     padding-top: 15px;
-    font-size: 18px;
-    line-height: 26px; }
-  .content-panel-component .document-cover .authors {
+    font-size: 13px;
+    line-height: 18px; }
+  .le-main .sc-content-panel .document-cover .authors {
     font-size: 20px;
     padding: 30px 0px; }
-    .content-panel-component .document-cover .authors .author {
+    .le-main .sc-content-panel .document-cover .authors .author {
       display: block;
       float: left;
       margin-right: 20px; }
@@ -1119,7 +1146,8 @@ a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
-dl, dt, dd, fieldset, form, label, legend,
+dl, dt, dd,
+fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
@@ -1210,7 +1238,7 @@ input,
 textarea {
   color: rgba(0, 0, 0, 0.75);
   font-family: -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
-  font-weight: 16px;
+  font-size: 16px;
   min-height: 30px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased; }
@@ -1241,7 +1269,7 @@ h4, h5, h6 {
   padding-bottom: 10px; }
 
 p {
-  margin-bottom: 20px; }
+  /* margin-bottom:20px;*/ }
 
 p:last-child {
   margin-bottom: 0; }
@@ -1409,73 +1437,6 @@ a.quiet.active, a.quiet:hover {
   .menubar.dark .pill.active, .menubar.dark .pill:hover {
     background: rgba(255, 255, 255, 0.1); }
 
-/* Toolbar
--------------------------------------------------- */
-.toolbar {
-  height: 40px;
-  /* Toolbar Tool
-  ---------------------------- */
-  /* Toolbar Dropdown
-  ---------------------------- */
-  /* Toolbar Select
-  ---------------------------- */ }
-  .toolbar .tool-group {
-    float: left;
-    margin-right: 10px; }
-  .toolbar .tool {
-    line-height: normal;
-    margin: 5px;
-    float: left;
-    position: relative; }
-  .toolbar .tool.active {
-    background: rgba(0, 0, 0, 0.1); }
-  .toolbar .tool:hover {
-    background: rgba(0, 0, 0, 0.1); }
-  .toolbar .tool.disabled:hover {
-    background: none; }
-  .toolbar input {
-    margin: 5px;
-    margin-left: 20px;
-    min-width: 600px;
-    border: none; }
-  .toolbar .button {
-    height: 30px;
-    min-width: 30px;
-    text-align: center;
-    color: inherit; }
-  .toolbar .dropdown, .toolbar .select {
-    overflow: visible;
-    position: relative;
-    float: left; }
-    .toolbar .dropdown .toggle, .toolbar .select .toggle {
-      height: 30px;
-      padding: 0px 10px;
-      line-height: 30px;
-      margin: 5px;
-      display: block; }
-    .toolbar .dropdown:not(.disabled) .toggle:after, .toolbar .select:not(.disabled) .toggle:after {
-      content: " \f0d7";
-      padding-left: 10px;
-      float: right;
-      font-family: FontAwesome; }
-    .toolbar .dropdown .options, .toolbar .select .options {
-      display: none;
-      position: absolute;
-      top: 40px;
-      z-index: 5000;
-      min-width: 150px; }
-      .toolbar .dropdown .options .option, .toolbar .select .options .option {
-        display: block;
-        padding: 5px 10px;
-        width: 100%; }
-      .toolbar .dropdown .options .option:hover, .toolbar .select .options .option:hover {
-        background: rgba(0, 0, 0, 0.05); }
-    .toolbar .dropdown.open .options, .toolbar .open.select .options {
-      display: block; }
-  .toolbar .select .toggle {
-    background: white;
-    border: 1px solid #ddd; }
-
 /* Modal
 -------------------------------------------------- */
 .modal {
@@ -1519,11 +1480,6 @@ a.quiet.active, a.quiet:hover {
 
 /* Controller styles
 -----------------------------------------------------*/
-.sc-controller .se-clipboard {
-  position: fixed;
-  opacity: 0.0;
-  bottom: -1000px; }
-
 /* This actually happens inside a Surface
 ----------------------------------------------------*/
 .sc-surface {
@@ -1533,14 +1489,7 @@ a.quiet.active, a.quiet:hover {
 
 /* Panels (Context panel)
 -----------------------------------------------------*/
-.panel {
-  position: absolute;
-  top: 40px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px; }
-
-.panel .panel-content {
+.sc-panel .se-panel-content {
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -1549,78 +1498,29 @@ a.quiet.active, a.quiet:hover {
   overflow: auto;
   line-height: 24px; }
 
-/* Dialog Panels (aka modal panels)
------------------------------------------------------*/
-.panel.dialog {
-  top: 0px;
-  background: #F8F8F8; }
-
-.panel.dialog .dialog-header {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  overflow: hidden;
-  height: 40px;
-  border-bottom: 1px solid #ddd; }
-
-.panel.dialog .dialog-header .back {
-  padding-left: 20px;
-  display: block;
-  float: left;
-  line-height: 40px;
-  font-size: 16px; }
-
-.panel.dialog .dialog-header .label {
-  padding: 0px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 39px;
-  /*color: white;*/
-  float: left; }
-
-.panel.dialog .dialog-header .actions {
-  overflow: hidden;
-  float: right; }
-
-.panel.dialog .dialog-header .actions a {
-  display: block;
-  float: left;
-  font-weight: 600;
-  padding: 0px 4px;
-  font-size: 12px;
-  line-height: 40px;
-  margin-right: 20px; }
-
-.panel.dialog .panel-content {
-  top: 40px; }
+.sc-panel .se-panel-content-inner {
+  position: relative; }
 
 /* Content Panel
 -----------------------------------------------------*/
-.content-panel-component {
-  position: absolute;
-  top: 40px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  padding: 20px; }
-
-.content-panel-component .panel-content-inner {
-  position: relative;
-  padding: 40px;
-  padding-right: 80px; }
-
-/* Overrides .panel .panel-content */
-.content-panel-component .panel-content {
-  left: 20px; }
-
-/* Hide native scroll bar */
-.content-panel-component .panel-content::-webkit-scrollbar {
-  width: 0px;
-  height: 0px; }
-
-.content-panel-component .panel-content::-webkit-scrollbar-thumb {
-  background-color: transparent; }
+.sc-content-panel {
+  /* For debugging purposes */
+  /* Hide native scroll bar in content panel */ }
+  .sc-content-panel .se-panel-content {
+    left: 20px; }
+  .sc-content-panel .se-scanline {
+    position: absolute;
+    display: none;
+    top: 50px;
+    left: 40px;
+    width: 10px;
+    height: 2px;
+    background: #ccc; }
+  .sc-content-panel .se-panel-content::-webkit-scrollbar {
+    width: 0px;
+    height: 0px; }
+  .sc-content-panel .se-panel-content::-webkit-scrollbar-thumb {
+    background-color: transparent; }
 
 .sc-context-toggles {
   height: 40px;
@@ -1641,39 +1541,7 @@ a.quiet.active, a.quiet:hover {
       background: #eee;
       border-bottom: 1px solid #444; }
 
-/* TOC Panel
------------------------------------------------------*/
-.toc-panel-component .toc-entries {
-  padding: 20px 0px; }
-
-.toc-panel-component .toc-entry {
-  color: #777;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-  display: block;
-  padding: 5px 0px; }
-
-.toc-panel-component .toc-entry.active {
-  color: #222; }
-
-.toc-panel-component .toc-entry:hover {
-  color: #444; }
-
-.toc-panel-component .toc-entry.level-1 {
-  font-size: 20px;
-  padding-left: 20px; }
-
-.toc-panel-component .toc-entry.level-2 {
-  font-size: 18px;
-  padding-left: 40px; }
-
-.toc-panel-component .toc-entry.level-3 {
-  font-size: 16px;
-  padding-left: 60px; }
-
-/* Scrollbar component
------------------------------------------------------*/
-.scrollbar-component {
+.sc-scrollbar {
   position: absolute;
   left: 0px;
   width: 20px;
@@ -1681,60 +1549,92 @@ a.quiet.active, a.quiet:hover {
   bottom: 0px;
   background: #FAFAFA;
   box-shadow: inset -4px 0 4px 0 rgba(25, 25, 25, 0.04); }
+  .sc-scrollbar .se-thumb {
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    right: 0px;
+    height: 0px;
+    background-color: rgba(0, 0, 0, 0.2); }
+  .sc-scrollbar .se-highlight {
+    position: absolute;
+    width: 100%;
+    background-color: #2B303B; }
 
-.scrollbar-component .thumb {
+/* TOC
+-----------------------------------------------------*/
+.sc-toc-panel .se-toc-entries {
+  padding: 20px 0px; }
+  .sc-toc-panel .se-toc-entries .se-toc-entry {
+    color: #777;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    display: block;
+    padding: 2px 0px;
+    position: relative; }
+    .sc-toc-panel .se-toc-entries .se-toc-entry i.fa {
+      font-size: 12px;
+      visibility: hidden;
+      display: inline-block;
+      padding-right: 5px; }
+    .sc-toc-panel .se-toc-entries .se-toc-entry.sm-active {
+      color: #222; }
+      .sc-toc-panel .se-toc-entries .se-toc-entry.sm-active i.fa {
+        visibility: visible; }
+    .sc-toc-panel .se-toc-entries .se-toc-entry:hover {
+      color: #222; }
+    .sc-toc-panel .se-toc-entries .se-toc-entry.sm-level-1 {
+      font-size: 16px;
+      margin-left: 20px; }
+    .sc-toc-panel .se-toc-entries .se-toc-entry.sm-level-2 {
+      font-size: 14px;
+      margin-left: 40px; }
+    .sc-toc-panel .se-toc-entries .se-toc-entry.sm-level-3 {
+      font-size: 12px;
+      margin-left: 60px; }
+
+.sc-context-section .se-context-panel {
   position: absolute;
-  top: 40px;
+  top: 0px;
   left: 0px;
   right: 0px;
-  height: 0px;
-  z-index: 4000;
-  background-color: rgba(0, 0, 0, 0.2); }
+  bottom: 0px; }
 
-.scrollbar-component .highlight {
+.sc-context-section.sm-context-toggles-shown .se-context-panel {
+  top: 40px; }
+
+.sc-dialog-header {
+  background: #F8F8F8;
   position: absolute;
-  width: 100%;
-  background-color: #91bb04; }
-
-/* For debugging purposes */
-.scanline {
-  position: absolute;
-  display: none;
-  top: 50px;
-  left: 40px;
-  width: 10px;
-  height: 2px;
-  background: #ccc; }
-
-/* TOC Panel
------------------------------------------------------*/
-.toc-panel-component .toc-entries {
-  padding: 20px 0px; }
-
-.toc-panel-component .toc-entry {
-  color: #777;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-  display: block;
-  padding: 5px 0px; }
-
-.toc-panel-component .toc-entry.active {
-  color: #222; }
-
-.toc-panel-component .toc-entry:hover {
-  color: #444; }
-
-.toc-panel-component .toc-entry.level-1 {
-  font-size: 20px;
-  padding-left: 20px; }
-
-.toc-panel-component .toc-entry.level-2 {
-  font-size: 18px;
-  padding-left: 40px; }
-
-.toc-panel-component .toc-entry.level-3 {
-  font-size: 16px;
-  padding-left: 60px; }
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  overflow: hidden;
+  height: 40px;
+  border-bottom: 1px solid #ddd; }
+  .sc-dialog-header .se-back {
+    padding-left: 20px;
+    display: block;
+    float: left;
+    line-height: 40px;
+    font-size: 16px; }
+  .sc-dialog-header .se-label {
+    padding: 0px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 39px;
+    float: left; }
+  .sc-dialog-header .se-actions {
+    overflow: hidden;
+    float: right; }
+    .sc-dialog-header .se-actions a {
+      display: block;
+      float: left;
+      font-weight: 600;
+      padding: 0px 4px;
+      font-size: 12px;
+      line-height: 40px;
+      margin-right: 20px; }
 
 /* StatusBar Component
 -----------------------------------------------------*/
@@ -1777,23 +1677,142 @@ a.quiet.active, a.quiet:hover {
 .sc-text-property .se-container-annotation.se-anchor {
   position: relative; }
 
-.toolbar .tool.expand::before, .toolbar .tool.truncate::before {
-  content: " \f07e";
-  font-family: FontAwesome;
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  font-size: 7px; }
+/* Toolbar
+-------------------------------------------------- */
+.sc-toolbar {
+  height: 40px;
+  overflow: visible;
+  border-bottom: 1px solid #ddd;
+  font-size: 13px;
+  /* Toolbar group
+  ---------------------------- */
+  /* ???
+  ---------------------------- */
+  /* Toolbar Dropdown
+  ---------------------------- */ }
+  .sc-toolbar .se-toolbar-group {
+    float: left; }
+    .sc-toolbar .se-toolbar-group .se-tool {
+      line-height: normal;
+      float: left;
+      position: relative; }
+      .sc-toolbar .se-toolbar-group .se-tool button {
+        position: relative;
+        margin: 5px;
+        color: inherit;
+        height: 30px;
+        min-width: 30px;
+        text-align: center; }
+      .sc-toolbar .se-toolbar-group .se-tool.expand button::before, .sc-toolbar .se-toolbar-group .se-tool.truncate button::before {
+        content: " \f07e";
+        font-family: FontAwesome;
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        font-size: 7px; }
+      .sc-toolbar .se-toolbar-group .se-tool.edit button::before {
+        content: " \f013";
+        font-family: FontAwesome;
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        font-size: 7px; }
+      .sc-toolbar .se-toolbar-group .se-tool.sm-active button {
+        background: rgba(0, 0, 0, 0.1); }
+      .sc-toolbar .se-toolbar-group .se-tool button:hover {
+        background: rgba(0, 0, 0, 0.1); }
+      .sc-toolbar .se-toolbar-group .se-tool.sm-disabled {
+        opacity: 0.2;
+        cursor: default; }
+        .sc-toolbar .se-toolbar-group .se-tool.sm-disabled button:hover {
+          background: none; }
+  .sc-toolbar input {
+    margin: 5px;
+    margin-left: 20px;
+    min-width: 600px;
+    border: none; }
+  .sc-toolbar .se-toolbar-dropdown {
+    overflow: visible;
+    position: relative;
+    float: left; }
+    .sc-toolbar .se-toolbar-dropdown .se-toggle {
+      height: 30px;
+      padding: 0px 10px;
+      line-height: 30px;
+      margin: 5px;
+      display: block; }
+    .sc-toolbar .se-toolbar-dropdown:not(.sm-disabled) .se-toggle:after {
+      content: " \f0d7";
+      padding-left: 10px;
+      float: right;
+      font-family: FontAwesome; }
+    .sc-toolbar .se-toolbar-dropdown .se-options {
+      display: none;
+      position: absolute;
+      background: white;
+      top: 40px;
+      z-index: 5000;
+      min-width: 150px;
+      box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.15);
+      border: 1px solid #ddd; }
+      .sc-toolbar .se-toolbar-dropdown .se-options .se-tool {
+        display: block;
+        padding: 5px 10px;
+        width: 100%; }
+        .sc-toolbar .se-toolbar-dropdown .se-options .se-tool:hover {
+          background: rgba(0, 0, 0, 0.05); }
+        .sc-toolbar .se-toolbar-dropdown .se-options .se-tool.sm-disabled {
+          opacity: 0.2;
+          cursor: default; }
+          .sc-toolbar .se-toolbar-dropdown .se-options .se-tool.sm-disabled button:hover {
+            background: none; }
+    .sc-toolbar .se-toolbar-dropdown.sm-open .se-options {
+      display: block; }
 
-.toolbar .tool.edit::before {
-  content: " \f013";
-  font-family: FontAwesome;
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  font-size: 7px; }
+/* Switch Text Type Component
+---------------------------- */
+.sc-switch-text-type {
+  overflow: visible;
+  position: relative;
+  float: left;
+  width: 140px; }
+  .sc-switch-text-type .se-toggle {
+    background: white;
+    height: 30px;
+    padding: 0px 10px;
+    line-height: 30px;
+    margin: 5px;
+    display: block;
+    overflow: hidden; }
+  .sc-switch-text-type:not(.sm-disabled) .se-toggle:after {
+    content: " \f0d7";
+    padding-left: 10px;
+    float: right;
+    font-family: FontAwesome; }
+  .sc-switch-text-type.sm-disabled {
+    opacity: 0.4;
+    cursor: default; }
+    .sc-switch-text-type.sm-disabled:hover {
+      background: none; }
+  .sc-switch-text-type .se-options {
+    display: none;
+    position: absolute;
+    background: white;
+    top: 40px;
+    z-index: 5000;
+    min-width: 150px;
+    box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.15);
+    border: 1px solid #ddd; }
+    .sc-switch-text-type .se-options .se-option {
+      display: block;
+      padding: 5px 10px;
+      width: 100%; }
+      .sc-switch-text-type .se-options .se-option:hover {
+        background: rgba(0, 0, 0, 0.05); }
+  .sc-switch-text-type.sm-open .se-options {
+    display: block; }
 
-.content-node.paragraph {
+.sc-paragraph {
   padding-bottom: 20px; }
 
 .sc-heading {
@@ -1811,109 +1830,127 @@ a.quiet.active, a.quiet:hover {
 .sc-heading.sm-level-3 {
   font-size: 16px; }
 
+/* SwitchTextTypeTool */
+.sc-switch-text-type .se-option.sm-heading1 {
+  font-size: 24px;
+  font-weight: 600; }
+
+.sc-switch-text-type .se-option.sm-heading2 {
+  font-size: 20px;
+  font-weight: 600; }
+
+.sc-switch-text-type .se-option.sm-heading3 {
+  font-size: 16px;
+  font-weight: 600; }
+
 .sc-blockquote {
   border-left: 2px solid #ccc;
-  font-family: Georgia;
   padding-left: 30px;
-  font-size: 20px;
-  font-style: italic;
   margin-bottom: 20px; }
 
+.sc-switch-text-type .se-option.sm-blockquote {
+  border-left: 2px solid #ccc;
+  padding-left: 30px; }
+
 .sc-codeblock {
-  font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-  font-size: 16px;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 15px;
   padding-bottom: 20px; }
+
+.sc-switch-text-type .se-option.sm-codeblock {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 15px; }
 
 /**
  * Substance List styles
  * -------
- * 
+ *
  * Used for ordered lists
  *
  * Supports nesting only up to level-4
  */
-.li.level-2 {
-  margin-left: 20px; }
-
-.li.level-3 {
-  margin-left: 40px; }
-
-.li.level-4 {
-  margin-left: 60px; }
-
-/* Spacing */
-.li.list-start {
-  padding-top: 20px; }
-
-.li.list-end {
-  padding-bottom: 20px; }
+.sc-li {
+  /* Spacing */ }
+  .sc-li.level-2 {
+    margin-left: 20px; }
+  .sc-li.level-3 {
+    margin-left: 40px; }
+  .sc-li.level-4 {
+    margin-left: 60px; }
+  .sc-li.se-list-start {
+    padding-top: 20px; }
+  .sc-li.se-list-end {
+    padding-bottom: 20px; }
 
 /**
  * Unordered lists
  * -------
  */
-.ul.li::before {
+ul.sc-list > .sc-li::before {
   content: "▪ "; }
 
 /**
  * Ordered lists
  * -------
- * 
+ *
  * Use CSS counters and support nesting up to level 4
  */
 /* When a new list occurs counters are reset */
-.list-start {
+.se-list-start {
   counter-reset: level1 level2 level3 level4 !important; }
 
 /* Resets for individual levels */
-.ol.li.level-1 {
+ol.sc-list > .sc-li.level-1 {
   counter-reset: level2 level3 level4; }
 
-.ol.li.level-2 {
+ol.sc-list > .sc-li.level-2 {
   counter-reset: level3 level4; }
 
-.ol.li.level-3 {
+ol.sc-list > .sc-li.level-3 {
   counter-reset: level4; }
 
 /* Counter displays for levels 1-3 */
-.ol.li.level-1::before {
+ol.sc-list > .sc-li.level-1::before {
   counter-increment: level1;
   content: counter(level1) ". "; }
 
-.ol.li.level-2::before {
+ol.sc-list > .sc-li.level-2::before {
   counter-increment: level2;
   content: counter(level1) "." counter(level2) ". "; }
 
-.ol.li.level-3::before {
+ol.sc-list > .sc-li.level-3::before {
   counter-increment: level3;
   content: counter(level1) "." counter(level2) "." counter(level3) ". "; }
 
-.ol.li.level-4::before {
+ol.sc-list > .sc-li.level-4::before {
   counter-increment: level4;
   content: counter(level1) "." counter(level2) "." counter(level3) "." counter(level4) ". "; }
 
-.annotation.link {
+.sc-link {
   color: #2079DC;
   border-bottom: 1px solid #CEDFF3; }
 
-.toolbar .tool.prompt .prompt {
+.sc-link-tool .se-prompt {
   padding: 15px;
   padding-bottom: 0px;
+  background: white;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.15);
+  border: 1px solid #ddd;
   position: absolute;
   left: -150px;
   top: 40px;
   z-index: 50000;
   width: 300px; }
-  .toolbar .tool.prompt .prompt .prompt-title {
+  .sc-link-tool .se-prompt .se-prompt-title {
     font-size: 16px;
     font-weight: bold; }
-  .toolbar .tool.prompt .prompt a.delete-link {
+  .sc-link-tool .se-prompt a.se-delete-link {
     position: absolute;
     top: 15px;
     right: 15px;
     font-size: 13px;
     color: red; }
-  .toolbar .tool.prompt .prompt input {
+  .sc-link-tool .se-prompt input {
     margin: 15px 0;
     width: 100%;
     font-size: 14px;
@@ -1921,6 +1958,48 @@ a.quiet.active, a.quiet:hover {
     border: 1px solid #ddd;
     min-width: auto;
     padding: 0 10px; }
+
+.sc-embed-tool .se-prompt {
+  padding: 15px;
+  padding-bottom: 0px;
+  background: white;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.15);
+  border: 1px solid #ddd;
+  position: absolute;
+  left: -150px;
+  top: 40px;
+  z-index: 50000;
+  width: 300px; }
+  .sc-embed-tool .se-prompt .se-prompt-title {
+    font-size: 16px;
+    font-weight: bold; }
+  .sc-embed-tool .se-prompt input {
+    margin: 15px 0;
+    width: 100%;
+    font-size: 14px;
+    display: block;
+    border: 1px solid #ddd;
+    min-width: auto;
+    padding: 0 10px; }
+
+.sc-figure {
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd; }
+  .sc-figure .se-label {
+    color: #777;
+    padding-bottom: 10px; }
+  .sc-figure .se-title {
+    font-size: 20px;
+    padding-bottom: 20px; }
+  .sc-figure .se-description {
+    padding-top: 20px;
+    line-height: 20px;
+    font-size: 14px; }
+  .sc-figure .se-image {
+    padding-bottom: 20px; }
+  .sc-figure img {
+    max-width: 100%; }
 
 /* Table nodes
 -----------------------------------------------------*/
@@ -1951,37 +2030,42 @@ a.quiet.active, a.quiet:hover {
   font-style: italic; }
 
 .sc-strong {
-  font-style: bold; }
+  font-weight: bold; }
 
-.text-tool-component.select .toggle {
-  width: 140px; }
+.sc-subscript {
+  vertical-align: sub;
+  font-size: smaller; }
 
-/* Special styles */
-.text-tool-component .option.heading1 {
-  font-size: 24px;
-  font-weight: 600; }
+.sc-superscript {
+  vertical-align: super;
+  font-size: smaller; }
 
-.text-tool-component .option.heading2 {
-  font-size: 20px;
-  font-weight: 600; }
-
-.text-tool-component .option.heading3 {
-  font-size: 16px;
-  font-weight: 600; }
+.sc-code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 14px;
+  background: #eee;
+  padding: 2px 0px; }
 
 .sc-bib-items-panel .se-bibliography-summary {
   padding: 20px; }
 
-.sc-bib-items-panel .se-bib-item {
+.sc-add-bib-items-panel .sc-panel .se-panel-content {
+  top: 40px; }
+
+.sc-add-bib-items-panel .se-search-form {
+  padding: 20px; }
+
+.sc-bib-item {
   position: relative;
   font-size: 14px;
   padding: 20px;
   border-top: 1px solid #ddd;
   border-left: 3px solid transparent; }
-  .sc-bib-items-panel .se-bib-item .se-label {
+  .sc-bib-item .se-label {
     padding-bottom: 10px;
-    color: #888; }
-  .sc-bib-items-panel .se-bib-item .se-focus-toggle {
+    color: #888;
+    min-height: 30px; }
+  .sc-bib-item .se-focus-toggle {
     font-size: 12px;
     font-weight: bold;
     position: absolute;
@@ -1990,13 +2074,45 @@ a.quiet.active, a.quiet:hover {
     top: 10px;
     right: 10px;
     cursor: pointer; }
-    .sc-bib-items-panel .se-bib-item .se-focus-toggle:hover {
+    .sc-bib-item .se-focus-toggle:hover {
       color: #0b9dd9; }
-  .sc-bib-items-panel .se-bib-item.se-highlighted {
+  .sc-bib-item.se-highlighted {
     border-left: 3px solid #0b9dd9;
     background: #fff; }
-    .sc-bib-items-panel .se-bib-item.se-highlighted .se-focus-toggle {
+    .sc-bib-item.se-highlighted .se-focus-toggle {
       color: #0b9dd9; }
+
+/* Cite Panel
+-----------------------------------------------------*/
+.sc-cite-panel .sc-panel .se-panel-content {
+  top: 40px; }
+
+.sc-cite-panel .item {
+  cursor: pointer;
+  padding: 20px;
+  border-left: 2px solid transparent;
+  /* Figure Item */ }
+  .sc-cite-panel .item.active {
+    background: white;
+    border-left: 2px solid #444; }
+  .sc-cite-panel .item:hover {
+    background: white; }
+  .sc-cite-panel .item.figure.active {
+    border-left: 2px solid #91bb04; }
+  .sc-cite-panel .item.figure .title {
+    font-weight: 600;
+    padding-bottom: 10px; }
+  .sc-cite-panel .item.figure img {
+    padding-right: 20px;
+    width: 70px;
+    float: left; }
+  .sc-cite-panel .item.item.bib-item.active {
+    background: white;
+    border-left: 2px solid #0b9dd9; }
+  .sc-cite-panel .item.item.bib-item .label {
+    padding-right: 5px;
+    float: left;
+    font-weight: 600; }
 
 .lc-writer, .lc-reader {
   position: absolute;
@@ -2016,9 +2132,16 @@ a.quiet.active, a.quiet:hover {
       height: 100%;
       background: #fff;
       position: relative;
-      width: 65%;
-      z-index: 30; }
-    .lc-writer .le-workspace .le-resource, .lc-reader .le-workspace .le-resource {
+      width: 65%; }
+      .lc-writer .le-workspace .le-main .sc-content-panel, .lc-reader .le-workspace .le-main .sc-content-panel {
+        position: absolute;
+        top: 40px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px; }
+        .lc-writer .le-workspace .le-main .sc-content-panel .se-panel-content-inner, .lc-reader .le-workspace .le-main .sc-content-panel .se-panel-content-inner {
+          padding: 40px; }
+    .lc-writer .le-workspace .sc-context-section, .lc-reader .le-workspace .sc-context-section {
       position: relative;
       float: right;
       border-left: 1px solid #ddd;
@@ -2027,13 +2150,7 @@ a.quiet.active, a.quiet:hover {
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
       width: 35%; }
 
-/* Container Annotations
------------------------------------------------------*/
-.container-annotation.active.annotation-fragment {
-  background-color: rgba(145, 187, 4, 0.2); }
-
-/* Selection style sheets
------------------------------------------------------*/
+/* TODO: The following styles need to be moved into component modules */
 /* CSL Styles
 -----------------------------------------------------*/
 .csl-entry {
@@ -2055,21 +2172,17 @@ a.quiet.active, a.quiet:hover {
 
 /* Content Tools
 -----------------------------------------------------*/
-.content-tools-component {
-  height: 40px;
-  border-bottom: 1px solid #ddd;
-  position: absolute;
-  z-index: 40000;
-  left: 0px;
-  right: 0px;
-  top: 0px; }
-
 /* Custom Scrollbar styles
 -----------------------------------------------------*/
-.scrollbar-component.comments .highlight {
+.sc-scrollbar.comments .highlight {
   background: #aaa; }
 
-.scrollbar-component.cite-bib-item .highlight, .scrollbar-component.bib-items .highlight {
+.sc-scrollbar.cite-image-figure .se-highlight,
+.sc-scrollbar.toc .se-highlight {
+  background-color: #91bb04; }
+
+.sc-scrollbar.cite-bib-item .se-highlight,
+.sc-scrollbar.bib-items .se-highlight {
   background-color: #0b9dd9; }
 
 /* Custom Annotation styles
@@ -2105,67 +2218,6 @@ a.quiet.active, a.quiet:hover {
 .annotation.bib-item-citation.highlighted {
   background: #0b9dd9; }
 
-/* Cite Panel
------------------------------------------------------*/
-.cite-panel-component .item {
-  cursor: pointer;
-  padding: 20px;
-  border-left: 2px solid transparent; }
-  .cite-panel-component .item.active {
-    background: white;
-    border-left: 2px solid #444; }
-  .cite-panel-component .item:hover {
-    background: white; }
-
-/* Figure Item */
-.cite-panel-component .item.figure.active {
-  border-left: 2px solid #91bb04; }
-
-.cite-panel-component .item.figure .title {
-  font-weight: 600;
-  padding-bottom: 10px; }
-
-.cite-panel-component .item.figure img {
-  padding-right: 20px;
-  width: 70px;
-  float: left; }
-
-.cite-panel-component .item.bib-item.active {
-  background: white;
-  border-left: 2px solid #0b9dd9; }
-
-.cite-panel-component .item.bib-item .label {
-  padding-right: 5px;
-  float: left;
-  font-weight: 600; }
-
-/* Figures
------------------------------------------------------*/
-.figure img {
-  max-width: 100%; }
-
-/* Figure Node
------------------------------------------------------*/
-.content-node.figure {
-  padding: 20px;
-  margin-bottom: 20px;
-  border: 1px solid #ddd; }
-  .content-node.figure .label {
-    color: #777;
-    padding-bottom: 10px; }
-  .content-node.figure .title {
-    font-size: 20px;
-    padding-bottom: 20px; }
-  .content-node.figure .description {
-    padding-top: 20px;
-    line-height: 20px; }
-  .content-node.figure .image {
-    padding-bottom: 20px; }
-  .content-node.figure img {
-    max-width: 100%; }
-
-/* Custom Annotation styles
------------------------------------------------------*/
 /* Manage BibItem Component
 -----------------------------------------------------*/
 .manage-bib-items-panel .panel-content {
@@ -2198,26 +2250,28 @@ a.quiet.active, a.quiet:hover {
 
 /* Document Cover
 -----------------------------------------------------*/
-.content-panel-component .document-cover {
-  margin-bottom: 30px; }
-  .content-panel-component .document-cover .title {
+.le-main .sc-content-panel .document-cover {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #ddd; }
+  .le-main .sc-content-panel .document-cover .title {
     font-size: 30px;
     font-weight: 600;
     letter-spacing: -0.5px;
     line-height: 40px; }
-  .content-panel-component .document-cover .abstract {
+  .le-main .sc-content-panel .document-cover .abstract {
     padding-top: 15px;
-    font-size: 18px;
-    line-height: 26px; }
-  .content-panel-component .document-cover .authors {
+    font-size: 13px;
+    line-height: 18px; }
+  .le-main .sc-content-panel .document-cover .authors {
     font-size: 20px;
     padding: 30px 0px; }
-    .content-panel-component .document-cover .authors .author {
+    .le-main .sc-content-panel .document-cover .authors .author {
       display: block;
       float: left;
       margin-right: 20px; }
 
-.lc-reader .content-panel-component {
+.lc-reader .le-workspace .le-main .sc-content-panel {
   top: 0px; }
 
 /* Integration styles */
