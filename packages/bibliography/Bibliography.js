@@ -2,6 +2,7 @@
 
 var _ = require('substance/util/helpers');
 var EventEmitter = require('substance/util/EventEmitter');
+var sortBy = require('lodash/collection/sortBy');
 
 // Nomenclature: 'Bibliography' is a set of 'References' which are cited from in the manuscript.
 
@@ -106,16 +107,9 @@ Bibliography.Prototype = function() {
         address: address
       };
     });
+
     // sort citation by occurrence in the container
-    citationItems.sort(function(a, b) {
-      if (a < b) {
-        return -1;
-      } else if (a > b) {
-        return 1;
-      } else {
-        return a.citation.startOffset - b.citation.startOffset;
-      }
-    });
+    sortBy(citationItems, 'address');
     // compile each label
     _.each(citationItems, function(item) {
       var citation = item.citation;
