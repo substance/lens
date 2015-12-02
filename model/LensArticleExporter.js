@@ -32,7 +32,7 @@ LensArticleExporter.Prototype = function() {
     articleEl.append(resourceEl);
 
     // Export article body
-    var bodyElements = this.convertContainer(doc, this.state.containerId);
+    var bodyElements = this.convertContainer(doc.get('main'));
     articleEl.append(
       $$('body').append(bodyElements)
     );
