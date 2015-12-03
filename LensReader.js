@@ -34,7 +34,7 @@ var CONFIG = {
       "table-figure-citation": require('./packages/citations/CitationComponent'),
 
       // Panels
-      "toc": require('substance/ui/TocPanel'),
+      "toc": require('substance/ui/TOCPanel'),
       "cite": require('./packages/citations/CitePanel'),
       "bib-items": require('./packages/bibliography/BibItemsPanel'),
 
