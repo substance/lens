@@ -2,7 +2,7 @@
 
 var _ = require('substance/util/helpers');
 var Component = require('substance/ui/Component');
-var Panel = require('substance/ui/Panel');
+var ScrollPane = require('substance/ui/ScrollPane');
 var DialogHeader = require('substance/ui/DialogHeader');
 var $$ = Component.$$;
 
@@ -31,7 +31,7 @@ CitePanel.Prototype = function() {
 
     return $$('div').addClass('sc-cite-panel').append(
       $$(DialogHeader, {label: this.i18n.t('choose_referenced_items')}),
-      $$(Panel).append(
+      $$(ScrollPane).append(
         items
       ).ref('panelEl')
     );

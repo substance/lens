@@ -5,7 +5,7 @@ var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 var BibItemComponent = require('./BibItemComponent');
 var DialogHeader = require('substance/ui/DialogHeader');
-var Panel = require('substance/ui/Panel');
+var ScrollPane = require('substance/ui/ScrollPane');
 
 // Create new bib items using cross ref search
 // -----------------
@@ -52,7 +52,7 @@ AddBibItemsPanel.Prototype = function() {
         label: this.i18n.t('add-bib-entries'),
         exitContext: 'bib-items'
       }),
-      $$(Panel).ref('panelEl').append(
+      $$(ScrollPane).ref('scrollPane').append(
         $$('div').addClass('se-search-form').append(
           $$('input')
             .attr({
@@ -160,9 +160,9 @@ AddBibItemsPanel.Prototype = function() {
 
     // Make this robust for now until we have a fix for owner-based refs
     if (this.refs.searchStr) {
-      searchStr = this.refs.panelEl.val();
+      searchStr = this.refs.scrollPane.val();
     } else {
-      searchStr = this.refs.panelEl.refs.searchStr.val();
+      searchStr = this.refs.scrollPane.refs.searchStr.val();
     }
     
     var self = this;
@@ -190,7 +190,7 @@ AddBibItemsPanel.Prototype = function() {
         if (idx >= 0) {
           runningQueries.splice(idx, 1);
         }
-      });
+      });scrollPane
       // keep the promise so that we can abort it
       runningQueries.push(promise);
     });

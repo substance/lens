@@ -1,8 +1,7 @@
 'use strict';
 
-var Panel = require('substance/ui/Panel');
 var Component = require('substance/ui/Component');
-var Panel = require('substance/ui/Panel');
+var ScrollPane = require('substance/ui/ScrollPane');
 var BibItemComponent = require('./BibItemComponent');
 var $$ = Component.$$;
 
@@ -48,7 +47,7 @@ Component.extend(BibliographySummary, function BibliographySummaryProto() {
 // -----------------
 
 function BibItemsPanel() {
-  Panel.apply(this, arguments);
+  Component.apply(this, arguments);
 
   var doc = this.props.doc;
   this.bibliography = doc.getCollection('bib-item');
@@ -64,9 +63,17 @@ BibItemsPanel.Prototype = function() {
   };
 
   this.didMount = function() {
+    this._scrollToTarget();
+  };
+
+  this.didReceiveProps = function() {
+    this._scrollToTarget();
+  };
+
+  this._scrollToTarget = function() {
     var bibItemId = this.getFirstActiveBibItemId();
     if (bibItemId) {
-      this.refs.panelEl.scrollToNode(bibItemId);
+      this.refs.scrollPane.scrollToNode(bibItemId);
     }
   };
 
@@ -98,7 +105,6 @@ BibItemsPanel.Prototype = function() {
   };
 
   this.render = function() {
-    console.log('BibItemsPanel.render');
     var bibItems = this.bibliography.getItems();
 
     var bibItemEls = $$('div').addClass('se-bib-items').ref('bibItems');
@@ -113,9 +119,9 @@ BibItemsPanel.Prototype = function() {
     }.bind(this));
 
     var el = $$('div').addClass('sc-bib-items-panel').append(
-      $$(Panel, {doc: this.props.doc}).append(
+      $$(ScrollPane, {doc: this.props.doc}).append(
         bibItemEls
-      ).ref('panelEl')
+      ).ref('scrollPane')
     );
 
     return el;
@@ -137,6 +143,6 @@ BibItemsPanel.Prototype = function() {
   // };
 };
 
-Panel.extend(BibItemsPanel);
+Component.extend(BibItemsPanel);
 
 module.exports = BibItemsPanel;
