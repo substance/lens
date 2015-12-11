@@ -24,7 +24,7 @@ function LensController(parent, params) {
   this.handleApplicationKeyCombos = this.handleApplicationKeyCombos.bind(this);
 
   // action handlers
-  this.actions({
+  this.handleActions({
     "switchState": this.switchState,
     "switchContext": this.switchContext,
     "toggleBibItem": this.toggleBibItem
@@ -124,7 +124,6 @@ LensController.Prototype = function() {
   // Here we update highlights
 
   this.handleStateUpdate = function(newState) {
-    // var oldState = this.state;
     var doc = this.getDocument();
 
     function getActiveNodes(state) {

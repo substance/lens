@@ -78,20 +78,6 @@ LensArticle.Prototype = function() {
     return this.get('article-meta');
   };
 
-  // TODO: refactor this. Use a static Node property to declare
-  // which nodes should go into the toc
-  this.getTOCNodes = function() {
-    var tocNodes = [];
-    var contentNodes = this.get('main').nodes;
-    _.each(contentNodes, function(nodeId) {
-      var node = this.get(nodeId);
-      if (node.type === "heading") {
-        tocNodes.push(node);
-      }
-    }, this);
-    return tocNodes;
-  };
-
   this.getCiteprocCompiler = function() {
     return this.citeprocCompiler;
   };

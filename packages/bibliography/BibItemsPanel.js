@@ -73,7 +73,7 @@ BibItemsPanel.Prototype = function() {
   this._scrollToTarget = function() {
     var bibItemId = this.getFirstActiveBibItemId();
     if (bibItemId) {
-      this.refs.scrollPane.scrollToNode(bibItemId);
+      this.refs.scrollPane.scrollTo(bibItemId);
     }
   };
 

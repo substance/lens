@@ -60,7 +60,7 @@ CitePanel.Prototype = function() {
   this._scrollToTarget = function() {
     var citationTargetId = this.getFirstCitationTarget();
     if (citationTargetId) {
-      this.refs.panelEl.scrollToNode(citationTargetId);
+      this.refs.panelEl.scrollTo(citationTargetId);
     }
   };
 
