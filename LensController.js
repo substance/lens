@@ -149,11 +149,15 @@ LensController.Prototype = function() {
     }
 
     var activeAnnos = getActiveNodes(newState);
+    var contentPanel = this.refs.contentPanel;
+    // contentPanel.setHighlights('bib-items', ['citation_234234']);
+    // contentPanel.setHighlights('user-selections', ['user-selection_234234'], 'sm-user-selection-user1');
+
     // HACK: updates the highlights when state
-    // transition has finished
-    setTimeout(function() {
-      doc.setHighlights(activeAnnos);
-    }, 0);
+    // transition has finished    
+    // setTimeout(function() {
+    //   doc.setHighlights(activeAnnos);
+    // }, 0);
   };
 };
 

@@ -130,7 +130,7 @@ LensWriter.Prototype = function() {
   this.render = function() {
     var doc = this.props.doc;
     var config = this.getConfig();
-    var el = $$('div').addClass('lc-writer sc-controller');
+    var el = $$('div').addClass('lc-lens lc-writer sc-controller');
 
     var workspace = $$('div').ref('workspace').addClass('le-workspace');
 
@@ -152,7 +152,7 @@ LensWriter.Prototype = function() {
             }).ref('mainEditor')
           ),
           $$(BibliographyComponent).ref('bib')
-        ).ref('content')
+        ).ref('contentPanel')
       )
     );
 
