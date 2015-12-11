@@ -23,8 +23,8 @@ var ReactLensWriter = React.createClass({
     this.props.onSave(xml, cb);
   },
 
-  _onFileUpload: function(file, cb) {
-    this.props.onFileUpload(file, cb);
+  _onUploadFile: function(file, cb) {
+    this.props.onUploadFile(file, cb);
   },
 
   getContent: function() {
@@ -52,7 +52,7 @@ var ReactLensWriter = React.createClass({
     this.writer = Component.mount($$(LensWriter, {
       doc: doc,
       onSave: this._onSave,
-      onFileUpload: this._onFileUpload
+      onUploadFile: this._onUploadFile
     }), el);
   },
 
