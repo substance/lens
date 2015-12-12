@@ -21,7 +21,7 @@ I18n.instance.load(require('./i18n/en'));
 
 function LensController(parent, params) {
   Controller.call(this, parent, params);
-
+  this.toc = new TOC(this);
   this.handleApplicationKeyCombos = this.handleApplicationKeyCombos.bind(this);
 
   // action handlers
@@ -83,7 +83,7 @@ LensController.Prototype = function() {
     var childContext = Controller.prototype.getChildContext.call(this);
 
     return _.extend(childContext, {
-      toc: new TOC(this),
+      toc: this.toc,
       bibSearchEngines: [new CrossrefSearch()],
       i18n: I18n.instance,
       // Used for turning embed urls to HTML content
