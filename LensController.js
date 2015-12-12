@@ -7,6 +7,7 @@ var omit = require('lodash/object/omit');
 var Controller = require("substance/ui/Controller");
 var CrossrefSearch = require('./packages/bibliography/CrossrefSearch');
 var $ = require('substance/util/jquery');
+var TOC = require('substance/ui/TOC');
 
 // Substance is i18n ready, but by now we did not need it
 // Thus, we configure I18n statically as opposed to loading
@@ -25,13 +26,37 @@ function LensController(parent, params) {
 
   // action handlers
   this.handleActions({
-    "switchState": this.switchState,
-    "switchContext": this.switchContext,
-    "toggleBibItem": this.toggleBibItem
+    'switchState': this.switchState,
+    'switchContext': this.switchContext,
+    'toggleBibItem': this.toggleBibItem,
+    'tocEntrySelected': this.tocEntrySelected
   });
 }
 
 LensController.Prototype = function() {
+
+  // HACK: we should not depend on the app state here
+  this.didMount = function() {
+    if (this.state.nodeId && this.state.contextId === 'toc') {
+      this.refs.contentPanel.refs.scrollPane.scrollTo(this.state.nodeId);
+    }
+  };
+
+  // HACK: we should not depend on the app state here
+  this.didUpdateState = function() {
+    if (this.state.nodeId && this.state.contextId === 'toc') {
+      // For some reasons this.refs.contentPanel disappears after 2nd state update
+      console.log('this.refs', this.refs);
+      this.refs.contentPanel.refs.scrollPane.scrollTo(this.state.nodeId);
+    }
+  };
+
+  this.tocEntrySelected = function(nodeId) {
+    this.extendState({
+      nodeId: nodeId
+    });
+  };
+
   // Extract props needed for panel parametrization
   this._panelPropsFromState = function() {
     var props = omit(this.state, 'contextId');
@@ -58,6 +83,7 @@ LensController.Prototype = function() {
     var childContext = Controller.prototype.getChildContext.call(this);
 
     return _.extend(childContext, {
+      toc: new TOC(this),
       bibSearchEngines: [new CrossrefSearch()],
       i18n: I18n.instance,
       // Used for turning embed urls to HTML content
@@ -149,6 +175,7 @@ LensController.Prototype = function() {
 
     var activeAnnos = getActiveNodes(newState);
     var contentPanel = this.refs.contentPanel;
+    
     // contentPanel.setHighlights('bib-items', ['citation_234234']);
     // contentPanel.setHighlights('user-selections', ['user-selection_234234'], 'sm-user-selection-user1');
 

@@ -139,7 +139,7 @@ LensWriter.Prototype = function() {
       $$('div').ref('main').addClass("le-main").append(
         $$(Toolbar).ref('toolbar').append($$(WriterTools)),
 
-        $$(ContentPanel).append(
+        $$(ContentPanel).ref('contentPanel').append(
           $$(CoverEditor).ref('coverEditor'),
 
           // The full fledged document (ContainerEditor)
@@ -152,7 +152,7 @@ LensWriter.Prototype = function() {
             }).ref('mainEditor')
           ),
           $$(BibliographyComponent).ref('bib')
-        ).ref('contentPanel')
+        )
       )
     );
 
