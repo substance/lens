@@ -34,19 +34,22 @@ function LensController(parent, params) {
 
 LensController.Prototype = function() {
 
-  // HACK: we should not depend on the app state here
+  // HACK: For some reasons this.refs.contentPanel disappears after 2nd state update
+  // so we work around by caching this.refs.contentPanel.refs.scrollPane
   this.didMount = function() {
+    if (!this.contentPanel && this.refs.contentPanel) {
+      this.contentPanel = this.refs.contentPanel;
+      this.contentPanelScrollPane = this.contentPanel.refs.scrollPane;
+    }
+
     if (this.state.nodeId && this.state.contextId === 'toc') {
-      this.refs.contentPanel.refs.scrollPane.scrollTo(this.state.nodeId);
+      this.contentPanelScrollPane.scrollPane.scrollTo(this.state.nodeId);
     }
   };
 
-  // HACK: we should not depend on the app state here
   this.didUpdateState = function() {
     if (this.state.nodeId && this.state.contextId === 'toc') {
-      // For some reasons this.refs.contentPanel disappears after 2nd state update
-      console.log('this.refs', this.refs);
-      this.refs.contentPanel.refs.scrollPane.scrollTo(this.state.nodeId);
+      this.contentPanelScrollPane.scrollTo(this.state.nodeId);
     }
   };
 
