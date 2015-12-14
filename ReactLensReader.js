@@ -28,6 +28,7 @@ var ReactLensReader = React.createClass({
 
   createDoc: function(xmlContent) {
     var doc = importer.importDocument(xmlContent);
+    doc.updateCollections();
     return doc;
   },
 
