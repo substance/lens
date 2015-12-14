@@ -43,7 +43,7 @@ LensController.Prototype = function() {
     }
 
     if (this.state.nodeId && this.state.contextId === 'toc') {
-      this.contentPanelScrollPane.scrollPane.scrollTo(this.state.nodeId);
+      this.contentPanelScrollPane.scrollTo(this.state.nodeId);
     }
   };
 
