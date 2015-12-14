@@ -38,6 +38,8 @@
 @import './components/_bib-item';
 @import './components/_cite-panel';
 
+@import './packages/citations/citation.scss';
+
 %lens {
   position: absolute;
   top: 0px;

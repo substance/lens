@@ -33,14 +33,12 @@ CitationComponent.Prototype = function() {
   };
 
   this.getClassNames = function() {
-    var classNames = this.props.node.getTypeNames().join(' ');
-    if (this.props.classNames) {
-      classNames += " " + this.props.classNames.join(' ');
-    }
+    var classNames = ['sc-citation', 'sm-'+this.props.node.type];
     if (this.props.node.highlighted) {
-      classNames += ' highlighted';
+      classNames.push('sm-highlighted');
+      // classNames.push('sm-'+this.props.node.highlightedScope);
     }
-    return classNames.replace(/_/g, '-');
+    return classNames.join(' ');
   };
 
   this.onMouseDown = function(e) {
@@ -48,7 +46,6 @@ CitationComponent.Prototype = function() {
     e.stopPropagation();
     var citation = this.props.node;
     var surface = this.context.surface;
-
     surface.setSelection(citation.getSelection());
     var controller = this.context.controller;
     controller.emit('citation:selected', citation);

@@ -28,100 +28,14 @@
 -----------------------------------------------------*/
 
 
-/* Custom Scrollbar styles
------------------------------------------------------*/
-
-.sc-scrollbar.comments .highlight {
-  background: #aaa;
-}
-
-.sc-scrollbar.cite-image-figure .se-highlight,
-.sc-scrollbar.toc .se-highlight {
-  background-color: $highlight-color-1;
-}
-
-.sc-scrollbar.cite-bib-item .se-highlight,
-.sc-scrollbar.bib-items .se-highlight,
- {
-  background-color: $highlight-color-2;
-}
-
 /* Custom Annotation styles
 -----------------------------------------------------*/
 
-.container-annotation.comment.annotation-fragment {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-.container-annotation.comment.annotation-fragment.active {
-  background: #aaa;
-}
-
-.annotation.citation {
-  background: rgba(145, 187, 4, 0.15);
-  border-bottom: 1px solid rgba(145, 187, 4, 0.6);
-  color: #495A11;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.annotation.citation:hover {
-  background: rgba(145, 187, 4, 0.2);
-}
-
-.annotation.citation.highlighted {
-  background: $highlight-color-1;
-}
-
-.annotation.bib-item-citation {
-  background: rgba(11, 157, 217, 0.075);
-  color: #1B6685;
-  border-bottom: 1px solid rgba(11, 157, 217, 0.4);
-  cursor: pointer;
-}
-
-.annotation.bib-item-citation:hover {
-  background: rgba(11, 157, 217, 0.15);
-}
-
-.annotation.bib-item-citation.highlighted {
-  background: $highlight-color-2;
-}
 
 
 
 
-/* Manage BibItem Component
------------------------------------------------------*/
 
-.manage-bib-items-panel {
-  .panel-content {
-    top: 40px;
-  }
-}
-
-/* Manage Collection Component
------------------------------------------------------*/
-
-.manage-collection-component {
-  background: green;
-}
-
-.manage-collection-component .content-node.figure.image_figure {
-
-  .figure-content {
-    float: left;
-    width: 40%;
-  }
-
-  .label,
-  .title,
-  .description {
-    padding-left: 30px;
-    float: right;
-    width: 60%;
-  }
-}
 
 /* Bibliography in manuscript area
 -----------------------------------------------------*/

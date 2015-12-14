@@ -2,7 +2,6 @@
 
 var _ = require('substance/util/helpers');
 
-var oo = require('substance/util/oo');
 var omit = require('lodash/object/omit');
 var Controller = require("substance/ui/Controller");
 var CrossrefSearch = require('./packages/bibliography/CrossrefSearch');
@@ -152,41 +151,47 @@ LensController.Prototype = function() {
   this.handleStateUpdate = function(newState) {
     var doc = this.getDocument();
 
-    function getActiveNodes(state) {
+    function getFigureHighlights(state) {
       if (state.citationId) {
-        // TODO: targets only works for figures
-        // However if we click on a bib ref [1-4]
-        // it would maybe be useful to show all citations that
-        // reference 1,2,3, or 4.
         var citation = doc.get(state.citationId);
-        if (citation) {
+        if (citation && ['image-figure', 'table-figure'].indexOf(citation.getItemType()) >= 0) {
           return [ state.citationId ].concat(citation.targets);
-        } else {
-          return [];
         }
-      }
-      if (state.bibItemId) {
-        // Get citations for a given target
-        var citations = Object.keys(doc.citationsIndex.get(state.bibItemId));
-        return citations;
       }
       return [];
     }
 
-    var activeAnnos = getActiveNodes(newState);
-    var contentPanel = this.refs.contentPanel;
-    
-    // contentPanel.setHighlights('bib-items', ['citation_234234']);
-    // contentPanel.setHighlights('user-selections', ['user-selection_234234'], 'sm-user-selection-user1');
+    function getBibItemHighlights(state) {
+      if (state.bibItemId) {
+        // Get citations for a given target
+        var citations = Object.keys(doc.citationsIndex.get(state.bibItemId));
+        return citations;
+      } else if (state.citationId) {
+        var citation = doc.get(state.citationId);
+        if (citation && citation.getItemType() === 'bib-item') {
+          return [ state.citationId ].concat(citation.targets);
+        }
+      }
+      return [];
+    }
 
+    var bibItemHighlights = getBibItemHighlights(newState);
+    var figureHighlights = getFigureHighlights(newState);
+    
     // HACK: updates the highlights when state
     // transition has finished    
-    // setTimeout(function() {
-    //   doc.setHighlights(activeAnnos);
-    // }, 0);
+    setTimeout(function() {
+      if (!this.contentPanel) {
+        this.contentPanel = this.refs.contentPanel;  
+      }
+      this.contentPanel.setHighlights({
+        'bib-item': bibItemHighlights,
+        'figure': figureHighlights
+      });
+    }.bind(this), 0);
   };
 };
 
-oo.inherit(LensController, Controller);
+Controller.extend(LensController);
 
 module.exports = LensController;

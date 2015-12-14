@@ -23,17 +23,17 @@
     cursor: pointer;
 
     &:hover {
-      color: $highlight-color-2;
+      color: $highlight-color-1;
     }
   }
 
   // When highlighted
   &.se-highlighted {
-    border-left: 3px solid $highlight-color-2;
+    border-left: 3px solid $highlight-color-1;
     background: #fff;
     
     .se-focus-toggle {
-      color: $highlight-color-2;
+      color: $highlight-color-1;
     }
   }
 }
