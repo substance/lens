@@ -34,22 +34,17 @@ function LensController(parent, params) {
 
 LensController.Prototype = function() {
 
-  // HACK: For some reasons this.refs.contentPanel disappears after 2nd state update
-  // so we work around by caching this.refs.contentPanel.refs.scrollPane
   this.didMount = function() {
-    if (!this.contentPanel && this.refs.contentPanel) {
-      this.contentPanel = this.refs.contentPanel;
-      this.contentPanelScrollPane = this.contentPanel.refs.scrollPane;
-    }
-
+    var scrollPane = this.refs.contentPanel.refs.scrollPane;
     if (this.state.nodeId && this.state.contextId === 'toc') {
-      this.contentPanelScrollPane.scrollTo(this.state.nodeId);
+      scrollPane.scrollTo(this.state.nodeId);
     }
   };
 
   this.didUpdateState = function() {
+    var scrollPane = this.refs.contentPanel.refs.scrollPane;
     if (this.state.nodeId && this.state.contextId === 'toc') {
-      this.contentPanelScrollPane.scrollTo(this.state.nodeId);
+      scrollPane.scrollTo(this.state.nodeId);
     }
   };
 
@@ -184,10 +179,7 @@ LensController.Prototype = function() {
     // HACK: updates the highlights when state
     // transition has finished    
     setTimeout(function() {
-      if (!this.contentPanel) {
-        this.contentPanel = this.refs.contentPanel;  
-      }
-      this.contentPanel.setHighlights({
+      this.refs.contentPanel.setHighlights({
         'bib-item': bibItemHighlights,
         'figure': figureHighlights
       });

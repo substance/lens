@@ -1,6 +1,5 @@
 'use strict';
 
-var oo = require('substance/util/oo');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 var Backend = require("./backend");
@@ -11,7 +10,6 @@ var Router = require('substance/ui/Router');
 
 function App() {
   Component.apply(this, arguments);
-
   this.backend = new Backend();
 }
 
@@ -90,8 +88,8 @@ App.Prototype = function() {
   };
 };
 
-oo.inherit(App, Component);
+Component.extend(App);
 
 $(function() {
-  window.app = Component.mount($$(App), $('#container'));
+  window.app = Component.mount(App, $('#container'));
 });
