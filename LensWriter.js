@@ -1,6 +1,5 @@
 'use strict';
 
-var extend = require('lodash/object/extend');
 var LensController = require('./LensController');
 var ContentPanel = require("substance/ui/ContentPanel");
 var StatusBar = require("substance/ui/StatusBar");
@@ -186,6 +185,7 @@ LensWriter.Prototype = function() {
     if (sel.equals(this.prevSelection)) {
       return;
     }
+
     this.prevSelection = sel;
     var doc = surface.getDocument();
     var citation = getActiveAnno('citation');
