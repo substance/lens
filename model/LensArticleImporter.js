@@ -28,8 +28,7 @@ function LensArticleImporter() {
   LensArticleImporter.super.call(this, {
     schema: articleSchema,
     converters: converters,
-    DocumentClass: LensArticle,
-    containerId: 'main'
+    DocumentClass: LensArticle
   });
 }
 

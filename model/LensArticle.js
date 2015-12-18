@@ -15,6 +15,30 @@ var LensArticle = function() {
   // it would be better if we created the containers dynamically
   LensArticle.super.call(this, schema);
 
+  this.create({
+    type: "container",
+    id: "main",
+    nodes: []
+  });
+
+  this.citeprocCompiler = new CiteprocCompiler();
+
+  this.collections = {
+    "bib-item": new Bibliography(this, 'main'),
+    "image-figure": new Collection(this, 'main', 'image-figure', 'Figure'),
+    "table-figure": new Collection(this, 'main', 'table-figure', 'Table'),
+  };
+
+  this.includesIndex = this.addIndex('includes', DocumentIndex.create({
+    type: "include",
+    property: "nodeId"
+  }));
+
+  this.citationsIndex = this.addIndex('citations', DocumentIndex.create({
+    type: "citation",
+    property: "targets"
+  }));
+
   this.connect(this, {
     'document:changed': this.onDocumentChanged
   });
@@ -40,34 +64,6 @@ LensArticle.Prototype = function() {
     }.bind(this));
   };
 
-  this.initialize = function() {
-    this.super.initialize.apply(this, arguments);
-
-    this.create({
-      type: "container",
-      id: "main",
-      nodes: []
-    });
-
-    this.citeprocCompiler = new CiteprocCompiler();
-
-    this.collections = {
-      "bib-item": new Bibliography(this, 'main'),
-      "image-figure": new Collection(this, 'main', 'image-figure', 'Figure'),
-      "table-figure": new Collection(this, 'main', 'table-figure', 'Table'),
-    };
-
-    this.includesIndex = this.addIndex('includes', DocumentIndex.create({
-      type: "include",
-      property: "nodeId"
-    }));
-
-    this.citationsIndex = this.addIndex('citations', DocumentIndex.create({
-      type: "citation",
-      property: "targets"
-    }));
-  };
-
   this.updateCollections = function() {
     _.each(this.collections, function(c) {
       c.update();
@@ -76,20 +72,6 @@ LensArticle.Prototype = function() {
 
   this.getDocumentMeta = function() {
     return this.get('article-meta');
-  };
-
-  // TODO: refactor this. Use a static Node property to declare
-  // which nodes should go into the toc
-  this.getTOCNodes = function() {
-    var tocNodes = [];
-    var contentNodes = this.get('main').nodes;
-    _.each(contentNodes, function(nodeId) {
-      var node = this.get(nodeId);
-      if (node.type === "heading") {
-        tocNodes.push(node);
-      }
-    }, this);
-    return tocNodes;
   };
 
   this.getCiteprocCompiler = function() {

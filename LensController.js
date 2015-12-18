@@ -2,11 +2,11 @@
 
 var _ = require('substance/util/helpers');
 
-var oo = require('substance/util/oo');
 var omit = require('lodash/object/omit');
 var Controller = require("substance/ui/Controller");
 var CrossrefSearch = require('./packages/bibliography/CrossrefSearch');
 var $ = require('substance/util/jquery');
+var TOC = require('substance/ui/TOC');
 
 // Substance is i18n ready, but by now we did not need it
 // Thus, we configure I18n statically as opposed to loading
@@ -20,18 +20,40 @@ I18n.instance.load(require('./i18n/en'));
 
 function LensController(parent, params) {
   Controller.call(this, parent, params);
-
+  this.toc = new TOC(this);
   this.handleApplicationKeyCombos = this.handleApplicationKeyCombos.bind(this);
 
   // action handlers
-  this.actions({
-    "switchState": this.switchState,
-    "switchContext": this.switchContext,
-    "toggleBibItem": this.toggleBibItem
+  this.handleActions({
+    'switchState': this.switchState,
+    'switchContext': this.switchContext,
+    'toggleBibItem': this.toggleBibItem,
+    'tocEntrySelected': this.tocEntrySelected
   });
 }
 
 LensController.Prototype = function() {
+
+  this.didMount = function() {
+    var scrollPane = this.refs.contentPanel.refs.scrollPane;
+    if (this.state.nodeId && this.state.contextId === 'toc') {
+      scrollPane.scrollTo(this.state.nodeId);
+    }
+  };
+
+  this.didUpdateState = function() {
+    var scrollPane = this.refs.contentPanel.refs.scrollPane;
+    if (this.state.nodeId && this.state.contextId === 'toc') {
+      scrollPane.scrollTo(this.state.nodeId);
+    }
+  };
+
+  this.tocEntrySelected = function(nodeId) {
+    this.extendState({
+      nodeId: nodeId
+    });
+  };
+
   // Extract props needed for panel parametrization
   this._panelPropsFromState = function() {
     var props = omit(this.state, 'contextId');
@@ -58,6 +80,7 @@ LensController.Prototype = function() {
     var childContext = Controller.prototype.getChildContext.call(this);
 
     return _.extend(childContext, {
+      toc: this.toc,
       bibSearchEngines: [new CrossrefSearch()],
       i18n: I18n.instance,
       // Used for turning embed urls to HTML content
@@ -124,39 +147,46 @@ LensController.Prototype = function() {
   // Here we update highlights
 
   this.handleStateUpdate = function(newState) {
-    // var oldState = this.state;
     var doc = this.getDocument();
 
-    function getActiveNodes(state) {
+    function getFigureHighlights(state) {
       if (state.citationId) {
-        // TODO: targets only works for figures
-        // However if we click on a bib ref [1-4]
-        // it would maybe be useful to show all citations that
-        // reference 1,2,3, or 4.
         var citation = doc.get(state.citationId);
-        if (citation) {
+        if (citation && ['image-figure', 'table-figure'].indexOf(citation.getItemType()) >= 0) {
           return [ state.citationId ].concat(citation.targets);
-        } else {
-          return [];
         }
-      }
-      if (state.bibItemId) {
-        // Get citations for a given target
-        var citations = Object.keys(doc.citationsIndex.get(state.bibItemId));
-        return citations;
       }
       return [];
     }
 
-    var activeAnnos = getActiveNodes(newState);
+    function getBibItemHighlights(state) {
+      if (state.bibItemId) {
+        // Get citations for a given target
+        var citations = Object.keys(doc.citationsIndex.get(state.bibItemId));
+        return citations;
+      } else if (state.citationId) {
+        var citation = doc.get(state.citationId);
+        if (citation && citation.getItemType() === 'bib-item') {
+          return [ state.citationId ].concat(citation.targets);
+        }
+      }
+      return [];
+    }
+
+    var bibItemHighlights = getBibItemHighlights(newState);
+    var figureHighlights = getFigureHighlights(newState);
+    
     // HACK: updates the highlights when state
-    // transition has finished
+    // transition has finished    
     setTimeout(function() {
-      doc.setHighlights(activeAnnos);
-    }, 0);
+      this.refs.contentPanel.setHighlights({
+        'bib-item': bibItemHighlights,
+        'figure': figureHighlights
+      });
+    }.bind(this), 0);
   };
 };
 
-oo.inherit(LensController, Controller);
+Controller.extend(LensController);
 
 module.exports = LensController;

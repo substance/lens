@@ -1,42 +1,17 @@
 // Substance base styles
 @import '../node_modules/substance/styles/base/index';
 
-// Substance UI Components used
-@import '../node_modules/substance/styles/components/_controller';
-@import '../node_modules/substance/styles/components/_surface';
-@import '../node_modules/substance/styles/components/_panel';
-@import '../node_modules/substance/styles/components/_scroll-pane';
-@import '../node_modules/substance/styles/components/_content-panel';
-@import '../node_modules/substance/styles/components/_context-toggles';
-@import '../node_modules/substance/styles/components/_scrollbar';
-@import '../node_modules/substance/styles/components/_toc-panel';
-@import '../node_modules/substance/styles/components/_context-section';
-@import '../node_modules/substance/styles/components/_dialog-header';
-@import '../node_modules/substance/styles/components/_status-bar';
-@import '../node_modules/substance/styles/components/_text-property';
-@import '../node_modules/substance/styles/components/_toolbar';
-@import '../node_modules/substance/packages/text/_switch-text-type-tool';
+// Substance modules
+@import '../node_modules/substance/styles/components/_all';
+@import '../node_modules/substance/packages/_all';
 
-// Nodes
-@import '../node_modules/substance/packages/paragraph/_paragraph';
-@import '../node_modules/substance/packages/heading/_heading';
-@import '../node_modules/substance/packages/blockquote/_blockquote';
-@import '../node_modules/substance/packages/codeblock/_codeblock';
-@import '../node_modules/substance/packages/list/_list';
-@import '../node_modules/substance/packages/link/_link';
-@import '../node_modules/substance/packages/embed/_embed';
-@import '../node_modules/substance/packages/figure/_figure';
-@import '../node_modules/substance/packages/table/_table';
-@import '../node_modules/substance/packages/emphasis/_emphasis';
-@import '../node_modules/substance/packages/strong/_strong';
-@import '../node_modules/substance/packages/subscript/_subscript';
-@import '../node_modules/substance/packages/superscript/_superscript';
-@import '../node_modules/substance/packages/code/_code';
-
+// Lens stuff
 @import './components/_bib-items-panel';
 @import './components/_add-bib-items-panel';
 @import './components/_bib-item';
 @import './components/_cite-panel';
+
+@import './packages/citations/citation.scss';
 
 %lens {
   position: absolute;
@@ -59,9 +34,7 @@
       height: 100%;
       background: #fff;
       position: relative;
-
       width: 65%;
-      // z-index: 0;
 
       // Position content-panel
       .sc-content-panel {
@@ -71,7 +44,7 @@
         left: 0px;
         right: 0px;
 
-        .se-panel-content-inner {
+        .se-content {
           padding: 40px;
         }
       }

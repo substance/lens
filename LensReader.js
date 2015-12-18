@@ -114,8 +114,7 @@ LensReader.Prototype = function() {
   this.render = function() {
     var doc = this.props.doc;
     var config = this.getConfig();
-    var el = $$('div').addClass('lc-reader sc-controller');
-
+    var el = $$('div').addClass('lc-lens lc-reader sc-controller');
     var workspace = $$('div').ref('workspace').addClass('le-workspace');
 
     workspace.append(
@@ -138,7 +137,7 @@ LensReader.Prototype = function() {
             }).ref('mainAnnotator')
           ),
           $$(BibliographyComponent).ref('bib')
-        ).ref('content')
+        ).ref('contentPanel')
       )
     );
 

@@ -1,6 +1,5 @@
 'use strict';
 
-var extend = require('lodash/object/extend');
 var LensController = require('./LensController');
 var ContentPanel = require("substance/ui/ContentPanel");
 var StatusBar = require("substance/ui/StatusBar");
@@ -130,7 +129,7 @@ LensWriter.Prototype = function() {
   this.render = function() {
     var doc = this.props.doc;
     var config = this.getConfig();
-    var el = $$('div').addClass('lc-writer sc-controller');
+    var el = $$('div').addClass('lc-lens lc-writer sc-controller');
 
     var workspace = $$('div').ref('workspace').addClass('le-workspace');
 
@@ -139,7 +138,7 @@ LensWriter.Prototype = function() {
       $$('div').ref('main').addClass("le-main").append(
         $$(Toolbar).ref('toolbar').append($$(WriterTools)),
 
-        $$(ContentPanel).append(
+        $$(ContentPanel).ref('contentPanel').append(
           $$(CoverEditor).ref('coverEditor'),
 
           // The full fledged document (ContainerEditor)
@@ -152,7 +151,7 @@ LensWriter.Prototype = function() {
             }).ref('mainEditor')
           ),
           $$(BibliographyComponent).ref('bib')
-        ).ref('content')
+        )
       )
     );
 
@@ -186,6 +185,7 @@ LensWriter.Prototype = function() {
     if (sel.equals(this.prevSelection)) {
       return;
     }
+
     this.prevSelection = sel;
     var doc = surface.getDocument();
     var citation = getActiveAnno('citation');
