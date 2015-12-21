@@ -10,8 +10,8 @@ var WriterTools = require('./packages/writer/WriterTools');
 var ContainerEditor = require('substance/ui/ContainerEditor');
 var docHelpers = require('substance/model/documentHelpers');
 var Component = require('substance/ui/Component');
-var ContextSection = require('substance/ui/ContextSection');
 var $$ = Component.$$;
+
 
 var CONFIG = {
   controller: {
@@ -100,22 +100,20 @@ var CONFIG = {
   },
   panels: {
     'toc': {
-      hideContextToggles: false
     },
     'bib-items': {
-      hideContextToggles: false
     },
     'cite-bib-item': {
-      hideContextToggles: true
+      isDialog: true
     },
     'cite-image-figure': {
-      hideContextToggles: true
+      idDialog: true
     },
     'add-bib-items': {
-      hideContextToggles: true
+      isDialog: true
     }
   },
-  panelOrder: ['toc', 'bib-items'],
+  tabOrder: ['toc', 'bib-items'],
   containerId: 'main',
   isEditable: true
 };
@@ -157,11 +155,7 @@ LensWriter.Prototype = function() {
 
     // Context section (right column)
     workspace.append(
-      $$(ContextSection, {
-        panelProps: this._panelPropsFromState(),
-        contextId: this.state.contextId,
-        panelConfig: config.panels[this.state.contextId],
-      }).ref(this.state.contextId)
+      this._renderContextSection()
     );
 
     el.append(workspace);

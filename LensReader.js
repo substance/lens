@@ -1,7 +1,6 @@
 'use strict';
 
 var LensController = require('./LensController');
-var ContextSection = require('substance/ui/ContextSection');
 var ContentPanel = require("substance/ui/ContentPanel");
 var StatusBar = require("substance/ui/StatusBar");
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
@@ -57,13 +56,11 @@ var CONFIG = {
   },
   panels: {
     'toc': {
-      hideContextToggles: false
     },
     'bib-items': {
-      hideContextToggles: false
     }
   },
-  panelOrder: ['toc', 'bib-items'],
+  tabOrder: ['toc', 'bib-items'],
   containerId: 'main',
   isEditable: false
 };
@@ -143,11 +140,7 @@ LensReader.Prototype = function() {
 
     // Context section (right column)
     workspace.append(
-      $$(ContextSection, {
-        contextId: this.state.contextId,
-        panelProps: this._panelPropsFromState(),
-        panelConfig: config.panels[this.state.contextId],
-      }).ref(this.state.contextId)
+      this._renderContextSection()
     );
 
     el.append(workspace);
