@@ -2,6 +2,7 @@
 
 var LensController = require('./LensController');
 var ContentPanel = require("substance/ui/ContentPanel");
+var SplitPane = require("substance/ui/SplitPane");
 var StatusBar = require("substance/ui/StatusBar");
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
 var CoverEditor = require('./packages/writer/CoverEditor');
@@ -11,7 +12,6 @@ var ContainerEditor = require('substance/ui/ContainerEditor');
 var docHelpers = require('substance/model/documentHelpers');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
-
 
 var CONFIG = {
   controller: {
@@ -124,21 +124,16 @@ function LensWriter(parent, params) {
 
 LensWriter.Prototype = function() {
 
-  this.render = function() {
-    var doc = this.props.doc;
+  this._renderMainSection = function() {
     var config = this.getConfig();
-    var el = $$('div').addClass('lc-lens lc-writer sc-controller');
 
-    var workspace = $$('div').ref('workspace').addClass('le-workspace');
-
-    workspace.append(
-      // Main (left column)
-      $$('div').ref('main').addClass("le-main").append(
+    return $$('div').ref('main').addClass('se-main-section').append(
+      $$(SplitPane, {splitType: 'horizontal', size: '40px'}).append(
+        // Menu Pane on top
         $$(Toolbar).ref('toolbar').append($$(WriterTools)),
-
+        // Content Panel below
         $$(ContentPanel).ref('contentPanel').append(
           $$(CoverEditor).ref('coverEditor'),
-
           // The full fledged document (ContainerEditor)
           $$("div").ref('main').addClass('document-content').append(
             $$(ContainerEditor, {
@@ -150,21 +145,21 @@ LensWriter.Prototype = function() {
           ),
           $$(BibliographyComponent).ref('bib')
         )
-      )
+      ).ref('mainSectionSplitPane')
     );
+  };
 
-    // Context section (right column)
-    workspace.append(
-      this._renderContextSection()
+  this.render = function() {
+    var doc = this.props.doc;
+    return $$('div').addClass('sc-lens sc-lens-writer sc-controller').append(
+      $$(SplitPane, {splitType: 'horizontal', size: '25px', reverseSizing: true}).append(      
+        $$(SplitPane, {splitType: 'vertical', size: '60%'}).append(
+          this._renderMainSection(),
+          this._renderContextSection()
+        ).ref('splitPane'),
+        $$(StatusBar, {doc: doc}).ref('statusBar')
+      ).ref('workspaceSplitPane')
     );
-
-    el.append(workspace);
-
-    // Status bar
-    el.append(
-      $$(StatusBar, {doc: doc}).ref('statusBar')
-    );
-    return el;
   };
 
   this.onSelectionChanged = function(sel, surface) {
@@ -204,7 +199,6 @@ LensWriter.Prototype = function() {
 };
 
 LensController.extend(LensWriter);
-
 LensWriter.static.config = CONFIG;
 
 module.exports = LensWriter;

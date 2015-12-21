@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('substance/util/helpers');
-
 var omit = require('lodash/object/omit');
 var Controller = require("substance/ui/Controller");
 var Component = require('substance/ui/Component');
@@ -29,7 +28,8 @@ function LensController(parent, params) {
   // action handlers
   this.handleActions({
     'switchState': this.switchState,
-    'switchTab': this.switchTab,
+    'switchTab': this.switchContext,
+    'switchContext': this.switchContext,
     'toggleBibItem': this.toggleBibItem,
     'tocEntrySelected': this.tocEntrySelected,
     'closeDialog': this.closeDialog
@@ -158,8 +158,8 @@ LensController.Prototype = function() {
     }
   };
 
-  // handles 'switchTab'
-  this.switchTab = function(tabId, options) {
+  // handles 'switchContext' and 'switchTab'
+  this.switchContext = function(tabId, options) {
     options = options || {};
     this.setState({ contextId: tabId });
     if (options.restoreSelection) {
