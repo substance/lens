@@ -128,7 +128,7 @@ LensWriter.Prototype = function() {
     var config = this.getConfig();
 
     return $$('div').ref('main').addClass('se-main-section').append(
-      $$(SplitPane, {splitType: 'horizontal', size: '40px'}).append(
+      $$(SplitPane, {splitType: 'horizontal'}).append(
         // Menu Pane on top
         $$(Toolbar).ref('toolbar').append($$(WriterTools)),
         // Content Panel below
@@ -152,8 +152,8 @@ LensWriter.Prototype = function() {
   this.render = function() {
     var doc = this.props.doc;
     return $$('div').addClass('sc-lens sc-lens-writer sc-controller').append(
-      $$(SplitPane, {splitType: 'horizontal', size: '25px', reverseSizing: true}).append(      
-        $$(SplitPane, {splitType: 'vertical', size: '60%'}).append(
+      $$(SplitPane, {splitType: 'horizontal', sizeB: 'inherit'}).append(      
+        $$(SplitPane, {splitType: 'vertical', sizeA: '60%'}).append(
           this._renderMainSection(),
           this._renderContextSection()
         ).ref('splitPane'),

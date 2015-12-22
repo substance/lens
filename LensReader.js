@@ -15,7 +15,7 @@ var CONFIG = {
     commands: [
       require('substance/ui/UndoCommand'),
       require('substance/ui/RedoCommand'),
-      require('substance/ui/SaveCommand'),
+      require('substance/ui/SaveCommand')
     ],
     components: {
       "paragraph": require('substance/packages/paragraph/ParagraphComponent'),
@@ -128,7 +128,7 @@ LensReader.Prototype = function() {
 
   this.render = function() {
     return $$('div').addClass('sc-lens sc-lens-reader sc-controller').append(
-      $$(SplitPane, {splitType: 'vertical', size: '60%'}).append(
+      $$(SplitPane, {splitType: 'vertical', sizeA: '60%'}).append(
         this._renderMainSection(),
         this._renderContextSection()
       ).ref('splitPane')
