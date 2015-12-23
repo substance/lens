@@ -1,3 +1,6 @@
+$fa-font-path:  "./fonts" !default;
+@import '../node_modules/font-awesome/scss/font-awesome';
+
 // Substance base styles
 @import '../node_modules/substance/styles/base/index';
 
@@ -31,5 +34,5 @@
   }
 }
 
-// TODO: Get rid one by one!
+// TODO: Get rid of it one by one!
 @import '_wild_overrides';
