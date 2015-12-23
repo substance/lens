@@ -15,6 +15,8 @@ gulp.task('sass', function () {
 gulp.task('assets', function () {
   gulp.src('./app/assets/**/*', {base:"./app/assets"})
         .pipe(gulp.dest('dist'));
+  gulp.src('node_modules/font-awesome/fonts/*')
+    .pipe(gulp.dest('./dist/fonts'));
 });
 
 gulp.task('data', function () {

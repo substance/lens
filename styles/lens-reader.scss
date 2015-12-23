@@ -1,9 +1,5 @@
 @import '_lens';
 
-.lc-reader {
+.sc-lens-reader {
   @extend %lens;
-
-  .le-workspace .le-main .sc-content-panel {
-      top: 0px;
-  }
 }

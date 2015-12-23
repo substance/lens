@@ -8,9 +8,10 @@
     "cheerio": "0.19.0",
     "ejs": "2.3.4",
     "express": "4.13.3",
+    "font-awesome": "4.4.0",
     "lodash": "3.10.1",
     "node-sass": "3.4.2",
-    "substance": "substance/substance#d85b4cb4be323fffaaca54821b645f47f55463e5"
+    "substance": "substance/substance#281a71a415ccbb4e94176a4d90c6eef701a13fca"
   },
   "devDependencies": {
     "gulp": "3.9.0",

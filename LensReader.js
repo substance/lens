@@ -1,11 +1,11 @@
 'use strict';
 
 var LensController = require('./LensController');
-var ContextSection = require('substance/ui/ContextSection');
 var ContentPanel = require("substance/ui/ContentPanel");
 var StatusBar = require("substance/ui/StatusBar");
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
 var ContainerAnnotator = require('substance/ui/ContainerAnnotator');
+var SplitPane = require("substance/ui/SplitPane");
 var Cover = require('./packages/reader/Cover');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
@@ -15,7 +15,7 @@ var CONFIG = {
     commands: [
       require('substance/ui/UndoCommand'),
       require('substance/ui/RedoCommand'),
-      require('substance/ui/SaveCommand'),
+      require('substance/ui/SaveCommand')
     ],
     components: {
       "paragraph": require('substance/packages/paragraph/ParagraphComponent'),
@@ -57,13 +57,11 @@ var CONFIG = {
   },
   panels: {
     'toc': {
-      hideContextToggles: false
     },
     'bib-items': {
-      hideContextToggles: false
     }
   },
-  panelOrder: ['toc', 'bib-items'],
+  tabOrder: ['toc', 'bib-items'],
   containerId: 'main',
   isEditable: false
 };
@@ -77,13 +75,6 @@ function LensReader(parent, params) {
 }
 
 LensReader.Prototype = function() {
-
-  // this.getInitialState = function() {
-  //   return {
-  //     contextId: 'bib-items',
-  //     citationId: 'bib_item_citation_a6da926ec7f4f4df975164f9e9ce413b',
-  //   };
-  // };
 
   this.onCitationSelected = function(citation) {
     if (this.state.citationId === citation.id) {
@@ -111,52 +102,37 @@ LensReader.Prototype = function() {
     this.disconnect(this);
   };
 
-  this.render = function() {
-    var doc = this.props.doc;
+  this._renderMainSection = function() {
     var config = this.getConfig();
-    var el = $$('div').addClass('lc-lens lc-reader sc-controller');
-    var workspace = $$('div').ref('workspace').addClass('le-workspace');
 
-    workspace.append(
-      // Main (left column)
-      $$('div').ref('main').addClass("le-main").append(
-        $$(ContentPanel).append(
-          // Document Cover display
-          $$(Cover, {
-            name: 'cover',
-            commands: config.cover.commands
-          }).ref('coverView'),
-
-          // The main container
-          $$("div").ref('main').addClass('document-content').append(
-            $$(ContainerAnnotator, {
-              name: 'main',
-              containerId: 'main',
-              editable: false,
-              commands: config.main.commands
-            }).ref('mainAnnotator')
-          ),
-          $$(BibliographyComponent).ref('bib')
-        ).ref('contentPanel')
+    return $$('div').ref('main').addClass('se-main-section').append(
+      // Content Panel below
+      $$(ContentPanel).ref('contentPanel').append(
+        $$(Cover, {
+          name: 'cover',
+          commands: config.cover.commands
+        }).ref('coverView'),
+        // The full fledged document (ContainerEditor)
+        $$("div").ref('main').addClass('document-content').append(
+          $$(ContainerAnnotator, {
+            name: 'main',
+            editable: false,
+            containerId: config.containerId,
+            commands: config.main.commands
+          }).ref('mainEditor')
+        ),
+        $$(BibliographyComponent).ref('bib')
       )
     );
+  };
 
-    // Context section (right column)
-    workspace.append(
-      $$(ContextSection, {
-        contextId: this.state.contextId,
-        panelProps: this._panelPropsFromState(),
-        panelConfig: config.panels[this.state.contextId],
-      }).ref(this.state.contextId)
+  this.render = function() {
+    return $$('div').addClass('sc-lens sc-lens-reader sc-controller').append(
+      $$(SplitPane, {splitType: 'vertical', sizeA: '60%'}).append(
+        this._renderMainSection(),
+        this._renderContextSection()
+      ).ref('splitPane')
     );
-
-    el.append(workspace);
-
-    // Status bar
-    el.append(
-      $$(StatusBar, {doc: doc}).ref('statusBar')
-    );
-    return el;
   };
 };
 

@@ -1,12 +1,14 @@
 'use strict';
 
 var _ = require('substance/util/helpers');
-
 var omit = require('lodash/object/omit');
 var Controller = require("substance/ui/Controller");
+var Component = require('substance/ui/Component');
+var $$ = Component.$$;
 var CrossrefSearch = require('./packages/bibliography/CrossrefSearch');
 var $ = require('substance/util/jquery');
 var TOC = require('substance/ui/TOC');
+var TabbedPane = require('substance/ui/TabbedPane');
 
 // Substance is i18n ready, but by now we did not need it
 // Thus, we configure I18n statically as opposed to loading
@@ -26,13 +28,20 @@ function LensController(parent, params) {
   // action handlers
   this.handleActions({
     'switchState': this.switchState,
+    'switchTab': this.switchContext,
     'switchContext': this.switchContext,
     'toggleBibItem': this.toggleBibItem,
-    'tocEntrySelected': this.tocEntrySelected
+    'tocEntrySelected': this.tocEntrySelected,
+    'closeDialog': this.closeDialog
   });
 }
 
 LensController.Prototype = function() {
+
+  // Shows the TOC by default
+  this.closeDialog = function() {
+    this.setState({ contextId: 'toc' });
+  };
 
   this.didMount = function() {
     var scrollPane = this.refs.contentPanel.refs.scrollPane;
@@ -59,6 +68,42 @@ LensController.Prototype = function() {
     var props = omit(this.state, 'contextId');
     props.doc = this.getDocument();
     return props;
+  };
+
+  // Used by two-column apps
+  this._renderContextSection = function() {
+    var config = this.getConfig();
+    var panelProps = this._panelPropsFromState();
+    var contextId = this.state.contextId;
+    var panels = config.panels || {};
+    var panelConfig = panels[this.state.contextId] || {};
+    var tabOrder = config.tabOrder;
+    var PanelComponentClass = this.componentRegistry.get(contextId);
+
+    var tabs = tabOrder.map(function(contextId) {
+      return {
+        id: contextId,
+        name: this.i18n.t(contextId)
+      };
+    }.bind(this));
+
+    var el = $$('div').addClass('se-context-section').ref('contextSection');
+    var panelEl = $$(PanelComponentClass, panelProps).ref(contextId);
+
+    // Use full space if panel is configured as a dialog
+    if (panelConfig.isDialog) {
+      el.append(panelEl);
+    } else {
+      el.append(
+        $$(TabbedPane, {
+          activeTab: contextId,
+          tabs: tabs,
+        }).ref(this.state.contextId).append(
+          panelEl
+        )
+      );
+    }
+    return el;
   };
 
   // Action used by BibItemComponent when clicked on focus
@@ -104,7 +149,7 @@ LensController.Prototype = function() {
   // Action handlers
   // ---------------
 
-  // handles 'switch-state'
+  // handles 'switchState'
   this.switchState = function(newState, options) {
     options = options || {};
     this.setState(newState);
@@ -113,10 +158,10 @@ LensController.Prototype = function() {
     }
   };
 
-  // handles 'switch-context'
-  this.switchContext = function(contextId, options) {
+  // handles 'switchContext' and 'switchTab'
+  this.switchContext = function(tabId, options) {
     options = options || {};
-    this.setState({ contextId: contextId });
+    this.setState({ contextId: tabId });
     if (options.restoreSelection) {
       this.restoreSelection();
     }
@@ -126,7 +171,6 @@ LensController.Prototype = function() {
     var surface = this.getSurface('body');
     surface.rerenderDomSelection();
   };
-
 
   this.uploadFile = function(file, cb) {
     // This is a testing implementation
