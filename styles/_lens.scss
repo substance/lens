@@ -1,4 +1,4 @@
-$fa-font-path:  "./fonts" !default;
+$fa-font-path:  "~font-awesome/fonts" !default;
 @import 'font-awesome/scss/font-awesome';
 
 // Substance base styles
@@ -13,7 +13,7 @@ $fa-font-path:  "./fonts" !default;
 @import './components/_add-bib-items-panel';
 @import './components/_bib-item';
 @import './components/_cite-panel';
-@import './packages/citations/citation.scss';
+@import '../packages/citations/citation';
 
 // Most layouting is now done using SplitPane
 %lens {
