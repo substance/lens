@@ -1,12 +1,12 @@
 $fa-font-path:  "./fonts" !default;
-@import '../node_modules/font-awesome/scss/font-awesome';
+@import 'font-awesome/scss/font-awesome';
 
 // Substance base styles
-@import '../node_modules/substance/styles/base/index';
+@import 'substance/styles/base/index';
 
 // Substance modules
-@import '../node_modules/substance/styles/components/_all';
-@import '../node_modules/substance/packages/_all';
+@import 'substance/styles/components/_all';
+@import 'substance/packages/_all';
 
 // Lens stuff
 @import './components/_bib-items-panel';
