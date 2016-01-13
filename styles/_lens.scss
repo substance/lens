@@ -13,7 +13,7 @@ $fa-font-path:  "./fonts" !default;
 @import './components/_add-bib-items-panel';
 @import './components/_bib-item';
 @import './components/_cite-panel';
-@import './packages/citations/citation.scss';
+@import '../packages/citations/citation.scss';
 
 // Most layouting is now done using SplitPane
 %lens {
