@@ -1,6 +1,5 @@
 'use strict';
 
-var oo = require('substance/util/oo');
 var XMLImporter = require('substance/model/XMLImporter');
 var articleSchema = require('./articleSchema');
 var LensArticle = require('./LensArticle');
@@ -25,7 +24,7 @@ var converters = [
 ];
 
 function LensArticleImporter() {
-  LensArticleImporter.super.call(this, {
+  XMLImporter.call(this, {
     schema: articleSchema,
     converters: converters,
     DocumentClass: LensArticle
@@ -42,7 +41,7 @@ LensArticleImporter.Prototype = function() {
   // </article>
   this.convertDocument = function(articleElement) {
     // Import meta node
-    var metaElement = articleElement.find('metadata');
+    var metaElement = articleElement.find('meta');
     this.convertElement(metaElement);
 
     // Import resources
@@ -60,5 +59,6 @@ LensArticleImporter.Prototype = function() {
 // Expose converters so we can reuse them in NoteHtmlExporter
 LensArticleImporter.converters = converters;
 
-oo.inherit(LensArticleImporter, XMLImporter);
+XMLImporter.extend(LensArticleImporter);
+
 module.exports = LensArticleImporter;

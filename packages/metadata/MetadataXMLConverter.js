@@ -2,7 +2,7 @@
 
 /*
   HTML converter for Paragraph.
-  
+
   Markup:
 
   ```
@@ -15,7 +15,7 @@
 module.exports = {
 
   type: 'article-meta',
-  tagName: 'metadata',
+  tagName: 'meta',
 
   import: function(el, node, converter) {
     node.id = 'article-meta';
@@ -23,12 +23,12 @@ module.exports = {
     // Extract title
     var titleEl = el.find('title');
     if (titleEl) {
-      node.title = converter.annotatedText(titleEl, [node.id, 'title']);  
+      node.title = converter.annotatedText(titleEl, [node.id, 'title']);
     } else {
       console.warn('ArticleMeta: no title found.');
       node.title = '';
     }
-    
+
     var abstractEl = el.find('abstract');
     // Extract abstract
     if (abstractEl) {
@@ -37,15 +37,16 @@ module.exports = {
       console.warn('ArticleMeta: no abstract found.');
       node.abstract = '';
     }
-    
+
     // Extract authors
     node.authors = [];
-  
+
   },
 
   export: function(node, el, converter) {
+    // id does not need to be exported
+    el.setId(null);
     var $$ = converter.$$;
-
     return el.append(
       $$('title').append(
         converter.annotatedText([node.id, 'title'])

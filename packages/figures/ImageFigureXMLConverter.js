@@ -10,8 +10,6 @@ module.exports = {
   import: function(el, node, converter) {
     FigureXMLConverter.import(el, node, converter);
 
-    node.id = el.attr('id') || node.id; // legacy ids
-
     var contentNode;
     // HACK: We abuse this for embed nodes, as they can't live on their own atm
     var image = el.find('image');

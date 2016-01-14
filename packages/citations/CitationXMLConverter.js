@@ -9,11 +9,11 @@ module.exports = {
 
   import: function(el, node) {
     node.id = el.attr('id') || node.id; // legacy ids
-    node.targets = compact(el.attr('data-rid').split(' '));
+    node.targets = compact(el.attr('rid').split(' '));
   },
 
   export: function(node, el) {
     var targets = node.targets.join(' ');
-    el.attr('data-rid', targets);
+    el.attr('rid', targets);
   }
 };

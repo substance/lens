@@ -8,7 +8,7 @@ module.exports = {
   tagName: 'cite',
 
   matchElement: function(el) {
-    return el.is('cite') && el.attr('data-rtype') === 'bib';
+    return el.is('cite') && el.attr('rtype') === 'bib';
   },
 
   import: function(el, node) {
@@ -18,6 +18,6 @@ module.exports = {
   export: function(node, el) {
     CitationXMLConverter.export(node, el);
     // Add specific type
-    el.attr('data-rtype', 'bib');
+    el.attr('rtype', 'bib');
   }
 };
