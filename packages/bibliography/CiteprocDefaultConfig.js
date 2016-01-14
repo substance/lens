@@ -1,3 +1,5 @@
+'use strict';
+
 function CiteprocDefaultConfig(options) {
   options = options || {};
   this.style = options.style || CiteprocDefaultConfig.defaultStyle;

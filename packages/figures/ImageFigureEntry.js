@@ -1,6 +1,5 @@
-"use strict";
+'use strict';
 
-var oo = require('substance/util/oo');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 
@@ -44,6 +43,6 @@ ImageFigureEntry.Prototype = function() {
   };
 };
 
-oo.inherit(ImageFigureEntry, Component);
+Component.extend(ImageFigureEntry);
 
 module.exports = ImageFigureEntry;

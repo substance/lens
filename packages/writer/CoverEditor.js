@@ -1,15 +1,15 @@
 "use strict";
 
-var OO = require('substance/util/oo');
 var Component = require('substance/ui/Component');
 var $$ = require('substance/ui/Component').$$;
 var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
 
 var CoverEditor = function() {
-  Component.apply(this, arguments);
+  CoverEditor.super.apply(this, arguments);
 };
 
 CoverEditor.Prototype = function() {
+
   this.render = function() {
     var doc = this.context.controller.getDocument();
     var config = this.context.config;
@@ -38,6 +38,6 @@ CoverEditor.Prototype = function() {
   };
 };
 
-OO.inherit(CoverEditor, Component);
+Component.extend(CoverEditor);
 
 module.exports = CoverEditor;

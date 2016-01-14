@@ -2,11 +2,13 @@
 
 var AnnotationTool = require('substance/ui/AnnotationTool');
 
-var BibItemCitationTool = AnnotationTool.extend({
-  static: {
-    name: 'Bibliographic Citation',
-    command: 'bibItemCitation'
-  }
-});
+function BibItemCitationTool() {
+  BibItemCitationTool.super.apply(this, arguments);
+}
+
+AnnotationTool.extend(BibItemCitationTool);
+
+BibItemCitationTool.static.name = 'bibItemCitation';
+BibItemCitationTool.static.command = 'bibItemCitation';
 
 module.exports = BibItemCitationTool;

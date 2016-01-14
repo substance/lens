@@ -1,3 +1,5 @@
+'use strict';
+
 var $ = require('substance/util/jquery');
 
 function CrossrefSearch() {

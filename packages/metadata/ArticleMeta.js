@@ -1,7 +1,12 @@
-var $ = require('substance/util/jquery');
+'use strict';
+
 var DocumentNode = require('substance/model/DocumentNode');
 
-var ArticleMeta = DocumentNode.extend();
+function ArticleMeta() {
+  ArticleMeta.super.apply(this, arguments);
+}
+
+DocumentNode.extend(ArticleMeta);
 
 ArticleMeta.static.name = "article-meta";
 

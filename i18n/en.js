@@ -23,5 +23,7 @@ module.exports = {
   'image-figure.title': 'Figure Title',
   'image-figure.caption': 'Figure Caption',
   'container-selection': 'Multiple Elements',
-  'add-bib-entries': 'Add new references'
+  'add-bib-entries': 'Add new references',
+  'bibItemCitation': 'Bibliographic Citation',
+  'imageFigureCitation': 'Figure Citation',
 };

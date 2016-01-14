@@ -56,9 +56,9 @@ Bibliography.Prototype = function() {
         }
       }
     });
-    
+
     if (needsUpdate) {
-      console.log('updating bibliography');
+      // console.log('updating bibliography');
       this.update();
     }
   };

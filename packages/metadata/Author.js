@@ -1,8 +1,12 @@
+'use strict';
 
-var $ = require('substance/util/jquery');
 var DocumentNode = require('substance/model/DocumentNode');
 
-var Author = DocumentNode.extend();
+function Author() {
+  Author.super.apply(this, arguments);
+}
+
+DocumentNode.extend(Author);
 
 Author.static.name = "author";
 

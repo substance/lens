@@ -164,7 +164,7 @@ AddBibItemsPanel.Prototype = function() {
     } else {
       searchStr = this.refs.scrollPane.refs.searchStr.val();
     }
-    
+
     var self = this;
     var doc = this.props.doc;
 
@@ -190,7 +190,7 @@ AddBibItemsPanel.Prototype = function() {
         if (idx >= 0) {
           runningQueries.splice(idx, 1);
         }
-      });scrollPane
+      });
       // keep the promise so that we can abort it
       runningQueries.push(promise);
     });

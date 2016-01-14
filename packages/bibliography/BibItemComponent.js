@@ -1,3 +1,5 @@
+'use strict';
+
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 var Icon = require('substance/ui/FontAwesomeIcon');
@@ -34,4 +36,5 @@ BibItemComponent.Prototype = function() {
 };
 
 Component.extend(BibItemComponent);
+
 module.exports = BibItemComponent;

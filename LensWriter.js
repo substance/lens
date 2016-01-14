@@ -50,7 +50,6 @@ var CONFIG = {
 
       "bib-item-entry": require('./packages/bibliography/BibItemEntry'),
       "image-figure-entry": require('./packages/figures/ImageFigureEntry'),
-      "table-figure-entry": require('./packages/figures/TableFigureEntry')
     },
   },
   main: {
@@ -152,7 +151,7 @@ LensWriter.Prototype = function() {
   this.render = function() {
     var doc = this.props.doc;
     return $$('div').addClass('sc-lens sc-lens-writer sc-controller').append(
-      $$(SplitPane, {splitType: 'horizontal', sizeB: 'inherit'}).append(      
+      $$(SplitPane, {splitType: 'horizontal', sizeB: 'inherit'}).append(
         $$(SplitPane, {splitType: 'vertical', sizeA: '60%'}).append(
           this._renderMainSection(),
           this._renderContextSection()

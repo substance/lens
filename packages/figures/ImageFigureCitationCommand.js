@@ -2,11 +2,13 @@
 
 var CitationCommand = require('../citations/CitationCommand');
 
-var ImageFigureCitationCommand = CitationCommand.extend({
-  static: {
-    name: 'imageFigureCitation',
-    annotationType: 'image-figure-citation'
-  }
-});
+function ImageFigureCitationCommand() {
+  ImageFigureCitationCommand.super.apply(this, arguments);
+}
+
+CitationCommand.extend(ImageFigureCitationCommand);
+
+ImageFigureCitationCommand.static.name = 'imageFigureCitation';
+ImageFigureCitationCommand.static.annotationType = 'image-figure-citation';
 
 module.exports = ImageFigureCitationCommand;

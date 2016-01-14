@@ -169,7 +169,7 @@ Collection.Prototype = function() {
   this.getItems = function() {
     return this.items;
   };
-  
+
   // HACK: Lots of hard coded things here, we need to improve this along with
   // removing the redudancy with Bibliography.js
   this.onDocumentChanged = function(change) {
@@ -180,7 +180,7 @@ Collection.Prototype = function() {
 
       // Figure citation has been created/changed/delete
       // -----------------
-      // 
+      //
 
       if (op.isCreate() || op.isSet() || op.isUpdate()) {
         var nodeId = op.path[0];
@@ -211,7 +211,7 @@ Collection.Prototype = function() {
 
       // New Figure has been inserted/moved or deleted
       // ----------------
-      // 
+      //
       // Figure insert or move case (when container is updated)
       if (!needsUpdate && op.path[0] === this.containerId) {
         if (op.type === "set") {
@@ -242,9 +242,9 @@ Collection.Prototype = function() {
         }
       }
     }.bind(this));
-    
+
     if (needsUpdate) {
-      console.log('Collection', this.itemType, 'is being updated');
+      // console.log('Collection', this.itemType, 'is being updated');
       this.update();
     }
   };

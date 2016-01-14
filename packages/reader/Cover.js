@@ -1,14 +1,12 @@
-"use strict";
+'use strict';
 
-var OO = require('substance/util/oo');
 var Component = require('substance/ui/Component');
 var TextPropertyAnnotator = require('substance/ui/TextPropertyAnnotator');
 var $$ = require('substance/ui/Component').$$;
-var TextProperty = require("substance/ui/TextPropertyComponent");
 
-var Cover = function() {
-  Component.apply(this, arguments);
-};
+function Cover() {
+  Cover.super.apply(this, arguments);
+}
 
 Cover.Prototype = function() {
 
@@ -35,6 +33,6 @@ Cover.Prototype = function() {
   };
 };
 
-OO.inherit(Cover, Component);
+Component.extend(Cover);
 
 module.exports = Cover;

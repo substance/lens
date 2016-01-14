@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('substance/util/helpers');
 var $ = require('substance/util/jquery');
 var CSL = require('./citeproc/citeproc').CSL;

@@ -29,8 +29,6 @@ var Link = require('substance/packages/link/Link');
 // Figures
 var Figure = require('substance/packages/figure/Figure');
 var ImageFigure = require('../packages/figures/ImageFigure');
-var TableFigure = require('../packages/figures/TableFigure');
-var TableFigureCitation = require('../packages/figures/TableFigureCitation');
 var ImageFigureCitation = require('../packages/figures/ImageFigureCitation');
 
 // Bibliography
@@ -59,8 +57,7 @@ schema.addNodes([
   Figure, // abstract type (!)
   ImageFigure,
   Table, TableSection, TableRow, TableCell,
-  TableFigure,
-  ImageFigureCitation, TableFigureCitation, BibItemCitation,
+  ImageFigureCitation, BibItemCitation,
   List, ListItem,
   BibItem,
 ]);

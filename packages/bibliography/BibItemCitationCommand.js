@@ -2,11 +2,13 @@
 
 var CitationCommand = require('../citations/CitationCommand');
 
-var BibItemCitationCommand = CitationCommand.extend({
-  static: {
-    name: 'bibItemCitation',
-    annotationType: 'bib-item-citation'
-  }
-});
+function BibItemCitationCommand() {
+  BibItemCitationCommand.super.apply(this, arguments);
+}
+
+CitationCommand.extend(BibItemCitationCommand);
+
+BibItemCitationCommand.static.name = 'bibItemCitation';
+BibItemCitationCommand.static.annotationType = 'bib-item-citation';
 
 module.exports = BibItemCitationCommand;

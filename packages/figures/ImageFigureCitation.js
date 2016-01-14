@@ -1,10 +1,18 @@
+'use strict';
+
 var Citation = require('../citations/Citation');
 
-var ImageFigureCitation = Citation.extend({
-  getItemType: function() {
+function ImageFigureCitation() {
+  ImageFigureCitation.super.apply(this, arguments);
+}
+
+ImageFigureCitation.Prototype = function() {
+  this.getItemType = function() {
     return "image-figure";
-  },
-});
+  };
+};
+
+Citation.extend(ImageFigureCitation);
 
 ImageFigureCitation.static.name = "image-figure-citation";
 

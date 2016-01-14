@@ -8,6 +8,7 @@ var $$ = Component.$$;
 
 function CitePanel() {
   Component.apply(this, arguments);
+
   this._initialize(this.props);
 }
 

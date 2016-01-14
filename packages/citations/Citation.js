@@ -1,29 +1,33 @@
-var _ = require('substance/util/helpers');
-var $ = require('substance/util/jquery');
+'use strict';
+
 var InlineNode = require('substance/model/InlineNode');
 
 function Citation() {
   Citation.super.apply(this, arguments);
 }
 
-InlineNode.extend(Citation, {
+Citation.Prototype = function() {
 
-  getDefaultProperties: function() {
-    return {targets: []};
-  },
+  this.getDefaultProperties = function() {
+    return {
+      targets: []
+    };
+  };
 
-  setLabel: function(label) {
+  this.setLabel = function(label) {
     if (this.label !== label) {
       this.label = label;
       this.emit('label:changed');
     }
-  },
+  };
 
-  onTargetChange: function(change, info, doc) {
+  this.onTargetChange = function(change, info, doc) {
     this.updateCollection(doc);
-  }
+  };
 
-});
+};
+
+InlineNode.extend(Citation);
 
 Citation.static.name = "citation";
 

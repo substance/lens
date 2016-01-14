@@ -46,7 +46,6 @@ var CONFIG = {
 
       "bib-item-entry": require('./packages/bibliography/BibItemEntry'),
       "image-figure-entry": require('./packages/figures/ImageFigureEntry'),
-      "table-figure-entry": require('./packages/figures/TableFigureEntry')
     },
   },
   main: {

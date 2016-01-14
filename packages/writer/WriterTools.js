@@ -1,3 +1,5 @@
+'use strict';
+
 var Toolbar = require('substance/ui/Toolbar');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
@@ -17,8 +19,13 @@ var InsertFigureTool = require('substance/packages/figure/InsertFigureTool');
 var ImageFigureCitationTool = require('../figures/ImageFigureCitationTool');
 var BibItemCitationTool = require('../bibliography/BibItemCitationTool');
 
-var WriterTools = Component.extend({
-  render: function() {
+function WriterTools() {
+  WriterTools.super.apply(this, arguments);
+}
+
+WriterTools.Prototype = function() {
+
+  this.render = function() {
     return $$('div').append(
       $$(Toolbar.Group).append(
         $$(SwitchTextTypeTool)
@@ -47,7 +54,9 @@ var WriterTools = Component.extend({
         $$(CodeTool).append($$(Icon, {icon: 'fa-code'}))
       )
     );
-  }
-});
+  };
+};
+
+Component.extend(WriterTools);
 
 module.exports = WriterTools;
