@@ -1,7 +1,6 @@
 'use strict';
 
 var LensController = require('./LensController');
-var ContentPanel = require('substance/ui/ContentPanel');
 var SplitPane = require('substance/ui/SplitPane');
 var ScrollPane = require('substance/ui/ScrollPane');
 var StatusBar = require('substance/ui/StatusBar');

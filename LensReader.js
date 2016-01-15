@@ -1,7 +1,6 @@
 'use strict';
 
 var LensController = require('./LensController');
-var ContentPanel = require("substance/ui/ContentPanel");
 var StatusBar = require("substance/ui/StatusBar");
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
 var ContainerAnnotator = require('substance/ui/ContainerAnnotator');
