@@ -1,11 +1,9 @@
 'use strict';
 
-var AnnotationComponent = require('substance/ui/AnnotationComponent');
-var Component = require('substance/ui/Component');
-var $$ = Component.$$;
+var InlineNodeComponent = require('substance/ui/InlineNodeComponent');
 
 function CitationComponent() {
-  AnnotationComponent.apply(this, arguments);
+  InlineNodeComponent.apply(this, arguments);
 
   this.props.node.connect(this, {
     "label:changed": this.onLabelChanged
@@ -14,22 +12,21 @@ function CitationComponent() {
 
 CitationComponent.Prototype = function() {
 
+  var _super = InlineNodeComponent.prototype;
+
   this.dispose = function() {
-    AnnotationComponent.prototype.dispose.call(this);
+    _super.dispose.call(this);
     this.props.node.disconnect(this);
   };
 
   this.render = function() {
-    return $$('span')
-      .addClass(this.getClassNames())
-      .attr({
-        "data-id": this.props.node.id,
-        "data-external": 1,
-        "contentEditable": false
-      })
+    var el = _super.render.call(this);
+    el.addClass(this.getClassNames())
+      .attr("data-id", this.props.node.id)
       .on('click', this.onClick)
       .on('mousedown', this.onMouseDown)
       .append(this.props.node.label || "");
+    return el;
   };
 
   this.getClassNames = function() {
@@ -61,6 +58,6 @@ CitationComponent.Prototype = function() {
   };
 };
 
-AnnotationComponent.extend(CitationComponent);
+InlineNodeComponent.extend(CitationComponent);
 
 module.exports = CitationComponent;
