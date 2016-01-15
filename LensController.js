@@ -222,7 +222,7 @@ LensController.Prototype = function() {
     // HACK: updates the highlights when state
     // transition has finished    
     setTimeout(function() {
-      this.contentHighlights.setHighlights({
+      this.contentHighlights.set({
         'bib-item': bibItemHighlights,
         'figure': figureHighlights
       });
