@@ -19,7 +19,6 @@ LensArticleExporter.Prototype = function() {
 
     // Export ArticleMeta
     var metaEl = this.convertNode(doc.get('article-meta'));
-    console.log('metaEl', metaEl);
     articleEl.append(metaEl);
 
     // Export resources (e.g. bib items)
@@ -36,7 +35,6 @@ LensArticleExporter.Prototype = function() {
     articleEl.append(
       $$('body').append(bodyElements)
     );
-
     return articleEl.outerHTML;
   };
 
