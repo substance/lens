@@ -6,6 +6,7 @@ var StatusBar = require("substance/ui/StatusBar");
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
 var ContainerAnnotator = require('substance/ui/ContainerAnnotator');
 var SplitPane = require("substance/ui/SplitPane");
+var ScrollPane = require("substance/ui/ScrollPane");
 var Cover = require('./packages/reader/Cover');
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
@@ -106,7 +107,12 @@ LensReader.Prototype = function() {
 
     return $$('div').ref('main').addClass('se-main-section').append(
       // Content Panel below
-      $$(ContentPanel).ref('contentPanel').append(
+      $$(ScrollPane, {
+        scrollbarType: 'substance',
+        scrollbarPosition: 'left',
+        toc: this.toc,
+        highlights: this.contentHighlights
+      }).ref('contentPanel').append(
         $$(Cover, {
           name: 'cover',
           commands: config.cover.commands

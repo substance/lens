@@ -8,6 +8,7 @@ var $$ = Component.$$;
 var CrossrefSearch = require('./packages/bibliography/CrossrefSearch');
 var $ = require('substance/util/jquery');
 var TOC = require('substance/ui/TOC');
+var Highlights = require('substance/ui/Highlights');
 var TabbedPane = require('substance/ui/TabbedPane');
 
 // Substance is i18n ready, but by now we did not need it
@@ -23,6 +24,7 @@ I18n.instance.load(require('./i18n/en'));
 function LensController(parent, params) {
   Controller.call(this, parent, params);
   this.toc = new TOC(this);
+  this.contentHighlights = new Highlights(this.getDocument());
   this.handleApplicationKeyCombos = this.handleApplicationKeyCombos.bind(this);
 
   // action handlers
@@ -44,16 +46,14 @@ LensController.Prototype = function() {
   };
 
   this.didMount = function() {
-    var scrollPane = this.refs.contentPanel.refs.scrollPane;
     if (this.state.nodeId && this.state.contextId === 'toc') {
-      scrollPane.scrollTo(this.state.nodeId);
+      this.refs.contentPanel.scrollTo(this.state.nodeId);
     }
   };
 
   this.didUpdateState = function() {
-    var scrollPane = this.refs.contentPanel.refs.scrollPane;
     if (this.state.nodeId && this.state.contextId === 'toc') {
-      scrollPane.scrollTo(this.state.nodeId);
+      this.refs.contentPanel.scrollTo(this.state.nodeId);
     }
   };
 
@@ -123,7 +123,6 @@ LensController.Prototype = function() {
   // Some things should go into controller
   this.getChildContext = function() {
     var childContext = Controller.prototype.getChildContext.call(this);
-
     return _.extend(childContext, {
       toc: this.toc,
       bibSearchEngines: [new CrossrefSearch()],
@@ -223,7 +222,7 @@ LensController.Prototype = function() {
     // HACK: updates the highlights when state
     // transition has finished    
     setTimeout(function() {
-      this.refs.contentPanel.setHighlights({
+      this.contentHighlights.setHighlights({
         'bib-item': bibItemHighlights,
         'figure': figureHighlights
       });

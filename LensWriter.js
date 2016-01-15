@@ -1,9 +1,10 @@
 'use strict';
 
 var LensController = require('./LensController');
-var ContentPanel = require("substance/ui/ContentPanel");
-var SplitPane = require("substance/ui/SplitPane");
-var StatusBar = require("substance/ui/StatusBar");
+var ContentPanel = require('substance/ui/ContentPanel');
+var SplitPane = require('substance/ui/SplitPane');
+var ScrollPane = require('substance/ui/ScrollPane');
+var StatusBar = require('substance/ui/StatusBar');
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
 var CoverEditor = require('./packages/writer/CoverEditor');
 var Toolbar = require('substance/ui/Toolbar');
@@ -131,7 +132,12 @@ LensWriter.Prototype = function() {
         // Menu Pane on top
         $$(Toolbar).ref('toolbar').append($$(WriterTools)),
         // Content Panel below
-        $$(ContentPanel).ref('contentPanel').append(
+        $$(ScrollPane, {
+          scrollbarType: 'substance',
+          scrollbarPosition: 'left',
+          toc: this.toc,
+          highlights: this.contentHighlights
+        }).ref('contentPanel').append(
           $$(CoverEditor).ref('coverEditor'),
           // The full fledged document (ContainerEditor)
           $$("div").ref('main').addClass('document-content').append(
