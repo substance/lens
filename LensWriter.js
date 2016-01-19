@@ -117,11 +117,18 @@ var CONFIG = {
   isEditable: true
 };
 
-function LensWriter(parent, params) {
-  LensController.call(this, parent, params);
+function LensWriter() {
+  LensWriter.super.apply(this, arguments);
 }
 
 LensWriter.Prototype = function() {
+
+  var _super = Object.getPrototypeOf(this);
+
+  this.render = function() {
+    return _super.render.call(this)
+      .addClass('sc-lens sc-lens-writer');
+  };
 
   this._renderMainSection = function() {
     var config = this.getConfig();
@@ -150,19 +157,6 @@ LensWriter.Prototype = function() {
           $$(BibliographyComponent).ref('bib')
         )
       ).ref('mainSectionSplitPane')
-    );
-  };
-
-  this.render = function() {
-    var doc = this.props.doc;
-    return $$('div').addClass('sc-lens sc-lens-writer sc-controller').append(
-      $$(SplitPane, {splitType: 'horizontal', sizeB: 'inherit'}).append(
-        $$(SplitPane, {splitType: 'vertical', sizeA: '60%'}).append(
-          this._renderMainSection(),
-          this._renderContextSection()
-        ).ref('splitPane'),
-        $$(StatusBar, {doc: doc}).ref('statusBar')
-      ).ref('workspaceSplitPane')
     );
   };
 

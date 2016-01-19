@@ -1,109 +1,27 @@
 'use strict';
 
-var _ = require('substance/util/helpers');
-var omit = require('lodash/object/omit');
-var Controller = require("substance/ui/Controller");
-var Component = require('substance/ui/Component');
-var $$ = Component.$$;
-var CrossrefSearch = require('./packages/bibliography/CrossrefSearch');
+var extend = require('lodash/object/extend');
 var $ = require('substance/util/jquery');
-var TOC = require('substance/ui/TOC');
-var Highlights = require('substance/ui/Highlights');
-var TabbedPane = require('substance/ui/TabbedPane');
+var TwoPanelController = require('substance/ui/TwoPanelController');
+var CrossrefSearch = require('./packages/bibliography/CrossrefSearch');
 
-// Substance is i18n ready, but by now we did not need it
-// Thus, we configure I18n statically as opposed to loading
-// language files for the current locale
 var I18n = require('substance/ui/i18n');
-I18n.instance.load(require('substance/i18n/en'));
 I18n.instance.load(require('./i18n/en'));
-// e.g. in german
-// I18n.instance.load(require('substance/ui/i18n/de'));
-// I18n.instance.load(require('./i18n/de'));
 
-function LensController(parent, params) {
-  Controller.call(this, parent, params);
-  this.toc = new TOC(this);
-  this.contentHighlights = new Highlights(this.getDocument());
-  this.handleApplicationKeyCombos = this.handleApplicationKeyCombos.bind(this);
+function LensController() {
+  LensController.super.apply(this, arguments);
 
-  // action handlers
   this.handleActions({
-    'switchState': this.switchState,
-    'switchTab': this.switchContext,
-    'switchContext': this.switchContext,
     'toggleBibItem': this.toggleBibItem,
-    'tocEntrySelected': this.tocEntrySelected,
-    'closeDialog': this.closeDialog
   });
 }
 
 LensController.Prototype = function() {
 
-  // Shows the TOC by default
-  this.closeDialog = function() {
-    this.setState({ contextId: 'toc' });
-  };
+  var _super = Object.getPrototypeOf(this);
 
-  this.didMount = function() {
-    if (this.state.nodeId && this.state.contextId === 'toc') {
-      this.refs.contentPanel.scrollTo(this.state.nodeId);
-    }
-  };
-
-  this.didUpdateState = function() {
-    if (this.state.nodeId && this.state.contextId === 'toc') {
-      this.refs.contentPanel.scrollTo(this.state.nodeId);
-    }
-  };
-
-  this.tocEntrySelected = function(nodeId) {
-    this.extendState({
-      nodeId: nodeId
-    });
-  };
-
-  // Extract props needed for panel parametrization
-  this._panelPropsFromState = function() {
-    var props = omit(this.state, 'contextId');
-    props.doc = this.getDocument();
-    return props;
-  };
-
-  // Used by two-column apps
-  this._renderContextSection = function() {
-    var config = this.getConfig();
-    var panelProps = this._panelPropsFromState();
-    var contextId = this.state.contextId;
-    var panels = config.panels || {};
-    var panelConfig = panels[this.state.contextId] || {};
-    var tabOrder = config.tabOrder;
-    var PanelComponentClass = this.componentRegistry.get(contextId);
-
-    var tabs = tabOrder.map(function(contextId) {
-      return {
-        id: contextId,
-        name: this.i18n.t(contextId)
-      };
-    }.bind(this));
-
-    var el = $$('div').addClass('se-context-section').ref('contextSection');
-    var panelEl = $$(PanelComponentClass, panelProps).ref(contextId);
-
-    // Use full space if panel is configured as a dialog
-    if (panelConfig.isDialog) {
-      el.append(panelEl);
-    } else {
-      el.append(
-        $$(TabbedPane, {
-          activeTab: contextId,
-          tabs: tabs,
-        }).ref(this.state.contextId).append(
-          panelEl
-        )
-      );
-    }
-    return el;
+  this.getContentPanel = function() {
+    return this.refs.contentPanel;
   };
 
   // Action used by BibItemComponent when clicked on focus
@@ -122,11 +40,9 @@ LensController.Prototype = function() {
 
   // Some things should go into controller
   this.getChildContext = function() {
-    var childContext = Controller.prototype.getChildContext.call(this);
-    return _.extend(childContext, {
-      toc: this.toc,
+    var childContext = _super.getChildContext.call(this);
+    return extend(childContext, {
       bibSearchEngines: [new CrossrefSearch()],
-      i18n: I18n.instance,
       // Used for turning embed urls to HTML content
       embedResolver: function(srcUrl, cb) {
         $.get('http://iframe.ly/api/iframely?url='+encodeURIComponent(srcUrl)+'&api_key=712fe98e864c79e054e2da')
@@ -141,47 +57,9 @@ LensController.Prototype = function() {
     });
   };
 
-  this.getInitialState = function() {
-    return {'contextId': 'toc'};
-  };
 
   // Action handlers
   // ---------------
-
-  // handles 'switchState'
-  this.switchState = function(newState, options) {
-    options = options || {};
-    this.setState(newState);
-    if (options.restoreSelection) {
-      this.restoreSelection();
-    }
-  };
-
-  // handles 'switchContext' and 'switchTab'
-  this.switchContext = function(tabId, options) {
-    options = options || {};
-    this.setState({ contextId: tabId });
-    if (options.restoreSelection) {
-      this.restoreSelection();
-    }
-  };
-
-  this.restoreSelection = function() {
-    var surface = this.getSurface('body');
-    surface.rerenderDomSelection();
-  };
-
-  this.uploadFile = function(file, cb) {
-    // This is a testing implementation
-    if (this.props.onUploadFile) {
-      return this.props.onUploadFile(file, cb);
-    } else {
-      // Default file upload implementation
-      // We just return a temporary objectUrl
-      var fileUrl = window.URL.createObjectURL(file);
-      cb(null, fileUrl);
-    }
-  };
 
 
   // Hande Writer state change updates
@@ -218,9 +96,9 @@ LensController.Prototype = function() {
 
     var bibItemHighlights = getBibItemHighlights(newState);
     var figureHighlights = getFigureHighlights(newState);
-    
+
     // HACK: updates the highlights when state
-    // transition has finished    
+    // transition has finished
     setTimeout(function() {
       this.contentHighlights.set({
         'bib-item': bibItemHighlights,
@@ -230,6 +108,6 @@ LensController.Prototype = function() {
   };
 };
 
-Controller.extend(LensController);
+TwoPanelController.extend(LensController);
 
 module.exports = LensController;

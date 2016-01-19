@@ -1,7 +1,6 @@
 'use strict';
 
 var LensController = require('./LensController');
-var StatusBar = require("substance/ui/StatusBar");
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
 var ContainerAnnotator = require('substance/ui/ContainerAnnotator');
 var SplitPane = require("substance/ui/SplitPane");
@@ -65,8 +64,8 @@ var CONFIG = {
   isEditable: false
 };
 
-function LensReader(parent, params) {
-  LensController.call(this, parent, params);
+function LensReader() {
+  LensReader.apply(this, arguments);
 
   this.connect(this, {
     'citation:selected': this.onCitationSelected
@@ -75,30 +74,16 @@ function LensReader(parent, params) {
 
 LensReader.Prototype = function() {
 
-  this.onCitationSelected = function(citation) {
-    if (this.state.citationId === citation.id) {
-      this.setState({
-        contextId: 'toc'
-      });
-      return;
-    }
-
-    if (citation.type === 'bib-item-citation') {
-      this.setState({
-        contextId: 'bib-items',
-        citationId: citation.id
-      });
-    } else {
-      this.setState({
-        contextId: 'toc',
-        citationId: citation.id
-      });
-    }
-  };
+  var _super = Object.getPrototypeOf(this);
 
   this.dispose = function() {
     LensController.prototype.dispose.call(this);
     this.disconnect(this);
+  };
+
+  this.render = function() {
+    return _super.render.call(this)
+      .addClass('sc-lens sc-lens-reader sc-controller');
   };
 
   this._renderMainSection = function() {
@@ -130,14 +115,26 @@ LensReader.Prototype = function() {
     );
   };
 
-  this.render = function() {
-    return $$('div').addClass('sc-lens sc-lens-reader sc-controller').append(
-      $$(SplitPane, {splitType: 'vertical', sizeA: '60%'}).append(
-        this._renderMainSection(),
-        this._renderContextSection()
-      ).ref('splitPane')
-    );
+  this.onCitationSelected = function(citation) {
+    if (this.state.citationId === citation.id) {
+      this.setState({
+        contextId: 'toc'
+      });
+      return;
+    }
+    if (citation.type === 'bib-item-citation') {
+      this.setState({
+        contextId: 'bib-items',
+        citationId: citation.id
+      });
+    } else {
+      this.setState({
+        contextId: 'toc',
+        citationId: citation.id
+      });
+    }
   };
+
 };
 
 LensController.extend(LensReader);
