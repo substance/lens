@@ -1,8 +1,8 @@
 'use strict';
 
 var SurfaceCommand = require('substance/ui/SurfaceCommand');
-var createAnnotation = require('substance/model/transform/createAnnotation');
-var insertText = require('substance/model/transform/insertText');
+var insertInlineNode = require('substance/model/transform/insertInlineNode');
+var extend = require('lodash/object/extend');
 
 function CitationCommand() {
   CitationCommand.super.apply(this, arguments);
@@ -16,7 +16,6 @@ CitationCommand.Prototype = function() {
       disabled: true,
       active: false
     };
-
     if (sel && !sel.isNull() && sel.isPropertySelection()) {
       newState.disabled = false;
     }
@@ -39,7 +38,6 @@ CitationCommand.Prototype = function() {
 
   this.execute = function() {
     var state = this.getCommandState();
-    var doc = this.getDocument();
     var surface = this.getSurface();
     var newAnno;
 
@@ -47,28 +45,12 @@ CitationCommand.Prototype = function() {
     if (state.disabled) return;
 
     surface.transaction(function(tx, args) {
-
-      // 1. Insert fake character where the citation should stick on
-      args = insertText(tx, {
-        selection: args.selection,
-        text: '$'
-      });
-
-      var citationSel = doc.createSelection({
-        type: 'property',
-        path: args.selection.path,
-        startOffset: args.selection.startOffset-1,
-        endOffset: args.selection.endOffset
-      });
-
-      // 2. Create citation annotation
-      args.annotationType = this.getAnnotationType();
-      args.annotationData = this.getAnnotationData();
-      args.selection = citationSel;
-      args.splitContainerSelections = false;
       args.containerId = surface.getContainerId();
+      args.node = extend({
+        type: this.getAnnotationType()
+      }, this.getAnnotationData());
 
-      args = createAnnotation(tx, args);
+      args = insertInlineNode(tx, args);
       newAnno = args.result;
       return args;
     }.bind(this));
@@ -78,7 +60,6 @@ CitationCommand.Prototype = function() {
       anno: newAnno
     };
   };
-
 };
 
 SurfaceCommand.extend(CitationCommand);
