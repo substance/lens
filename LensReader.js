@@ -65,7 +65,7 @@ var CONFIG = {
 };
 
 function LensReader() {
-  LensReader.apply(this, arguments);
+  LensReader.super.apply(this, arguments);
 
   this.connect(this, {
     'citation:selected': this.onCitationSelected
