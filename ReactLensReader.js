@@ -35,9 +35,9 @@ var ReactLensReader = React.createClass({
   componentDidMount: function() {
     var el = React.findDOMNode(this);
     var doc = this.createDoc(this.props.content);
-    this.reader = Component.mount($$(LensReader, {
+    this.reader = Component.mount(LensReader, {
       doc: doc
-    }), el);
+    }, el);
   },
 
   componentWillUnmount: function() {
