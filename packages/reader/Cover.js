@@ -1,7 +1,7 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var TextPropertyAnnotator = require('substance/ui/TextPropertyAnnotator');
+var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
 var $$ = require('substance/ui/Component').$$;
 
 function Cover() {
@@ -15,18 +15,20 @@ Cover.Prototype = function() {
     var metaNode = doc.getDocumentMeta();
     return $$("div").addClass("document-cover")
       .append(
-        $$(TextPropertyAnnotator, {
+        $$(TextPropertyEditor, {
           name: 'title',
           tagName: "div",
-          path: [metaNode.id, "title"]
+          path: [metaNode.id, "title"],
+          editing: 'readonly'
         }).addClass('title'),
 
         // Abstract
         $$('div').addClass('abstract').append(
-          $$(TextPropertyAnnotator, {
+          $$(TextPropertyEditor, {
             name: 'abstract',
             tagName: "div",
-            path: [metaNode.id, "abstract"]
+            path: [metaNode.id, "abstract"],
+            editing: 'readonly'
           }).addClass('abstract')
         )
       );

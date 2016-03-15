@@ -4,6 +4,7 @@
 // Takes care of generating labels and keeping them up to date
 
 var _ = require('substance/util/helpers');
+var pluck = require('substance/util/pluck');
 var oo = require('substance/util/oo');
 
 function Collection(doc, containerId, itemType, labelPrefix) {
@@ -92,7 +93,7 @@ Collection.Prototype = function() {
       }
       var targetPos = _item.index + 1;
       targetPositions.push(targetPos);
-    }, this);
+    }.bind(this));
     targetPositions.sort();
     // generate a label by concatenating numbers
     // and provide a special label for empty citations.
@@ -111,7 +112,7 @@ Collection.Prototype = function() {
       var label = this.createItemLabel(_item);
       // console.log('generated item label', label);
       _item.item.setLabel(label);
-    }, this);
+    }.bind(this));
   };
 
   this.updateCitationLabels = function() {
@@ -119,7 +120,7 @@ Collection.Prototype = function() {
     _.each(this._citations, function(_citation) {
       var label = this.createCitationLabel(_citation);
       _citation.citation.setLabel(label);
-    }, this);
+    }.bind(this));
   };
 
   // get citation nodes sorted by occurence in container.
@@ -156,10 +157,10 @@ Collection.Prototype = function() {
     this._items = this.determineItems();
     // Note: doing this right away allows us to easily find the
     // position of an item
-    this.items = _.pluck(this._items, 'item');
+    this.items = pluck(this._items, 'item');
 
     this._citations = this.determineCitations();
-    this.citations = _.pluck(this._citations, 'citation');
+    this.citations = pluck(this._citations, 'citation');
 
     // compile labels
     this.updateItemLabels();
@@ -175,6 +176,7 @@ Collection.Prototype = function() {
   this.onDocumentChanged = function(change) {
     var doc = this.doc;
     var needsUpdate = false;
+    var node, deletedNode;
 
     _.each(change.ops, function(op) {
 
@@ -184,7 +186,7 @@ Collection.Prototype = function() {
 
       if (op.isCreate() || op.isSet() || op.isUpdate()) {
         var nodeId = op.path[0];
-        var node = doc.get(nodeId);
+        node = doc.get(nodeId);
         if (!node) return;
 
         if (op.isCreate()) {
@@ -202,7 +204,7 @@ Collection.Prototype = function() {
         }
       } else if (op.isDelete()) {
         // Delete
-        var deletedNode = op.val;
+        deletedNode = op.val;
         if (deletedNode.type === 'image-figure-citation' || deletedNode.type === 'table-figure-citation') {
           needsUpdate = true;
         }
@@ -221,7 +223,7 @@ Collection.Prototype = function() {
         // which have the inserted or removed value as `val`.
         if (op.type === "update") {
           var id = op.diff.val;
-          var node = doc.get(id);
+          node = doc.get(id);
           // ATTENTION: as these are intermediate ops
           // it may happen that the node itself has been
           // deleted by a later op in this change
@@ -236,7 +238,7 @@ Collection.Prototype = function() {
 
       // When node of this.itemType has been deleted
       if (op.isDelete()) {
-        var deletedNode = op.val;
+        deletedNode = op.val;
         if (deletedNode.type === this.itemType) {
           needsUpdate = true;
         }

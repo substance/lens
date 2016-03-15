@@ -22,7 +22,8 @@ CoverEditor.Prototype = function() {
           name: 'title',
           tagName: "div",
           commands: config.title.commands,
-          path: [metaNode.id, "title"]
+          path: [metaNode.id, "title"],
+          editing: 'full'
         }).addClass('title'),
 
         // Editable abstract
@@ -31,7 +32,8 @@ CoverEditor.Prototype = function() {
             name: 'abstract',
             tagName: 'div',
             commands: config.abstract.commands,
-            path: [metaNode.id, 'abstract']
+            path: [metaNode.id, 'abstract'],
+            editing: 'full'
           }).addClass('abstract')
         )
       );

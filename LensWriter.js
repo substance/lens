@@ -27,14 +27,14 @@ var CONFIG = {
       "codeblock": require('substance/packages/codeblock/CodeblockComponent'),
       "embed": require('substance/packages/embed/EmbedComponent'),
       "image": require('substance/packages/image/ImageComponent'),
-      "table": require('substance/packages/table/TableComponent'),
+      // "table": require('substance/packages/table/TableComponent'),
 
       "image-figure": require('substance/packages/figure/FigureComponent'),
-      "table-figure": require('substance/packages/figure/FigureComponent'),
+      // "table-figure": require('substance/packages/figure/FigureComponent'),
 
       "bib-item-citation": require('./packages/citations/CitationComponent'),
       "image-figure-citation": require('./packages/citations/CitationComponent'),
-      "table-figure-citation": require('./packages/citations/CitationComponent'),
+      // "table-figure-citation": require('./packages/citations/CitationComponent'),
 
       // Panels
       "toc": require('substance/ui/TOCPanel'),
@@ -46,7 +46,7 @@ var CONFIG = {
       // the citation type based on state.contextId
       "cite-bib-item": require('./packages/citations/CitePanel'),
       "cite-image-figure": require('./packages/citations/CitePanel'),
-      "cite-table-figure": require('./packages/citations/CitePanel'),
+      // "cite-table-figure": require('./packages/citations/CitePanel'),
 
       "bib-item-entry": require('./packages/bibliography/BibItemEntry'),
       "image-figure-entry": require('./packages/figures/ImageFigureEntry'),

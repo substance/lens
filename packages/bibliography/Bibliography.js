@@ -95,7 +95,7 @@ Bibliography.Prototype = function() {
       data.id = bibItem.id;
       compiler.addRecord(data);
       this.bibitemsByGuid[bibItem.guid] = bibItem;
-    }, this);
+    }.bind(this));
 
     // get citation nodes sorted by occurrence position.
     var citations = doc.getIndex('type').get('bib-item-citation');
@@ -126,7 +126,7 @@ Bibliography.Prototype = function() {
       } else {
         citation.setLabel('???');
       }
-    }, this);
+    }.bind(this));
 
     var compiledBibItems = this.getCompiler().makeBibliography();
     compiledBibItems = _.sortBy(compiledBibItems, "rank");
@@ -135,7 +135,7 @@ Bibliography.Prototype = function() {
       bibItem.setLabel(item.label);
       bibItem.setText(item.content);
       return bibItem;
-    }, this);
+    }.bind(this));
 
     this.emit('bibliography:updated');
   };
