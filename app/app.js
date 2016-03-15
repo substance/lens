@@ -3,6 +3,7 @@
 var Component = require('substance/ui/Component');
 var $$ = Component.$$;
 var Backend = require("./backend");
+var DocumentSession = require('substance/model/DocumentSession');
 var $ = window.$ = require('substance/util/jquery');
 var LensWriter = require('../LensWriter');
 var LensReader = require('../LensReader');
@@ -55,11 +56,11 @@ App.Prototype = function() {
       )
     );
 
-    if (this.doc) {
+    if (this.documentSession) {
       var lensEl;
       if (this.state.mode === 'write') {
         lensEl = $$(LensWriter, {
-          doc: this.doc,
+          documentSession: this.documentSession,
           onUploadFile: function(file, cb) {
             console.log('custom file upload handler in action...');
             var fileUrl = window.URL.createObjectURL(file);
@@ -72,7 +73,7 @@ App.Prototype = function() {
         }).ref('writer').route();
       } else {
         lensEl = $$(LensReader, {
-          doc: this.doc
+          documentSession: this.documentSession
         }).ref('reader').route();
       }
       el.append($$('div').addClass('context').append(lensEl));
@@ -82,7 +83,9 @@ App.Prototype = function() {
 
   this.didMount = function() {
     this.backend.getDocument('sample', function(err, doc) {
-      this.doc = doc;
+      this.documentSession = new DocumentSession(doc);
+      // Expose to window for debugging
+      window.documentSession = this.documentSession;
       this.rerender();
     }.bind(this));
   };

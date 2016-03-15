@@ -3,7 +3,6 @@
 var LensController = require('./LensController');
 var SplitPane = require('substance/ui/SplitPane');
 var ScrollPane = require('substance/ui/ScrollPane');
-var StatusBar = require('substance/ui/StatusBar');
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
 var CoverEditor = require('./packages/writer/CoverEditor');
 var Toolbar = require('substance/ui/Toolbar');
@@ -161,6 +160,7 @@ LensWriter.Prototype = function() {
   };
 
   this.onSelectionChanged = function(sel, surface) {
+    var doc;
     function getActiveAnno(type) {
       return docHelpers.getAnnotationsForSelection(doc, sel, type, 'main')[0];
     }
@@ -174,7 +174,7 @@ LensWriter.Prototype = function() {
     }
 
     this.prevSelection = sel;
-    var doc = surface.getDocument();
+    doc = surface.getDocument();
     var citation = getActiveAnno('citation');
 
     if (citation && citation.getSelection().equals(sel)) {
