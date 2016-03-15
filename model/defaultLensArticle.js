@@ -4,7 +4,7 @@ var createDocumentFactory = require('substance/model/createDocumentFactory');
 var LensArticle = require('./LensArticle');
 
 module.exports = createDocumentFactory(LensArticle, function(tx) {
-  var body = tx.get('body');
+  var main = tx.get('main');
 
   // TODO: allow provision of initial title
   tx.set(['article-meta', 'title'], 'Untitled');
@@ -15,5 +15,5 @@ module.exports = createDocumentFactory(LensArticle, function(tx) {
     type: 'paragraph',
     content: 'Enter text here'
   });
-  body.show('p1');
+  main.show('p1');
 });
