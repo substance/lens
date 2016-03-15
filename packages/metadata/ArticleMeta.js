@@ -12,7 +12,7 @@ ArticleMeta.static.name = "article-meta";
 
 ArticleMeta.static.defineSchema({
   "title": "string",
-  "authors": ["array", "string"],
+  "authors": {type: ["array", "string"], default: []},
   "abstract": "string"
 });
 
