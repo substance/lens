@@ -85,32 +85,3 @@ Component.mount($$(LensWriter, {
 ```
 
 Make sure to also include the stylesheets into your app. We provide entry points at `styles/lens-writer.sass` and `styles/lens-reader.sass`. Lens requires a module bundler, such as Browserify or Webpack.
-
-## Usage from React
-
-Lens provides simple React wrappers, for easier embedding. To embed the Writer do:
-
-```js
-var LensWriter = require('lens/ReactLensWriter');
-
-React.createElement(LensWriter, {
-  content: LENS_ARTICLE_XML,
-  onSave: function(xml, cb) {
-    // Save document and confirm with cb(null, )
-  },
-  onFileUpload(file, cb) {
-    // Handle file upload
-    // Store file somewhere and confirm with cb(null, 'http://url.to/file.png')
-  }
-});
-```
-
-And for the Reader:
-
-```js
-var LensReader = require('lens/ReactLensReader');
-
-React.createElement(LensReader, {
-  content: LENS_ARTICLE_XML
-});
-```
