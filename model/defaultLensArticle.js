@@ -6,9 +6,12 @@ var LensArticle = require('./LensArticle');
 module.exports = createDocumentFactory(LensArticle, function(tx) {
   var main = tx.get('main');
 
-  // TODO: allow provision of initial title
-  tx.set(['article-meta', 'title'], 'Untitled');
-  tx.set(['article-meta', 'abstract'], 'Enter abstract');
+  tx.create({
+    id: 'article-meta',
+    type: 'article-meta',
+    title: 'Untitled',
+    abstract: 'Enter abstract'
+  });
 
   tx.create({
     id: 'p1',
