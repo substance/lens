@@ -20,7 +20,7 @@
     "through2": "2.0.0"
   },
   "peerDependencies": {
-    "substance": "^1.0.0-beta.4"
+    "substance": "1.0.0-beta.4"
   },
   "scripts": {
     "bundle": "gulp"
