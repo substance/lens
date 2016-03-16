@@ -11,7 +11,7 @@
     "font-awesome": "4.4.0",
     "lodash": "3.10.1",
     "node-sass": "3.4.2",
-    "substance": "substance/substance#fcc5dbb5dcadb12aeef8db3ccef5805a2f07bf06"
+    "substance": "substance/substance#d5ca2b73841d12fa9a4b2c9b88ad61a162bce13b"
   },
   "devDependencies": {
     "gulp": "3.9.0",
