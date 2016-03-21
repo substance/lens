@@ -61,6 +61,7 @@ App.Prototype = function() {
       if (this.state.mode === 'write') {
         lensEl = $$(LensWriter, {
           documentSession: this.documentSession,
+          doc: this.documentSession.doc,
           onUploadFile: function(file, cb) {
             console.log('custom file upload handler in action...');
             var fileUrl = window.URL.createObjectURL(file);
@@ -73,7 +74,8 @@ App.Prototype = function() {
         }).ref('writer').route();
       } else {
         lensEl = $$(LensReader, {
-          documentSession: this.documentSession
+          documentSession: this.documentSession,
+          doc: this.documentSession.doc
         }).ref('reader').route();
       }
       el.append($$('div').addClass('context').append(lensEl));
