@@ -4,6 +4,7 @@ var extend = require('lodash/object/extend');
 var $ = require('substance/util/jquery');
 var TwoPanelController = require('substance/ui/TwoPanelController');
 var CrossrefSearch = require('./packages/bibliography/CrossrefSearch');
+var CiteprocCompiler = require('./packages/bibliography/CiteprocCompiler');
 
 var I18n = require('substance/ui/i18n');
 I18n.instance.load(require('./i18n/en'));
@@ -22,6 +23,12 @@ LensController.Prototype = function() {
 
   this.getContentPanel = function() {
     return this.refs.contentPanel;
+  };
+
+  this.didMount = function() {
+    _super.didMount.call(this);
+    var doc = this.props.documentSession.getDocument();
+    doc.citeprocCompiler = new CiteprocCompiler();
   };
 
   // Action used by BibItemComponent when clicked on focus

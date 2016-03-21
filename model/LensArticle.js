@@ -3,7 +3,6 @@ var _ = require('substance/util/helpers');
 var Document = require('substance/model/Document');
 var DocumentIndex = require('substance/model/DocumentIndex');
 
-var CiteprocCompiler = require('../packages/bibliography/CiteprocCompiler');
 var Bibliography = require('../packages/bibliography/Bibliography');
 var Collection = require('./Collection');
 
@@ -20,8 +19,6 @@ var LensArticle = function() {
     id: "main",
     nodes: []
   });
-
-  this.citeprocCompiler = new CiteprocCompiler();
 
   this.collections = {
     "bib-item": new Bibliography(this, 'main'),

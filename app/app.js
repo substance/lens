@@ -8,6 +8,8 @@ var $ = window.$ = require('substance/util/jquery');
 var LensWriter = require('../LensWriter');
 var LensReader = require('../LensReader');
 var Router = require('substance/ui/Router');
+var LensArticleExporter = require('../model/LensArticleExporter');
+var exporter = new LensArticleExporter();
 
 function App() {
   Component.apply(this, arguments);
@@ -67,7 +69,8 @@ App.Prototype = function() {
             cb(null, fileUrl);
           },
           onSave: function(doc, changes, cb) {
-            console.log('custom save handler in action...');
+            var xml = exporter.exportDocument(doc);
+            console.log('XML', xml);
             cb(null);
           }
         }).ref('writer').route();
