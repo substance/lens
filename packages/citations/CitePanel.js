@@ -4,7 +4,6 @@ var _ = require('substance/util/helpers');
 var Component = require('substance/ui/Component');
 var ScrollPane = require('substance/ui/ScrollPane');
 var DialogHeader = require('substance/ui/DialogHeader');
-var $$ = Component.$$;
 
 function CitePanel() {
   Component.apply(this, arguments);
@@ -14,7 +13,15 @@ function CitePanel() {
 
 CitePanel.Prototype = function() {
 
-  this.render = function() {
+  this.didMount = function() {
+    this._scrollToTarget();
+  };
+
+  this.willReceiveProps = function(nextProps) {
+    this._initialize(nextProps);
+  };
+
+  this.render = function($$) {
     var componentRegistry = this.context.componentRegistry;
     var items;
     if (this.items.length > 0) {
@@ -38,24 +45,12 @@ CitePanel.Prototype = function() {
     );
   };
 
-  this.willReceiveProps = function(nextProps) {
-    this._initialize(nextProps);
-  };
-
-  this._initialize = function() {
-    this.items = this.getItems(this.props.citationType);
-  };
-
-  this.dispose = function() {
-    this.$el.off('click', '.back', this.handleCancel);
-  };
-
-  this.didMount = function() {
+  this.didRender = function() {
     this._scrollToTarget();
   };
 
-  this.didReceiveProps = function() {
-    this._scrollToTarget();
+  this._initialize = function(props) {
+    this.items = this.getItems(props.citationType);
   };
 
   this._scrollToTarget = function() {

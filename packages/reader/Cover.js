@@ -2,7 +2,6 @@
 
 var Component = require('substance/ui/Component');
 var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
-var $$ = require('substance/ui/Component').$$;
 
 function Cover() {
   Cover.super.apply(this, arguments);
@@ -10,7 +9,7 @@ function Cover() {
 
 Cover.Prototype = function() {
 
-  this.render = function() {
+  this.render = function($$) {
     var doc = this.context.controller.getDocument();
     var metaNode = doc.getDocumentMeta();
     return $$("div").addClass("document-cover")

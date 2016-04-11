@@ -1,7 +1,6 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var $$ = Component.$$;
 
 function ImageFigureEntry() {
   Component.apply(this, arguments);
@@ -9,7 +8,7 @@ function ImageFigureEntry() {
 
 ImageFigureEntry.Prototype = function() {
 
-  this.render = function() {
+  this.render = function($$) {
     var el = $$('div')
       .addClass('figure border-bottom item pad clearfix small')
       .attr('data-id', this.props.node.id)

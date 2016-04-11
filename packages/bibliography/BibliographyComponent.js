@@ -1,20 +1,26 @@
 'use strict';
 
 var _ = require('substance/util/helpers');
-var oo = require('substance/util/oo');
 var Component = require('substance/ui/Component');
-var $$ = Component.$$;
 
 function BibliographyComponent() {
   Component.apply(this, arguments);
+
+  var doc = this.getDocument();
+  this.bibliography = doc.getCollection('bib-item');
 }
 
 BibliographyComponent.Prototype = function() {
-  this.getDocument = function() {
-    return this.context.controller.getDocument();
+
+  this.didMount = function() {
+    this.bibliography.on('bibliography:updated', this.update, this);
   };
 
-  this.render = function() {
+  this.dispose = function() {
+    this.bibliography.off(this);
+  };
+
+  this.render = function($$) {
     var state = this.state;
     if (state.bibItems) {
       var bibItemEls = [
@@ -35,12 +41,8 @@ BibliographyComponent.Prototype = function() {
     }
   };
 
-  this.didMount = function() {
-    var doc = this.getDocument();
-    this.bibliography = doc.getCollection('bib-item');
-    this.bibliography.connect(this, {
-      'bibliography:updated': this.update
-    });
+  this.getDocument = function() {
+    return this.context.controller.getDocument();
   };
 
   this.update = function() {
@@ -51,6 +53,6 @@ BibliographyComponent.Prototype = function() {
   };
 };
 
-oo.inherit(BibliographyComponent, Component);
+Component.extend(BibliographyComponent);
 
 module.exports = BibliographyComponent;

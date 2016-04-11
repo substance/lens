@@ -9,8 +9,6 @@ var Toolbar = require('substance/ui/Toolbar');
 var WriterTools = require('./packages/writer/WriterTools');
 var ContainerEditor = require('substance/ui/ContainerEditor');
 var docHelpers = require('substance/model/documentHelpers');
-var Component = require('substance/ui/Component');
-var $$ = Component.$$;
 
 var CONFIG = {
   controller: {
@@ -122,14 +120,15 @@ function LensWriter() {
 
 LensWriter.Prototype = function() {
 
-  var _super = Object.getPrototypeOf(this);
+  var _super = LensWriter.super.prototype;
 
   this.render = function() {
-    return _super.render.call(this)
-      .addClass('sc-lens sc-lens-writer');
+    var el = _super.render.apply(this, arguments);
+    el.addClass('sc-lens sc-lens-writer');
+    return el;
   };
 
-  this._renderMainSection = function() {
+  this._renderMainSection = function($$) {
     var config = this.getConfig();
 
     return $$('div').ref('main').addClass('se-main-section').append(

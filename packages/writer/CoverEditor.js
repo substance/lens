@@ -1,7 +1,6 @@
 "use strict";
 
 var Component = require('substance/ui/Component');
-var $$ = require('substance/ui/Component').$$;
 var TextPropertyEditor = require('substance/ui/TextPropertyEditor');
 
 var CoverEditor = function() {
@@ -10,7 +9,7 @@ var CoverEditor = function() {
 
 CoverEditor.Prototype = function() {
 
-  this.render = function() {
+  this.render = function($$) {
     var doc = this.context.controller.getDocument();
     var config = this.context.config;
 

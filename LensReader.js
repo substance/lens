@@ -3,11 +3,8 @@
 var LensController = require('./LensController');
 var BibliographyComponent = require('./packages/bibliography/BibliographyComponent');
 var ContainerAnnotator = require('substance/ui/ContainerAnnotator');
-var SplitPane = require("substance/ui/SplitPane");
 var ScrollPane = require("substance/ui/ScrollPane");
 var Cover = require('./packages/reader/Cover');
-var Component = require('substance/ui/Component');
-var $$ = Component.$$;
 
 var CONFIG = {
   controller: {
@@ -66,27 +63,31 @@ var CONFIG = {
 
 function LensReader() {
   LensReader.super.apply(this, arguments);
-
-  this.connect(this, {
-    'citation:selected': this.onCitationSelected
-  });
 }
 
 LensReader.Prototype = function() {
 
-  var _super = Object.getPrototypeOf(this);
+  var _super = LensReader.super.prototype;
+
+  this.didMount = function() {
+    _super.didMount.call(this);
+
+    this.on('citation:selected', this.onCitationSelected, this);
+  };
 
   this.dispose = function() {
-    LensController.prototype.dispose.call(this);
-    this.disconnect(this);
+    _super.dispose.call(this);
+
+    this.off(this);
   };
 
   this.render = function() {
-    return _super.render.call(this)
-      .addClass('sc-lens sc-lens-reader sc-controller');
+    var el = _super.render.apply(this, arguments);
+    el.addClass('sc-lens sc-lens-reader sc-controller');
+    return el;
   };
 
-  this._renderMainSection = function() {
+  this._renderMainSection = function($$) {
     var config = this.getConfig();
 
     return $$('div').ref('main').addClass('se-main-section').append(

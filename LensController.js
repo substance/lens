@@ -19,35 +19,11 @@ function LensController() {
 
 LensController.Prototype = function() {
 
-  var _super = Object.getPrototypeOf(this);
+  var _super = LensController.super.prototype;
 
-  this.getContentPanel = function() {
-    return this.refs.contentPanel;
-  };
-
-  this.didMount = function() {
-    _super.didMount.call(this);
-    var doc = this.props.documentSession.getDocument();
-    doc.citeprocCompiler = new CiteprocCompiler();
-  };
-
-  // Action used by BibItemComponent when clicked on focus
-  this.toggleBibItem = function(bibItem) {
-    if (this.state.bibItemId === bibItem.id) {
-      this.setState({
-        contextId: 'bib-items'
-      });
-    } else {
-      this.setState({
-        contextId: 'bib-items',
-        bibItemId: bibItem.id
-      });
-    }
-  };
-
-  // Some things should go into controller
   this.getChildContext = function() {
     var childContext = _super.getChildContext.call(this);
+
     return extend(childContext, {
       bibSearchEngines: [new CrossrefSearch()],
       // Used for turning embed urls to HTML content
@@ -64,12 +40,33 @@ LensController.Prototype = function() {
     });
   };
 
+  this.didMount = function() {
+    _super.didMount.call(this);
 
-  // Action handlers
-  // ---------------
+    var doc = this.props.documentSession.getDocument();
+    doc.citeprocCompiler = new CiteprocCompiler();
+  };
+
+  this.getContentPanel = function() {
+    return this.refs.contentPanel;
+  };
+
+  // Action used by BibItemComponent when clicked on focus
+  this.toggleBibItem = function(bibItem) {
+    if (this.state.bibItemId === bibItem.id) {
+      this.setState({
+        contextId: 'bib-items'
+      });
+    } else {
+      this.setState({
+        contextId: 'bib-items',
+        bibItemId: bibItem.id
+      });
+    }
+  };
 
 
-  // Hande Writer state change updates
+  // Handle Writer state change updates
   // --------------
   //
   // Here we update highlights

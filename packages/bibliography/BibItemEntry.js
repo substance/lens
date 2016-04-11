@@ -1,24 +1,22 @@
 'use strict';
 
-var oo = require('substance/util/oo');
 var Component = require('substance/ui/Component');
-var $$ = Component.$$;
 
 function BibItemEntry() {
   Component.apply(this, arguments);
-
-  this.props.node.connect(this, {
-    'label': this.onLabelChanged
-  });
 }
 
 BibItemEntry.Prototype = function() {
 
-  this.dispose = function() {
-    this.props.node.disconnect(this);
+  this.didMount = function() {
+    this.props.node.on('label', this.onLabelChanged, this);
   };
 
-  this.render = function() {
+  this.dispose = function() {
+    this.props.node.off(this);
+  };
+
+  this.render = function($$) {
     var el = $$('div')
       .addClass('bib-item border-bottom pad item small clearfix')
       .attr('data-id', this.props.node.id);
@@ -50,6 +48,6 @@ BibItemEntry.Prototype = function() {
   };
 };
 
-oo.inherit(BibItemEntry, Component);
+Component.extend(BibItemEntry);
 
 module.exports = BibItemEntry;

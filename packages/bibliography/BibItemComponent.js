@@ -1,7 +1,6 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var $$ = Component.$$;
 var Icon = require('substance/ui/FontAwesomeIcon');
 
 // Used in BibItemsPanel
@@ -11,11 +10,7 @@ function BibItemComponent() {
 
 BibItemComponent.Prototype = function() {
 
-  this.toggleFocus = function() {
-    this.send('toggleBibItem', this.props.node);
-  };
-
-  this.render = function() {
+  this.render = function($$) {
     var el = $$('div').addClass('sc-bib-item').attr('data-id', this.props.node.id);
     if (this.props.highlighted) {
       el.addClass('se-highlighted');
@@ -33,6 +28,10 @@ BibItemComponent.Prototype = function() {
     // Text
     el.append($$('div').addClass('se-text').append(this.props.node.text || ''));
     return el;
+  };
+
+  this.toggleFocus = function() {
+    this.send('toggleBibItem', this.props.node);
   };
 };
 

@@ -4,7 +4,6 @@ var Component = require('substance/ui/Component');
 var ScrollPane = require('substance/ui/ScrollPane');
 var BibItemComponent = require('./BibItemComponent');
 var BibliographySummary = require('./BibliographySummary');
-var $$ = Component.$$;
 
 // List existing bib items
 // -----------------
@@ -14,23 +13,44 @@ function BibItemsPanel() {
 
   var doc = this.props.doc;
   this.bibliography = doc.getCollection('bib-item');
-  this.bibliography.connect(this, {
-    'bibliography:updated': this.rerender
-  });
 }
 
 BibItemsPanel.Prototype = function() {
 
-  this.dispose = function() {
-    this.bibliography.disconnect(this);
+  this.didMount = function() {
+    this.bibliography.on('bibliography:updated', this.rerender, this);
+    this._scrollToTarget();
   };
 
-  this.didMount = function() {
-    this._scrollToTarget();
+  this.dispose = function() {
+    this.bibliography.off(this);
   };
 
   this.didReceiveProps = function() {
     this._scrollToTarget();
+  };
+
+  this.render = function($$) {
+    var bibItems = this.bibliography.getItems();
+
+    var bibItemEls = $$('div').addClass('se-bib-items').ref('bibItems');
+    bibItemEls.append($$(BibliographySummary, {bibItems: bibItems}));
+
+    bibItems.forEach(function(bibItem) {
+      bibItemEls.append($$(BibItemComponent, {
+        node: bibItem,
+        toggleName: this.i18n.t('focus'),
+        highlighted: this.isHighlighted(bibItem)
+      }));
+    }.bind(this));
+
+    var el = $$('div').addClass('sc-bib-items-panel').append(
+      $$(ScrollPane, {doc: this.props.doc}).append(
+        bibItemEls
+      ).ref('scrollPane')
+    );
+
+    return el;
   };
 
   this._scrollToTarget = function() {
@@ -65,29 +85,6 @@ BibItemsPanel.Prototype = function() {
       }
     }
     return false;
-  };
-
-  this.render = function() {
-    var bibItems = this.bibliography.getItems();
-
-    var bibItemEls = $$('div').addClass('se-bib-items').ref('bibItems');
-    bibItemEls.append($$(BibliographySummary, {bibItems: bibItems}));
-
-    bibItems.forEach(function(bibItem) {
-      bibItemEls.append($$(BibItemComponent, {
-        node: bibItem,
-        toggleName: this.i18n.t('focus'),
-        highlighted: this.isHighlighted(bibItem)
-      }));
-    }.bind(this));
-
-    var el = $$('div').addClass('sc-bib-items-panel').append(
-      $$(ScrollPane, {doc: this.props.doc}).append(
-        bibItemEls
-      ).ref('scrollPane')
-    );
-
-    return el;
   };
 
   // this.handleDeleteBibItem = function(e) {

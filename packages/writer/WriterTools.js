@@ -2,7 +2,6 @@
 
 var Toolbar = require('substance/ui/Toolbar');
 var Component = require('substance/ui/Component');
-var $$ = Component.$$;
 var SwitchTextTypeTool = require('substance/packages/text/SwitchTextTypeTool');
 var UndoTool = require('substance/ui/UndoTool');
 var RedoTool = require('substance/ui/RedoTool');
@@ -25,7 +24,7 @@ function WriterTools() {
 
 WriterTools.Prototype = function() {
 
-  this.render = function() {
+  this.render = function($$) {
     return $$('div').append(
       $$(Toolbar.Group).append(
         $$(SwitchTextTypeTool)

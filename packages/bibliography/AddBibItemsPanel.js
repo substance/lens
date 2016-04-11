@@ -2,7 +2,6 @@
 
 var _ = require('substance/util/helpers');
 var Component = require('substance/ui/Component');
-var $$ = Component.$$;
 var BibItemComponent = require('./BibItemComponent');
 var DialogHeader = require('substance/ui/DialogHeader');
 var ScrollPane = require('substance/ui/ScrollPane');
@@ -21,21 +20,6 @@ function AddBibItemsPanel() {
 
 AddBibItemsPanel.Prototype = function() {
 
-  this.toggleBibItem = function(bibItem) {
-    this.toggleItem(bibItem.id);
-  };
-
-  this.didMount = function() {
-    // push surface selection state so that we can recover it when closing
-    var $input = this.$el.find('input');
-    $input.val(this.state.searchResult.searchStr).focus();
-  };
-
-  this.handleCancel = function(e) {
-    e.preventDefault();
-    this.send('switchContext', 'bib-items');
-  };
-
   this.getInitialState = function() {
     return {
       searchResult: {
@@ -46,7 +30,13 @@ AddBibItemsPanel.Prototype = function() {
     };
   };
 
-  this.render = function() {
+  this.didMount = function() {
+    // push surface selection state so that we can recover it when closing
+    var $input = this.$el.find('input');
+    $input.val(this.state.searchResult.searchStr).focus();
+  };
+
+  this.render = function($$) {
     return $$('div').addClass('sc-add-bib-items-panel').append(
       $$(DialogHeader, {
         label: this.i18n.t('add-bib-entries'),
@@ -66,9 +56,18 @@ AddBibItemsPanel.Prototype = function() {
             .append("Search")
             .on('click', this.startSearch.bind(this))
         ),
-        this.renderSearchResult()
+        this.renderSearchResult($$)
       )
     );
+  };
+
+  this.toggleBibItem = function(bibItem) {
+    this.toggleItem(bibItem.id);
+  };
+
+  this.handleCancel = function(e) {
+    e.preventDefault();
+    this.send('switchContext', 'bib-items');
   };
 
   this.isAdded = function(entry) {
@@ -85,7 +84,7 @@ AddBibItemsPanel.Prototype = function() {
     return label;
   };
 
-  this.renderSearchResult = function() {
+  this.renderSearchResult = function($$) {
     var searchResultEl = $$('div').addClass('se-search-results');
     var items = this.state.searchResult.items;
 

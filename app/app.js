@@ -1,13 +1,10 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var $$ = Component.$$;
 var Backend = require("./backend");
 var DocumentSession = require('substance/model/DocumentSession');
-var $ = window.$ = require('substance/util/jquery');
 var LensWriter = require('../LensWriter');
 var LensReader = require('../LensReader');
-var Router = require('substance/ui/Router');
 var LensArticleExporter = require('../model/LensArticleExporter');
 var exporter = new LensArticleExporter();
 
@@ -18,31 +15,22 @@ function App() {
 
 App.Prototype = function() {
 
-  this.getInitialContext = function() {
-    return {
-      router: new Router(this)
-    };
-  };
-
   this.getInitialState = function() {
     return {
       mode: 'write'
     };
   };
 
-  this.openReader = function() {
-    this.extendState({
-      mode: 'read'
-    });
+  this.didMount = function() {
+    this.backend.getDocument('sample', function(err, doc) {
+      this.documentSession = new DocumentSession(doc);
+      // Expose to window for debugging
+      window.documentSession = this.documentSession;
+      this.rerender();
+    }.bind(this));
   };
 
-  this.openWriter = function() {
-    this.extendState({
-      mode: 'write'
-    });
-  };
-
-  this.render = function() {
+  this.render = function($$) {
     var el = $$('div').addClass('app');
 
     el.append(
@@ -73,29 +61,33 @@ App.Prototype = function() {
             console.log('XML', xml);
             cb(null);
           }
-        }).ref('writer').route();
+        }).ref('writer');
       } else {
         lensEl = $$(LensReader, {
           documentSession: this.documentSession
-        }).ref('reader').route();
+        }).ref('reader');
       }
       el.append($$('div').addClass('context').append(lensEl));
     }
     return el;
   };
 
-  this.didMount = function() {
-    this.backend.getDocument('sample', function(err, doc) {
-      this.documentSession = new DocumentSession(doc);
-      // Expose to window for debugging
-      window.documentSession = this.documentSession;
-      this.rerender();
-    }.bind(this));
+  this.openReader = function() {
+    this.extendState({
+      mode: 'read'
+    });
   };
+
+  this.openWriter = function() {
+    this.extendState({
+      mode: 'write'
+    });
+  };
+
 };
 
 Component.extend(App);
 
-$(function() {
-  window.app = Component.mount(App, $('#container'));
-});
+window.onload = function() {
+  window.app = Component.mount(App, '#container');
+};

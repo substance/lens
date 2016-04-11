@@ -1,19 +1,14 @@
 'use strict';
 
 var Component = require('substance/ui/Component');
-var $$ = Component.$$;
 
 function BibliographySummary() {
-  BibliographySummary.super.apply(this, arguments);
+  Component.apply(this, arguments);
 }
 
 BibliographySummary.Prototype = function() {
-  this.handleAddBibItems = function(e) {
-    e.preventDefault();
-    this.send('switchContext', 'add-bib-items');
-  };
 
-  this.render = function() {
+  this.render = function($$) {
     var el = $$('div').addClass('se-bibliography-summary');
 
     el.append(
@@ -37,6 +32,11 @@ BibliographySummary.Prototype = function() {
       );
     }
     return el;
+  };
+
+  this.handleAddBibItems = function(e) {
+    e.preventDefault();
+    this.send('switchContext', 'add-bib-items');
   };
 };
 
