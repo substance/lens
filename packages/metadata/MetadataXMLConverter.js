@@ -50,7 +50,7 @@ module.exports = {
     return el.append(
       $$('title').append(
         converter.annotatedText([node.id, 'title'])
-      ),
+      )).append(
       $$('abstract').append(
         converter.annotatedText([node.id, 'abstract'])
       )
