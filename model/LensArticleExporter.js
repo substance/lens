@@ -18,7 +18,7 @@ LensArticleExporter.Prototype = function() {
     var articleEl = $$('article');
 
     // Export ArticleMeta
-    var metaEl = this.convertNode(doc.get('article-meta'));
+    var metaEl = this.convertNode(doc.get('meta'));
     articleEl.append(metaEl);
 
     // Export resources (e.g. bib items)
