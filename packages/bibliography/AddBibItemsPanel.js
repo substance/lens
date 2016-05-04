@@ -160,7 +160,7 @@ AddBibItemsPanel.Prototype = function() {
 
     // Make this robust for now until we have a fix for owner-based refs
     if (this.refs.searchStr) {
-      searchStr = this.refs.scrollPane.val();
+      searchStr = this.refs.searchStr.val();
     } else {
       searchStr = this.refs.scrollPane.refs.searchStr.val();
     }
