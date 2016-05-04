@@ -106,7 +106,7 @@ AddBibItemsPanel.Prototype = function() {
         toggleName: this.i18n.t(isAdded ? 'Remove' : 'Add'),
         highlighted: isAdded
       }));
-    }, this);
+    }.bind(this));
 
     return searchResultEl;
   };
