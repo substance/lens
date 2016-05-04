@@ -136,15 +136,13 @@ AddBibItemsPanel.Prototype = function() {
   this.addItem = function(itemGuid) {
     var bibEntry = this.getItem(itemGuid);
     var doc = this.props.doc;
-    doc.transaction({}, {}, function(tx) {
-      var bibItem = {
-        id: bibEntry.data.DOI,
-        type: "bib-item",
-        data: bibEntry.data,
-        format: 'citeproc'
-      };
-      tx.create(bibItem);
-    });
+    var bibItem = {
+      id: bibEntry.data.DOI,
+      type: "bib-item",
+      data: bibEntry.data,
+      format: 'citeproc'
+    };
+    doc.create(bibItem);
     this.rerender();
   };
 
