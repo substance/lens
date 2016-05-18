@@ -142,7 +142,11 @@ AddBibItemsPanel.Prototype = function() {
       data: bibEntry.data,
       format: 'citeproc'
     };
-    doc.create(bibItem);
+
+    this.context.controller.transaction(function(tx) {
+      tx.create(bibItem);
+    });
+
     this.rerender();
   };
 
