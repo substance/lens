@@ -1,4 +1,4 @@
-**No longer maintained. Use http://github.com/substance/scientist instead.**
+**No longer maintained. Use http://github.com/substance/texture instead.**
 
 # Lens (editable edition)
 
