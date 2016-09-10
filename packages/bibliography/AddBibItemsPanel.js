@@ -106,7 +106,7 @@ AddBibItemsPanel.Prototype = function() {
         toggleName: this.i18n.t(isAdded ? 'Remove' : 'Add'),
         highlighted: isAdded
       }));
-    }, this);
+    }.bind(this));
 
     return searchResultEl;
   };
@@ -136,15 +136,17 @@ AddBibItemsPanel.Prototype = function() {
   this.addItem = function(itemGuid) {
     var bibEntry = this.getItem(itemGuid);
     var doc = this.props.doc;
-    doc.transaction({}, {}, function(tx) {
-      var bibItem = {
-        id: bibEntry.data.DOI,
-        type: "bib-item",
-        data: bibEntry.data,
-        format: 'citeproc'
-      };
+    var bibItem = {
+      id: bibEntry.data.DOI,
+      type: "bib-item",
+      data: bibEntry.data,
+      format: 'citeproc'
+    };
+
+    this.context.controller.transaction(function(tx) {
       tx.create(bibItem);
     });
+
     this.rerender();
   };
 
