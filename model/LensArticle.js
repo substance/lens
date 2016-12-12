@@ -141,10 +141,10 @@ Document.extend(LensArticle);
 
 LensArticle.XML_TEMPLATE = [
 '<article xmlns="http://substance.io/science-article/0.1.0" lang="en">',
-  '<metadata>',
+  '<meta>',
     '<title>Enter title</title>',
     '<abstract>Enter abstract</abstract>',
-  '</metadata>',
+  '</meta>',
   '<resources></resources>',
   '<body>',
     '<p id="p1">Enter your article here.</p>',
